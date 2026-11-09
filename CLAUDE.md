@@ -29,7 +29,7 @@
 승태 님이 직접 만든 의학서적 위키가 http://localhost:7070 에 있습니다 (의학서적 카테고리: Braunwald's Heart Disease 8판, Harrison's Principles of Internal Medicine 17판, Tintinalli's Emergency Medicine 7판 — 모두 영어 원서).
 인터넷 자료만 쓰지 말고, 의학적 주장은 먼저 7070에서 근거를 찾습니다.
 
-1. **근거 찾기** (검색어는 영어로)
+1. **근거 찾기** — 7070 자체 검색(한글도 됨, 위키가 영어로 번역)을 먼저 쓰고, 안 되면 허브 예비 색인(영어 검색어)으로 자동 전환됩니다
    - 허브가 켜져 있으면: `curl -s "http://localhost:8787/api/med/search?q=diabetic+ketoacidosis&limit=5"` (책 지정: `&book=harrisons|braunwald|tintinalli`)
    - 허브 없이: `python3 hub/medref.py search "diabetic ketoacidosis" --book tintinalli`
    - 색인이 없으면 `python3 hub/medref.py index` (7070이 켜져 있어야 함, 이 기기에만 저장)

@@ -122,6 +122,7 @@ class Indexer:
     def status(self):
         st = dict(self.state)
         st["base_url"] = base_url()
+        st["wiki_search"] = probe_wiki()
         st["db"] = DB_PATH.exists()
         if DB_PATH.exists() and st["state"] != "running":
             try:
@@ -236,7 +237,7 @@ def make_link(base, href, snippet):
     return base + href + frag
 
 
-def search(q, book=None, limit=8):
+def search_local(q, book=None, limit=8):
     if not DB_PATH.exists():
         return {"ok": False, "error": "아직 색인이 없어요. '색인 만들기'를 먼저 눌러 주세요.", "results": []}
     if HANGUL.search(q) and not re.search(r"[A-Za-z]{3,}", q):
@@ -285,7 +286,73 @@ def search(q, book=None, limit=8):
             "url": make_link(base, url, snip), "page_url": base + url,
             "snippet": snip, "excerpt": plain, "score": round(score, 3),
         })
-    return {"ok": True, "query": q, "results": out}
+    return {"ok": True, "query": q, "results": out, "engine": "허브 색인"}
+
+
+def _strip_html(h):
+    h = re.sub(r"<mark>", "[[", h, flags=re.I)
+    h = re.sub(r"</mark>", "]]", h, flags=re.I)
+    h = re.sub(r"<[^>]+>", "", h)
+    return re.sub(r"\s+", " ", htmlmod.unescape(h)).strip()
+
+
+def search_wiki(q, book=None, limit=8, timeout=12):
+    """7070 위키 자체 검색(/api/search). 한글 검색어는 위키가 영어로 번역해서 찾고,
+    장 전체가 아니라 문단 단위로 결과를 줍니다. 실패하면 예외를 던집니다."""
+    base = base_url()
+    url = f"{base}/api/search?q={urllib.parse.quote(q)}&domain=medical"
+    data = json.loads(fetch(url, timeout=timeout))
+    out = []
+    for r in data.get("results", []):
+        if r.get("domain") != "medical":
+            continue
+        src = r.get("source", "")
+        if book and src != book:
+            continue
+        title = (r.get("title") or "").strip()
+        parts = [x.strip() for x in (r.get("breadcrumb") or "").split(">") if x.strip()]
+        parts = [x for x in parts if "目錄" not in x and x != r.get("display_name") and "Table of Contents" not in x]
+        if not parts or title not in parts[-1]:
+            parts.append(title)
+        section = parts[-1]
+        chapter = parts[-2] if len(parts) >= 2 else section
+        snip = _strip_html(r.get("snippet_html") or "")
+        href = "/doc/medical/%s/%s" % (src, urllib.parse.quote(r.get("path", "")))
+        plain = snip.replace("[[", "").replace("]]", "")
+        out.append({
+            "book": src, "book_title": r.get("display_name") or src, "chapter": chapter, "section": section,
+            "part": " › ".join(parts[:-2]), "url": make_link(base, href, snip), "page_url": base + href,
+            "snippet": snip, "excerpt": plain, "score": None,
+        })
+        if len(out) >= limit:
+            break
+    return {"ok": True, "query": q, "results": out, "engine": "7070 자체 검색"}
+
+
+def search(q, book=None, limit=8):
+    """7070 자체 검색을 먼저 쓰고, 안 되면(꺼짐·색인 재생성 중 오류 등) 허브 색인으로 찾습니다."""
+    q = (q or "").strip()
+    if not q:
+        return {"ok": False, "error": "검색어가 비어 있어요", "results": []}
+    try:
+        return search_wiki(q, book, limit)
+    except Exception as e:
+        why = getattr(e, "code", None)
+        why = f"HTTP {why}" if why else type(e).__name__
+        res = search_local(q, book, limit)
+        res["fallback"] = f"7070 자체 검색이 응답하지 않아({why}) 허브 색인으로 찾았어요"
+        if not res.get("ok"):
+            res["error"] = res["fallback"] + " — " + res.get("error", "")
+        return res
+
+
+def probe_wiki(timeout=4):
+    try:
+        json.loads(fetch(base_url() + "/api/search?q=heart&domain=medical", timeout=timeout))
+        return {"ok": True}
+    except Exception as e:
+        code = getattr(e, "code", None)
+        return {"ok": False, "why": f"HTTP {code}" if code else type(e).__name__}
 
 
 def footnote(r, n):
@@ -323,6 +390,7 @@ if __name__ == "__main__":
         if not res["ok"]:
             print(res["error"])
             sys.exit(1)
+        print(f"[{res.get('engine', '')}] {res.get('fallback', '')}".rstrip())
         if not res["results"]:
             print(f"7070 의학서적에 없음: '{a.query}' → 본문에 쓰면 ⚠️[7070 없음] 표시")
         for i, r in enumerate(res["results"], 1):

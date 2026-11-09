@@ -343,12 +343,12 @@ async function savePack() {
   if (!CUR.files.find(x => x.name === 'evidence.json')) CUR.files.push({ path, name: 'evidence.json', text: true, size: 0 });
 }
 const BOOKS = [['', '전체 서적'], ['braunwald', "Braunwald's"], ['harrisons', "Harrison's"], ['tintinalli', "Tintinalli's"]];
-let MEDQ = '', MEDBOOK = '', MEDST = null;
+let MEDQ = '', MEDBOOK = '', MEDST = null, MEDENG = '', MEDFB = '';
 async function renderMed() {
   const box = $('#rbody');
   box.innerHTML = `<div class="med">
     <div id="medStatus" class="hint">7070 색인 확인 중…</div>
-    <div class="q"><input id="medQ" placeholder="영어로 검색 (예: diabetic ketoacidosis, HbA1c target)" value="${esc(MEDQ)}">
+    <div class="q"><input id="medQ" placeholder="검색어 (한글 가능: 당뇨 케톤산증 / 영어: diabetic ketoacidosis)" value="${esc(MEDQ)}">
       <select id="medBook">${BOOKS.map(([v, t]) => `<option value="${v}" ${v === MEDBOOK ? 'selected' : ''}>${t}</option>`).join('')}</select>
       <button class="primary" id="medGo">검색</button></div>
     <div class="hint">본문에서 근거를 달 문장 끝에 커서를 두고 <b>주석 삽입</b>을 누르세요. 모은 근거는 'Claude 요청문 복사'에도 함께 들어가요.</div>
@@ -368,7 +368,9 @@ async function refreshMedStatus() {
     }
     if (MEDST.state === 'error') { el.innerHTML = `<span class="err">색인 실패: ${esc(MEDST.error)}</span> · ${esc(MEDST.base_url)} 이 켜져 있는지 확인해 주세요 <button id="medIdx">다시 시도</button>`; }
     else if (!MEDST.db) { el.innerHTML = `아직 색인이 없어요 (${esc(MEDST.base_url)}) <button id="medIdx">색인 만들기</button>`; }
-    else { el.innerHTML = `7070 의학서적 ${MEDST.pages}쪽 색인됨 · ${esc(MEDST.built || '')} ${MEDST.fts ? '' : '(단순 검색 모드)'} <button id="medIdx" class="ghost" title="7070에 책이 늘었거나 바뀌었을 때">다시 색인</button>${MEDST.error ? ` <span class="err">${esc(MEDST.error)}</span>` : ''}`; }
+    else { el.innerHTML = `예비 색인 ${MEDST.pages}쪽 · ${esc(MEDST.built || '')} ${MEDST.fts ? '' : '(단순 검색 모드)'} <button id="medIdx" class="ghost" title="7070에 책이 늘었거나 바뀌었을 때">다시 색인</button>${MEDST.error ? ` <span class="err">${esc(MEDST.error)}</span>` : ''}`; }
+    const ws = MEDST.wiki_search || {};
+    el.innerHTML = (ws.ok ? '<b style="color:var(--ok)">● 7070 자체 검색 연결됨</b> (한글 검색 가능) · ' : `<b style="color:var(--warn)">● 7070 자체 검색 안 됨</b> (${esc(ws.why || '')}) → 예비 색인으로 찾아요 (영어 검색어) · `) + el.innerHTML;
     const b = $('#medIdx'); if (b) b.onclick = async () => { await post('/api/med/index'); refreshMedStatus() };
   } catch (e) { el.textContent = '색인 상태를 못 읽었어요: ' + e.message }
 }
@@ -377,7 +379,7 @@ async function medSearch() {
   $('#medRes').innerHTML = '<div class="hint">찾는 중…</div>';
   try {
     const r = await api(`/api/med/search?q=${encodeURIComponent(MEDQ)}&book=${encodeURIComponent(MEDBOOK)}&limit=10`);
-    MEDRES = r.ok ? r.results : []; renderMedResults(r.ok ? null : r.error);
+    MEDRES = r.ok ? r.results : []; MEDENG = r.engine || ''; MEDFB = r.fallback || ''; renderMedResults(r.ok ? null : r.error);
   } catch (e) { MEDRES = []; renderMedResults(e.message) }
 }
 function locOf(r) { return r.section === r.chapter ? r.chapter : `${r.chapter} › ${r.section}` }
@@ -385,7 +387,7 @@ function renderMedResults(err) {
   const box = $('#medRes'); if (!box) return;
   if (err) { box.innerHTML = `<div class="err">${esc(err)}</div>`; return }
   if (!MEDRES.length) { box.innerHTML = MEDQ ? `<div class="hint">“${esc(MEDQ)}” — <b>7070 의학서적에 없음</b>. 같은 뜻의 다른 표현(예: HbA1c → A1C, heart attack → myocardial infarction)이나 더 짧은 검색어로도 찾아보세요. 그래도 없으면 문장 끝에 ⚠️[7070 없음]을 붙여 주세요. <button id="flagNow">⚠️ 표시 넣기</button></div>` : ''; if ($('#flagNow')) $('#flagNow').onclick = () => insertAtCursor(' ⚠️[7070 없음]'); return }
-  box.innerHTML = MEDRES.map((r, i) => `<div class="res">
+  box.innerHTML = `<div class="hint">검색 방법: <b>${esc(MEDENG)}</b>${MEDFB ? ' · ' + esc(MEDFB) : ''}</div>` + MEDRES.map((r, i) => `<div class="res">
       <div class="src"><b>${esc(r.book_title)}</b> · ${esc(locOf(r))}</div>
       <div class="sn">${esc(r.snippet).replace(/\[\[/g, '<mark>').replace(/\]\]/g, '</mark>')}</div>
       <div class="acts"><button class="primary" data-i="${i}" data-a="ins">주석 삽입</button><button data-i="${i}" data-a="pack">근거 묶음에 추가</button><a href="${esc(r.url)}" target="_blank"><button type="button">7070에서 열기 ↗</button></a></div></div>`).join('');
