@@ -92,6 +92,12 @@ def run_single_generation(topic: str, keyword: str, audience: str = "일반 독�
             print("[2/2] OpenAI GPT-4o로 다채널 광고 카피 10종 생성 중...")
             ad_content = generate_ads_with_openai(topic, keyword, blog_content[:500])
 
+    # 0. slop-rewrite 자동 탈(脫)AI 정밀 교정 패스 실행
+    print("🧹 [slop-rewrite] AI 티 제거 및 자연스러운 문체 정밀 교정 패스 실행 중...")
+    from engine.slop_engine import apply_slop_rewrite
+    blog_content, slop_report = apply_slop_rewrite(blog_content, provider=provider if not dry_run else None)
+    print(f"   슬롭 지수: {slop_report['initial_score']} ➔ {slop_report['final_score']} (적용된 교정: {len(slop_report['fixes_applied'])}건)")
+
     # 1. content/<허브ID>/ 에 저장 (로컬 작업 허브와 같은 구조, Git 커밋 대상)
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     content_dir = os.path.join(base_dir, "content")
@@ -106,10 +112,13 @@ def run_single_generation(topic: str, keyword: str, audience: str = "일반 독�
 
     post_filepath = os.path.join(item_dir, "post.md")
     ad_filepath = os.path.join(item_dir, "ads.md")
+    slop_report_path = os.path.join(item_dir, "slop_report.json")
     with open(post_filepath, "w", encoding="utf-8") as f:
         f.write(blog_content)
     with open(ad_filepath, "w", encoding="utf-8") as f:
         f.write(ad_content)
+    with open(slop_report_path, "w", encoding="utf-8") as f:
+        f.write(json.dumps(slop_report, ensure_ascii=False, indent=2) + "\n")
 
     meta_path = os.path.join(item_dir, "meta.json")
     meta = {}

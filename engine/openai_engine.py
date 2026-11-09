@@ -57,7 +57,13 @@ def generate_blog_with_openai(topic: str, keyword: str, audience: str = "일반 
 위 요청 정보를 바탕으로 네이버 C-Rank 및 구글 SEO 최적화 전문 블로그 원고를 작성해 주세요.
 제목 3개, 메타 디스크립션, 서론(훅), 본문(H2, H3), 결론 요약 및 해시태그를 포함하세요.
 """
-    return call_openai(system_prompt, user_prompt)
+    raw_blog = call_openai(system_prompt, user_prompt)
+    try:
+        from engine.slop_engine import apply_slop_rewrite
+        cleaned_blog, _ = apply_slop_rewrite(raw_blog, provider="openai")
+        return cleaned_blog
+    except Exception:
+        return raw_blog
 
 def generate_ads_with_openai(topic: str, keyword: str, blog_summary: str = "") -> str:
     """OpenAI GPT-4o를 이용한 다채널 마케팅 광고 카피 생성"""

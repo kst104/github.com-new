@@ -61,7 +61,13 @@ def generate_blog_with_claude(topic: str, keyword: str, audience: str = "일반 
 위 요청 정보를 바탕으로 네이버 C-Rank 및 구글 SEO 최적화 전문 블로그 원고를 XML 구조(<blog_post>)에 맞추어 작성해 주세요.
 모바일 가독성을 고려하여 단락 구분을 명확히 하고, 바로 복사하여 블로그에 포스팅할 수 있는 완결된 형태로 작성해 주세요.
 """
-    return call_claude(system_prompt, user_prompt)
+    raw_blog = call_claude(system_prompt, user_prompt)
+    try:
+        from engine.slop_engine import apply_slop_rewrite
+        cleaned_blog, _ = apply_slop_rewrite(raw_blog, provider="claude")
+        return cleaned_blog
+    except Exception:
+        return raw_blog
 
 def generate_ads_with_claude(topic: str, keyword: str, blog_summary: str = "") -> str:
     """Claude 3.5 Sonnet을 이용한 다채널 마케팅 광고 카피 생성"""
