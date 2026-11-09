@@ -1,0 +1,85 @@
+name: Content Automation Engine (Claude & OpenAI)
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 매일 아침 09:00 KST (00:00 UTC) 정기 실행
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: 'AI 모델 엔진 선택'
+        required: true
+        default: 'claude'
+        type: choice
+        options:
+          - claude
+          - openai
+      topic:
+        description: '포스팅 주제 (미입력 시 노션 DB 대기열 자동 조회)'
+        required: false
+        default: ''
+        type: string
+      keyword:
+        description: '타깃 검색 키워드'
+        required: false
+        default: ''
+        type: string
+      dry_run:
+        description: '테스트 모의 실행 여부'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  run-content-pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Content Engine
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DEFAULT_MODEL_PROVIDER: ${{ inputs.provider || 'claude' }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.provider }}" != "" ]; then
+            ARGS="$ARGS --provider ${{ inputs.provider }}"
+          fi
+          if [ "${{ inputs.topic }}" != "" ]; then
+            ARGS="$ARGS --topic '${{ inputs.topic }}'"
+          fi
+          if [ "${{ inputs.keyword }}" != "" ]; then
+            ARGS="$ARGS --keyword '${{ inputs.keyword }}'"
+          fi
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          python engine/run_pipeline.py $ARGS
+
+      - name: Commit and Push Generated Content
+        run: |
+          git config --global user.name "GeongTae Automation Engine"
+          git config --global user.email "bot@pickle.internal"
+          git add posts/ ads/
+          if git diff --staged --quiet; then
+            echo "새로 생성된 파일이 없습니다."
+          else
+            git commit -m "Auto: New blog post & ad copies generated [skip ci]"
+            git push
+          fi
