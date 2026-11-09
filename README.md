@@ -38,8 +38,8 @@
 
 ```
 content-automation-engine/
-├── .github/workflows/
-│   └── content_engine.yml          # GitHub Actions 서버리스 자동화 워크플로우
+├── workflows/
+│   └── content_engine.yml          # GitHub Actions 서버리스 자동화 워크플로우 템플릿
 ├── engine/
 │   ├── config.py                   # 환경변수 및 모델 설정
 │   ├── claude_engine.py            # Anthropic Claude 3.5 Sonnet 파이프라인
@@ -66,7 +66,7 @@ content-automation-engine/
 
 ```bash
 # 레포지토리 클론 및 이동
-git clone https://github.com/kst104/content-automation-engine.git
+git clone https://github.com/kst104/github.com-new.git content-automation-engine
 cd content-automation-engine
 
 # 의존성 패키지 설치
