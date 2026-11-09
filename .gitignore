@@ -9,3 +9,5 @@ Thumbs.db
 # 편집기
 .vscode/
 .idea/
+# 7070 의학서적 근거 색인 (기기마다 따로 만들어짐)
+hub/.medref.*

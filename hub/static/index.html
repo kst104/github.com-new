@@ -64,6 +64,34 @@ textarea.ed:focus{border-color:var(--accent)}
 .preview h1{font-size:20px}.preview h2{font-size:17px;border-bottom:1px solid var(--line);padding-bottom:4px}.preview h3{font-size:15px}
 .preview table{border-collapse:collapse;width:100%}.preview td,.preview th{border:1px solid var(--line);padding:4px 8px}
 .preview blockquote{margin:0;padding:4px 12px;border-left:3px solid var(--accent);color:var(--muted)}
+.rpane{display:flex;flex-direction:column;min-height:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);overflow:hidden}
+.rtabs{display:flex;gap:2px;padding:6px;border-bottom:1px solid var(--line)}
+.rtabs button{border:none;background:transparent;color:var(--muted);padding:5px 10px}
+.rtabs button.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.rbody{flex:1;overflow:auto;min-height:0}
+.rbody .preview{border:none;border-radius:0}
+.med{padding:12px 14px}
+.med .q{display:flex;gap:6px;margin-bottom:8px}
+.med .q input{flex:1;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.med .q select{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:0 6px}
+.med .hint{font-size:12px;color:var(--muted);margin:4px 0 10px}
+.res{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;background:var(--bg)}
+.res .src{font-size:12px;color:var(--muted)}.res .src b{color:var(--ink)}
+.res .sn{font-size:12.5px;margin:6px 0;line-height:1.55}
+.res mark{background:#ffe8a3;color:#1f1d1a;border-radius:3px;padding:0 2px}
+.res .acts{display:flex;gap:6px;flex-wrap:wrap}.res .acts button,.res .acts a{font-size:12px;padding:3px 8px}
+.pack{font-size:12.5px;border-top:1px dashed var(--line);margin-top:12px;padding-top:10px}
+.pack li{margin-bottom:4px}
+.rv{padding:14px}
+.rv .cnt{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.rv .cnt div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);font-size:12.5px}
+.rv .cnt b{font-size:18px;display:block}
+.rv .ln{font-size:12.5px;border-bottom:1px solid var(--line);padding:6px 0;cursor:pointer}
+.rv .ln:hover{color:var(--accent)}
+.flag{background:#fff3bf;color:#7a4b00;border-radius:4px;padding:0 3px;font-size:.9em}
+.flag.old{background:#e7f5ff;color:#1864ab}
+sup.fn{color:var(--accent);font-size:.75em}
+.fndef{font-size:12px;color:var(--muted);margin:2px 0}
 .bar{display:flex;gap:8px;align-items:center;margin-top:10px;color:var(--muted);font-size:12.5px}
 video,img.media{max-width:100%;max-height:60vh;border-radius:var(--radius);background:#000}
 /* 보드 */
@@ -145,12 +173,15 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600); };
 const fmtTime = iso => iso ? new Date(iso).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
 
-let CFG = {}, ITEMS = [], CUR = null, CURFILE = null, FILTER = '전체', DIRTY = false, MTIME = null;
+let CFG = {}, ITEMS = [], CUR = null, CURFILE = null, FILTER = '전체', DIRTY = false, MTIME = null, RTAB = 'pv', PACK = [], MEDRES = [];
 
 // ---------- 아주 작은 마크다운 미리보기
 function md(src) {
   const lines = src.replace(/\r/g, '').split('\n'); let out = [], inList = null, inTable = false;
-  const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>').replace(/\[(.+?)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>').replace(/\[(.+?)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+    .replace(/&lt;(https?:\/\/[^\s&]+(?:&amp;[^\s&]+)*)&gt;/g, (_, u) => `<a href="${u}" target="_blank">원문 ↗</a>`)
+    .replace(/\[\^([mw]\d+)\]/g, '<sup class="fn">[$1]</sup>')
+    .replace(/⚠️\[7070 없음\]/g, '<span class="flag">⚠️ 7070 없음</span>').replace(/⚠️\[최신 확인\]/g, '<span class="flag old">🕒 최신 확인</span>');
   const close = () => { if (inList) { out.push(`</${inList}>`); inList = null } if (inTable) { out.push('</table>'); inTable = false } };
   for (const l of lines) {
     let m;
@@ -159,6 +190,7 @@ function md(src) {
       if (!inTable) { close(); out.push('<table>'); inTable = true }
       out.push('<tr>' + l.trim().replace(/^\||\|$/g, '').split('|').map(c => `<td>${inline(c.trim())}</td>`).join('') + '</tr>'); continue;
     }
+    if ((m = l.match(/^\[\^([mw]\d+)\]:\s*(.*)/))) { close(); out.push(`<p class="fndef"><b>[${m[1]}]</b> ${inline(m[2])}</p>`); continue }
     if ((m = l.match(/^(#{1,4})\s+(.*)/))) { close(); out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); continue }
     if ((m = l.match(/^\s*[-*]\s+(.*)/))) { if (inList !== 'ul') { close(); out.push('<ul>'); inList = 'ul' } out.push(`<li>${inline(m[1])}</li>`); continue }
     if ((m = l.match(/^\s*\d+\.\s+(.*)/))) { if (inList !== 'ol') { close(); out.push('<ol>'); inList = 'ol' } out.push(`<li>${inline(m[1])}</li>`); continue }
@@ -197,7 +229,7 @@ async function openItem(id, file) {
   renderList();
   const order = ['post.md', 'ads.md', 'shorts.md'];
   const files = [...CUR.files].sort((a, b) => (order.indexOf(a.name) + 1 || 99) - (order.indexOf(b.name) + 1 || 99));
-  const label = n => ({ 'post.md': '블로그', 'ads.md': '광고 소재', 'shorts.md': '쇼츠 대본' }[n] || n);
+  const label = n => ({ 'post.md': '블로그', 'ads.md': '광고 소재', 'shorts.md': '쇼츠 대본', 'evidence.json': '7070 근거 묶음' }[n] || n);
   CURFILE = file || (files[0] && files[0].path);
   $('#detail').innerHTML = `
     <div class="head">
@@ -230,11 +262,16 @@ async function openItem(id, file) {
   if (!f) { $('#fileArea').innerHTML = '<div class="empty">파일이 없어요</div>'; return }
   if (f.text) {
     const { content, mtime } = await api('/api/file?path=' + encodeURIComponent(f.path)); MTIME = mtime;
-    $('#fileArea').innerHTML = `<div class="editor"><textarea class="ed" id="ed" spellcheck="false"></textarea><div class="preview" id="pv"></div></div>
+    const isMd = f.name.endsWith('.md');
+    $('#fileArea').innerHTML = `<div class="editor"><textarea class="ed" id="ed" spellcheck="false"></textarea>
+      <div class="rpane"><div class="rtabs"><button data-t="pv">미리보기</button>${isMd ? '<button data-t="med">7070 근거</button><button data-t="rv">검수</button>' : ''}</div><div class="rbody" id="rbody"></div></div></div>
       <div class="bar"><button class="primary" id="saveFile">저장 (⌘S)</button><span id="saveState">저장됨</span><span class="sp"></span><span>${esc(f.path)}</span></div>`;
-    const ed = $('#ed'); ed.value = content; $('#pv').innerHTML = md(content);
-    ed.oninput = () => { DIRTY = true; $('#saveState').textContent = '저장 안 됨'; $('#pv').innerHTML = md(ed.value) };
+    const ed = $('#ed'); ed.value = content;
+    if (!isMd) RTAB = 'pv';
+    document.querySelectorAll('.rtabs button').forEach(b => b.onclick = () => { RTAB = b.dataset.t; renderRight() });
+    ed.oninput = () => { DIRTY = true; $('#saveState').textContent = '저장 안 됨'; if (RTAB !== 'med') renderRight() };
     $('#saveFile').onclick = () => saveFile();
+    await loadPack(); renderRight();
   } else {
     const url = '/api/raw?path=' + encodeURIComponent(f.path);
     const ext = f.name.split('.').pop().toLowerCase();
@@ -256,15 +293,162 @@ async function saveFile(force = false) {
   }
 }
 async function saveMeta() {
+  if ($('#dStatus').value === '발행완료' && CUR.status !== '발행완료') {
+    const pf = CUR.files.find(x => x.name === 'post.md');
+    if (pf) {
+      try {
+        const { content } = await api('/api/file?path=' + encodeURIComponent(pf.path)); const c = reviewCounts(content);
+        if ((c.missing || c.old || c.broken.length) && !confirm(`아직 검수할 곳이 남아 있어요.\n⚠️ 7070 없음 ${c.missing}곳 · 🕒 최신 확인 ${c.old}곳 · 정의 없는 주석 ${c.broken.length}개\n\n그래도 발행완료로 바꿀까요?`)) { $('#dStatus').value = CUR.status; return }
+      } catch (_) {}
+    }
+  }
   try {
     const r = await post('/api/items/' + CUR.id, { title: $('#dTitle').value.trim(), keyword: $('#dKeyword').value.trim(), status: $('#dStatus').value, channels: [...document.querySelectorAll('.dCh:checked')].map(x => x.value), published_url: $('#dUrl').value.trim(), category: $('#dCat').value, audience: $('#dAud').value.trim(), engine: $('#dEng').value });
     toast(r.notion ? '저장했어요 · ' + r.notion : '저장했어요'); const keep = CURFILE; await loadItems(); DIRTY = false; openItem(CUR.id, keep);
   } catch (e) { toast(e.message) }
 }
+const RULES = `[근거·주석 규칙]
+- 의학적 주장 중 아래 [7070 의학서적 근거]로 뒷받침되는 문장 끝에는 [^m번호]를 달고, 글 끝 '각주'에 근거를 그대로 옮겨 주세요. 번호는 아래 목록 번호를 그대로 씁니다.
+- 인터넷 자료(가이드라인·논문·공공기관)를 쓴 주장에는 [^w번호]를 달고 각주에 기관/저자, 제목, URL, 연도를 적어 주세요.
+- 의학적 주장인데 7070 근거에 없는 내용은 문장 끝에 ⚠️[7070 없음]을 붙여 주세요. 근거를 지어내지 마세요.
+- 7070 의학서적은 과거 판(Harrison's 17판 2008 등)이라, 치료·약물·목표 수치처럼 바뀌었을 수 있는 내용에는 ⚠️[최신 확인]을 붙여 주세요.
+- 글 끝에 '## 근거·검수표'를 표(# | 본문 주장 요약 | 근거 | 상태)로 만들어 주세요. 상태: ✅ 7070 확인 / 🌐 인터넷만 / ⚠️ 7070 없음 / 🕒 최신 확인 필요`;
+function packText() {
+  if (!PACK.length) return '[7070 의학서적 근거]\n(아직 모은 근거가 없어요 — 의학적 주장은 모두 ⚠️[7070 없음]으로 표시해 주세요)';
+  return '[7070 의학서적 근거]\n' + PACK.map(e => `(m${e.n}) ${e.book_title} — ${e.loc}\n    발췌: "${e.excerpt}"\n    원문: ${e.url}`).join('\n');
+}
 function copyPrompt() {
-  const text = `주제: ${CUR.title}\n키워드: ${CUR.keyword || '(키워드)'}\n채널: ${CUR.channels.join(', ') || '전체'}\n\n프로젝트 지침의 출력 구조대로 블로그 포스팅 1편과 다채널 마케팅 광고 소재를 작성해 주세요.\n결과는 post.md(블로그) / ads.md(광고 소재 4종) / shorts.md(60초 대본) 세 부분으로 나눠 주세요.\n(허브 ID: ${CUR.id})`;
-  navigator.clipboard.writeText(text).then(() => toast('복사했어요 · Claude 프로젝트에 붙여넣으세요'), () => prompt('복사해서 쓰세요', text));
+  const text = `주제: ${CUR.title}\n키워드: ${CUR.keyword || '(키워드)'}\n카테고리: ${CUR.category || '-'}\n타깃 독자: ${CUR.audience || '-'}\n채널: ${CUR.channels.join(', ') || '전체'}\n\n프로젝트 지침의 출력 구조대로 블로그 포스팅 1편과 다채널 마케팅 광고 소재를 작성해 주세요.\n결과는 post.md(블로그) / ads.md(광고 소재 4종) / shorts.md(60초 대본) 세 부분으로 나눠 주세요.\n(허브 ID: ${CUR.id})\n\n${RULES}\n\n${packText()}`;
+  navigator.clipboard.writeText(text).then(() => toast(`복사했어요 (7070 근거 ${PACK.length}개 포함) · Claude 프로젝트에 붙여넣으세요`), () => prompt('복사해서 쓰세요', text));
   if (CFG.claude_project_url) window.open(CFG.claude_project_url, '_blank');
+}
+
+// ---------- 오른쪽 패널: 미리보기 / 7070 근거 / 검수
+function renderRight() {
+  document.querySelectorAll('.rtabs button').forEach(b => b.classList.toggle('on', b.dataset.t === RTAB));
+  const box = $('#rbody'); if (!box) return;
+  if (RTAB === 'pv') box.innerHTML = `<div class="preview">${md($('#ed').value)}</div>`;
+  else if (RTAB === 'med') renderMed();
+  else renderReview();
+}
+async function loadPack() {
+  PACK = [];
+  const pf = CUR.files.find(x => x.name === 'evidence.json');
+  if (!pf) return;
+  try { const { content } = await api('/api/file?path=' + encodeURIComponent(pf.path)); PACK = (JSON.parse(content).items || []) } catch (_) { PACK = [] }
+}
+async function savePack() {
+  const path = CUR.folder + '/evidence.json';
+  await post('/api/file', { path, content: JSON.stringify({ note: '7070 의학서적에서 이 콘텐츠에 쓰려고 모은 근거 (허브가 관리)', items: PACK }, null, 2) + '\n', force: true });
+  if (!CUR.files.find(x => x.name === 'evidence.json')) CUR.files.push({ path, name: 'evidence.json', text: true, size: 0 });
+}
+const BOOKS = [['', '전체 서적'], ['braunwald', "Braunwald's"], ['harrisons', "Harrison's"], ['tintinalli', "Tintinalli's"]];
+let MEDQ = '', MEDBOOK = '', MEDST = null;
+async function renderMed() {
+  const box = $('#rbody');
+  box.innerHTML = `<div class="med">
+    <div id="medStatus" class="hint">7070 색인 확인 중…</div>
+    <div class="q"><input id="medQ" placeholder="영어로 검색 (예: diabetic ketoacidosis, HbA1c target)" value="${esc(MEDQ)}">
+      <select id="medBook">${BOOKS.map(([v, t]) => `<option value="${v}" ${v === MEDBOOK ? 'selected' : ''}>${t}</option>`).join('')}</select>
+      <button class="primary" id="medGo">검색</button></div>
+    <div class="hint">본문에서 근거를 달 문장 끝에 커서를 두고 <b>주석 삽입</b>을 누르세요. 모은 근거는 'Claude 요청문 복사'에도 함께 들어가요.</div>
+    <div id="medRes"></div>
+    <div class="pack" id="medPack"></div></div>`;
+  $('#medGo').onclick = medSearch;
+  $('#medQ').onkeydown = e => { if (e.key === 'Enter') medSearch() };
+  $('#medBook').onchange = e => { MEDBOOK = e.target.value };
+  renderMedResults(); renderPack(); refreshMedStatus();
+}
+async function refreshMedStatus() {
+  const el = $('#medStatus'); if (!el) return;
+  try {
+    MEDST = await api('/api/med/status');
+    if (MEDST.state === 'running') {
+      el.innerHTML = `7070 색인 만드는 중… ${MEDST.done}/${MEDST.total}쪽`; setTimeout(refreshMedStatus, 2500); return;
+    }
+    if (MEDST.state === 'error') { el.innerHTML = `<span class="err">색인 실패: ${esc(MEDST.error)}</span> · ${esc(MEDST.base_url)} 이 켜져 있는지 확인해 주세요 <button id="medIdx">다시 시도</button>`; }
+    else if (!MEDST.db) { el.innerHTML = `아직 색인이 없어요 (${esc(MEDST.base_url)}) <button id="medIdx">색인 만들기</button>`; }
+    else { el.innerHTML = `7070 의학서적 ${MEDST.pages}쪽 색인됨 · ${esc(MEDST.built || '')} ${MEDST.fts ? '' : '(단순 검색 모드)'} <button id="medIdx" class="ghost" title="7070에 책이 늘었거나 바뀌었을 때">다시 색인</button>${MEDST.error ? ` <span class="err">${esc(MEDST.error)}</span>` : ''}`; }
+    const b = $('#medIdx'); if (b) b.onclick = async () => { await post('/api/med/index'); refreshMedStatus() };
+  } catch (e) { el.textContent = '색인 상태를 못 읽었어요: ' + e.message }
+}
+async function medSearch() {
+  MEDQ = $('#medQ').value.trim(); if (!MEDQ) return;
+  $('#medRes').innerHTML = '<div class="hint">찾는 중…</div>';
+  try {
+    const r = await api(`/api/med/search?q=${encodeURIComponent(MEDQ)}&book=${encodeURIComponent(MEDBOOK)}&limit=10`);
+    MEDRES = r.ok ? r.results : []; renderMedResults(r.ok ? null : r.error);
+  } catch (e) { MEDRES = []; renderMedResults(e.message) }
+}
+function locOf(r) { return r.section === r.chapter ? r.chapter : `${r.chapter} › ${r.section}` }
+function renderMedResults(err) {
+  const box = $('#medRes'); if (!box) return;
+  if (err) { box.innerHTML = `<div class="err">${esc(err)}</div>`; return }
+  if (!MEDRES.length) { box.innerHTML = MEDQ ? `<div class="hint">“${esc(MEDQ)}” — <b>7070 의학서적에 없음</b>. 이 내용을 쓰면 문장 끝에 ⚠️[7070 없음]을 붙여 주세요. <button id="flagNow">⚠️ 표시 넣기</button></div>` : ''; if ($('#flagNow')) $('#flagNow').onclick = () => insertAtCursor(' ⚠️[7070 없음]'); return }
+  box.innerHTML = MEDRES.map((r, i) => `<div class="res">
+      <div class="src"><b>${esc(r.book_title)}</b> · ${esc(locOf(r))}</div>
+      <div class="sn">${esc(r.snippet).replace(/\[\[/g, '<mark>').replace(/\]\]/g, '</mark>')}</div>
+      <div class="acts"><button class="primary" data-i="${i}" data-a="ins">주석 삽입</button><button data-i="${i}" data-a="pack">근거 묶음에 추가</button><a href="${esc(r.url)}" target="_blank"><button type="button">7070에서 열기 ↗</button></a></div></div>`).join('');
+  box.querySelectorAll('button[data-a]').forEach(b => b.onclick = () => addEvidence(MEDRES[+b.dataset.i], b.dataset.a === 'ins'));
+}
+function shortEx(t) { t = t.replace(/^[\s…]+|[\s…]+$/g, ''); return t.length > 220 ? t.slice(0, 220).replace(/\s+\S*$/, '') + ' …' : t }
+async function addEvidence(r, insert) {
+  let e = PACK.find(x => x.url === r.url);
+  if (!e) {
+    const n = Math.max(0, ...PACK.map(x => x.n), ...[...$('#ed').value.matchAll(/\[\^m(\d+)\]/g)].map(m => +m[1])) + 1;
+    e = { n, book: r.book, book_title: r.book_title, loc: locOf(r), url: r.url, excerpt: shortEx(r.excerpt), query: MEDQ, added: new Date().toISOString() };
+    PACK.push(e);
+    try { await savePack() } catch (er) { toast('근거 묶음 저장 실패: ' + er.message) }
+  }
+  if (insert) {
+    insertAtCursor(`[^m${e.n}]`);
+    const ed = $('#ed'); const def = `[^m${e.n}]: **${e.book_title}** — ${e.loc} · 7070 원문: <${e.url}> · 발췌: "${e.excerpt}"`;
+    if (!new RegExp(`^\\[\\^m${e.n}\\]:`, 'm').test(ed.value)) {
+      if (!/^## 각주/m.test(ed.value)) ed.value = ed.value.replace(/\s*$/, '') + '\n\n## 각주\n';
+      ed.value = ed.value.replace(/(## 각주[^\n]*\n)/, `$1${def}\n`);
+    }
+    DIRTY = true; $('#saveState').textContent = '저장 안 됨';
+    toast(`[^m${e.n}] 주석을 넣었어요 · 저장(⌘S)을 눌러 주세요`);
+  } else toast(`근거 묶음에 m${e.n}로 추가했어요`);
+  renderPack();
+}
+function renderPack() {
+  const box = $('#medPack'); if (!box) return;
+  box.innerHTML = `<b>이 콘텐츠의 7070 근거 묶음 (${PACK.length})</b>` + (PACK.length ? '<ol>' + PACK.map(e => `<li value="${e.n}">m${e.n} · ${esc(e.book_title)} — ${esc(e.loc)} <a href="${esc(e.url)}" target="_blank">↗</a> <button class="ghost" data-del="${e.n}" title="묶음에서 빼기">✕</button></li>`).join('') + '</ol>' : '<div class="hint">아직 없어요</div>');
+  box.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => { PACK = PACK.filter(x => x.n !== +b.dataset.del); await savePack(); renderPack() });
+}
+function insertAtCursor(t) {
+  const ed = $('#ed'); const a = ed.selectionStart ?? ed.value.length, b = ed.selectionEnd ?? a;
+  ed.value = ed.value.slice(0, a) + t + ed.value.slice(b); ed.selectionStart = ed.selectionEnd = a + t.length; ed.focus();
+  DIRTY = true; $('#saveState').textContent = '저장 안 됨';
+}
+function reviewCounts(text) {
+  const refs = new Set([...text.matchAll(/\[\^([mw]\d+)\](?!:)/g)].map(m => m[1]));
+  const defs = new Set([...text.matchAll(/^\[\^([mw]\d+)\]:/gm)].map(m => m[1]));
+  return {
+    m: [...refs].filter(x => x[0] === 'm').length, w: [...refs].filter(x => x[0] === 'w').length,
+    missing: (text.match(/⚠️\[7070 없음\]/g) || []).length, old: (text.match(/⚠️\[최신 확인\]/g) || []).length,
+    broken: [...refs].filter(x => !defs.has(x)),
+  };
+}
+function renderReview() {
+  const ed = $('#ed'), text = ed.value, c = reviewCounts(text);
+  const lines = text.split('\n'); const flagged = [];
+  lines.forEach((l, i) => { if (/⚠️\[(7070 없음|최신 확인)\]/.test(l) && !/^\|/.test(l)) flagged.push([i, l]) });
+  $('#rbody').innerHTML = `<div class="rv">
+    <div class="cnt"><div><b>${c.m}</b>✅ 7070 주석</div><div><b>${c.w}</b>🌐 인터넷 출처</div><div><b style="color:var(--warn)">${c.missing}</b>⚠️ 7070 없음 (검수 필요)</div><div><b style="color:var(--s1)">${c.old}</b>🕒 최신 지침 확인</div></div>
+    ${c.broken.length ? `<div class="err" style="margin-bottom:8px">각주 내용이 없는 주석: ${c.broken.map(x => '[^' + x + ']').join(', ')}</div>` : ''}
+    <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap"><button id="addMiss">⚠️[7070 없음] 넣기</button><button id="addOld">⚠️[최신 확인] 넣기</button><button id="addTable">검수표 틀 넣기</button></div>
+    <div class="hint">아래 줄을 누르면 편집기에서 그 줄로 이동해요. 확인이 끝나면 표시를 지우거나 주석으로 바꿔 주세요.</div>
+    ${flagged.length ? flagged.map(([i, l]) => `<div class="ln" data-l="${i}">${i + 1}행 · ${esc(l.slice(0, 140))}</div>`).join('') : '<div class="hint">검수 표시가 없어요.</div>'}</div>`;
+  $('#addMiss').onclick = () => { insertAtCursor(' ⚠️[7070 없음]') };
+  $('#addOld').onclick = () => { insertAtCursor(' ⚠️[최신 확인]') };
+  $('#addTable').onclick = () => { if (/^## 근거·검수표/m.test(ed.value)) return toast('이미 있어요'); ed.value = ed.value.replace(/\s*$/, '') + '\n\n## 근거·검수표\n| # | 본문 주장 요약 | 근거 | 상태 | 검수 메모 |\n|---|---|---|---|---|\n| 1 | | [^m1] | ✅ 7070 확인 | |\n'; DIRTY = true; renderReview() };
+  $('#rbody').querySelectorAll('.ln').forEach(d => d.onclick = () => {
+    const n = +d.dataset.l; const pos = lines.slice(0, n).reduce((a, l) => a + l.length + 1, 0);
+    ed.focus(); ed.setSelectionRange(pos, pos + lines[n].length);
+    ed.scrollTop = Math.max(0, (n - 3) * parseFloat(getComputedStyle(ed).lineHeight || 22));
+  });
 }
 
 // ---------- 보드

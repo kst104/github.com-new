@@ -25,6 +25,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import medref  # noqa: E402  7070 의학서적 근거 색인
+
 ROOT = Path(__file__).resolve().parent.parent
 HUB = ROOT / "hub"
 CONTENT = ROOT / "content"
@@ -444,12 +447,17 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(200, list_items())
             if u.path == "/api/sync":
                 return self._send(200, SYNC.status())
+            if u.path == "/api/med/status":
+                return self._send(200, medref.INDEXER.status())
+            if u.path == "/api/med/search":
+                return self._send(200, medref.search(q.get("q", [""])[0], (q.get("book") or [None])[0] or None,
+                                                     int((q.get("limit") or [8])[0])))
             if u.path == "/api/file":
                 p = safe_path(q["path"][0])
                 if p.suffix.lower() not in TEXT_EXT:
                     return self._send(400, {"error": "텍스트 파일만 열 수 있어요"})
                 return self._send(200, {"path": q["path"][0], "content": p.read_text(encoding="utf-8"),
-                                        "mtime": p.stat().st_mtime_ns})
+                                        "mtime": str(p.stat().st_mtime_ns)})
             if u.path == "/api/raw":
                 p = safe_path(q["path"][0])
                 ctype = {".mp4": "video/mp4", ".mov": "video/quicktime", ".png": "image/png", ".jpg": "image/jpeg",
@@ -527,13 +535,16 @@ class Handler(BaseHTTPRequestHandler):
                 if p.suffix.lower() not in TEXT_EXT:
                     return self._send(400, {"error": "텍스트 파일만 저장할 수 있어요"})
                 base = b.get("base_mtime")
-                if base and p.exists() and not b.get("force") and p.stat().st_mtime_ns != int(base):
+                if base and p.exists() and not b.get("force") and str(p.stat().st_mtime_ns) != str(base):
                     return self._send(409, {"error": "열어둔 사이에 이 파일이 바뀌었어요 (다른 기기에서 동기화됐을 수 있어요)"})
                 p.parent.mkdir(parents=True, exist_ok=True)
                 p.write_text(b["content"], encoding="utf-8")
-                return self._send(200, {"ok": True, "saved": now_iso(), "mtime": p.stat().st_mtime_ns})
+                return self._send(200, {"ok": True, "saved": now_iso(), "mtime": str(p.stat().st_mtime_ns)})
             if u.path == "/api/sync":
                 return self._send(200, SYNC.sync("수동"))
+            if u.path == "/api/med/index":
+                started = medref.INDEXER.start()
+                return self._send(200, {"ok": True, "started": started, "status": medref.INDEXER.status()})
             if u.path == "/api/sync/resolve":
                 return self._send(200, SYNC.resolve())
             if u.path == "/api/sync/auto":
@@ -576,6 +587,18 @@ def main():
     SYNC = GitSync(env.get("SYNC_INTERVAL", 120))
     SYNC.auto = not args.no_auto_sync
     threading.Thread(target=SYNC.loop, daemon=True).start()
+
+    def auto_index():
+        if medref.DB_PATH.exists():
+            return
+        try:
+            medref.fetch(medref.base_url() + "/medwiki/index", timeout=5)
+        except Exception:
+            print(f"7070 의학서적 위키({medref.base_url()})에 연결하지 못해 근거 색인은 건너뛰어요. 위키를 켠 뒤 허브에서 '색인 만들기'를 누르세요.")
+            return
+        print("7070 의학서적 근거 색인을 처음 만드는 중이에요 (몇 분 걸려요, 허브는 바로 쓸 수 있어요)")
+        medref.INDEXER.start()
+    threading.Thread(target=auto_index, daemon=True).start()
 
     httpd = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     print(f"작업 허브 실행 중 → {url}   (끄려면 이 창에서 Ctrl+C)")
