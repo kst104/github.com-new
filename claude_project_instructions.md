@@ -86,3 +86,29 @@ claude
 ```
 
 허브에서 **7070 근거** 탭으로 근거를 모은 뒤 **Claude 요청문 복사**를 누르면, 이 규칙과 근거 목록이 요청문에 함께 들어갑니다.
+
+---
+
+## 5. 쇼츠 영상 2종 제작 (일반 겅태 3D vs 90s 레트로 일본 만화 애니)
+
+쇼츠/릴스 제작 시 스타일에 맞게 선택하거나 2종을 동시에 제작할 수 있습니다:
+- **일반 버전**: 메디컬 호스트 겅태 3D 캐릭터 + 우측 상황별 인포그래픽 카드
+- **90s 애니 버전**: 1990년대 일본 레트로 셀 애니메이션 스타일(CRT 스캔라인, 만화 효과음 SFX, 레트로 옐로우 자막)
+
+### 실행 명령어 (터미널)
+```bash
+# 1) 일반 + 90s 애니 2개 버전 동시 렌더링 (추천)
+python3 engine/video_engine.py --style both
+
+# 2) 90s 레트로 애니 단독 렌더링
+python3 engine/video_engine.py --style anime
+
+# 3) 일반 겅태 단독 렌더링
+python3 engine/video_engine.py --style standard
+```
+
+### 90s 애니 일러스트 프롬프트 공식
+```text
+90s retro anime style, [장면 설명 및 행동], vintage 1990s cel animation screencap, detailed line art, muted retro color palette, dramatic lighting, 1995 anime OVA screenshot, cel shaded
+```
+

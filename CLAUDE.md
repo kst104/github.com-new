@@ -45,6 +45,14 @@
 4. **검수표**: `post.md` 끝 `## 근거·검수표`에 주장마다 근거와 상태(✅ 7070 확인 / 🌐 인터넷만 / ⚠️ 7070 없음 / 🕒 최신 확인 필요)를 적습니다.
 5. 발췌는 짧게(220자 이내) 인용하고, 본문은 우리말로 풀어 씁니다. 원서 문장을 길게 옮기지 않습니다.
 
+## 쇼츠·릴스 영상 엔진 & 스타일 선택 (일반 vs 90s 일본 만화 애니)
+쇼츠와 릴스는 일반 버전(겅태 3D 마스코트 + 인포그래픽 카드)과 90s 레트로 일본 애니 만화 버전 2개로 선택 제작할 수 있습니다.
+- `python3 engine/video_engine.py --style both`: 일반과 90s 애니 2종 동시 렌더링 (기본 권장)
+- `python3 engine/video_engine.py --style standard`: 일반 겅태 3D 버전 단독 렌더링
+- `python3 engine/video_engine.py --style anime`: 90년대 일본 레트로 셀 애니메이션 버전 단독 렌더링
+- Claude 전용 스킬: `.claude/skills/anime-shorts/` (90s 만화 스타일 프롬프트 및 비디오 엔진 연동)
+- 에셋 위치: `assets/anime/` (90s 셀 애니메이션 씬 일러스트), `assets/character/geongtae/` (겅태 3D 15종)
+
 ## 하지 말 것
 - `.env`(비밀 키)를 만들거나 커밋하지 않기
 - 다른 콘텐츠 폴더의 `meta.json`에서 `id`, `notion_page_id`를 바꾸지 않기
