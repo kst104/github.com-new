@@ -1,0 +1,51 @@
+name: Publish on Notion Confirm
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # 30분마다 노션의 '발행요청' 상태 자동 감지
+  workflow_dispatch:
+    inputs:
+      target_folder:
+        description: '특정 발행 폴더 지정 (예: content/2026-11-09-05)'
+        required: false
+        default: ''
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Publishing Pipeline
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          TISTORY_ACCESS_TOKEN: ${{ secrets.TISTORY_ACCESS_TOKEN }}
+          TISTORY_BLOG_NAME: ${{ secrets.TISTORY_BLOG_NAME }}
+        run: |
+          ARGS=""
+          if [ "${{ inputs.target_folder }}" != "" ]; then
+            ARGS="--folder ${{ inputs.target_folder }}"
+          fi
+          python publisher/publish_pipeline.py $ARGS
+
+      - name: Commit Meta & Published Updates
+        run: |
+          git config --global user.name "GeongTae Publisher"
+          git config --global user.email "bot@pickle.internal"
+          git add content/
+          if git diff --staged --quiet; then
+            echo "변경 사항 없음"
+          else
+            git commit -m "Auto: Update published status & naver html [skip ci]"
+            git push
+          fi
