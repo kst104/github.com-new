@@ -11,3 +11,4 @@ Thumbs.db
 .idea/
 # 7070 의학서적 근거 색인 (기기마다 따로 만들어짐)
 hub/.medref.*
+knowledge_base/
