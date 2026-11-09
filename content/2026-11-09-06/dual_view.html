@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>닥터 K 콘텐츠 이원화 듀얼 뷰어 (대중용 vs 전문가용)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --clinical: #0f766e;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Nanum Gothic", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-bar {
+      display: flex;
+      gap: 8px;
+    }
+    .tab-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .tab-btn.clinical-active {
+      background: var(--clinical);
+      color: white;
+      border-color: var(--clinical);
+    }
+    .main-wrapper {
+      display: flex;
+      max-width: 1600px;
+      margin: 20px auto;
+      gap: 20px;
+      padding: 0 20px;
+    }
+    .column {
+      flex: 1;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      min-width: 0;
+    }
+    .column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .column-header.public { border-bottom-color: var(--primary); }
+    .column-header.clinical { border-bottom-color: var(--clinical); }
+    .col-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+    }
+    .col-title.public { color: var(--primary); }
+    .col-title.clinical { color: var(--clinical); }
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .badge-public { background: #eff6ff; color: #1d4ed8; }
+    .badge-clinical { background: #f0fdf4; color: #15803d; }
+    .content-body {
+      font-size: 15px;
+      line-height: 1.8;
+      word-break: break-all;
+    }
+    .content-body h1 { font-size: 22px; color: #1e293b; margin-top: 24px; }
+    .content-body h2 { font-size: 18px; color: #334155; margin-top: 20px; }
+    .content-body h3 { font-size: 16px; color: #475569; margin-top: 16px; }
+    .content-body blockquote {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 10px 16px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .clinical .content-body blockquote {
+      border-left-color: var(--clinical);
+    }
+    @media (max-width: 1024px) {
+      .main-wrapper { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🩺 닥터 K 임상·대중 이원화 콘텐츠 허브 (Day 1)</h1>
+    <div class="toggle-bar">
+      <button class="tab-btn active" onclick="setView('both')">나란히 비교 (Dual)</button>
+      <button class="tab-btn" onclick="setView('public')">대중용만 보기</button>
+      <button class="tab-btn" onclick="setView('clinical')">전문가용만 보기</button>
+    </div>
+  </header>
+
+  <div class="main-wrapper" id="wrapper">
+    <!-- 대중용 칼럼 & 쇼츠 영역 -->
+    <section class="column public" id="col-public">
+      <div class="column-header public">
+        <h2 class="col-title public">📱 대중용 에디션 (General Public)</h2>
+        <span class="badge badge-public">블로그 · 릴스 · 쇼츠 · 광고 10종</span>
+      </div>
+      <div class="content-body">
+        <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+          <strong>🎬 제작 완료 숏폼 영상</strong>: <a href="Day1_겨울철_혈압_주의보_겅태_쇼츠_데모_v2.mp4" target="_blank">Day 1 겅태 쇼츠 데모 v2 (MP4) 재생</a><br>
+          <strong>📋 핵심 타깃</strong>: 4050 직장인, 고혈압 환자 및 가족 보호자<br>
+          <strong>💡 강조 포인트</strong>: 3분 기상 공식, 생활 속 금기 사항, 쉬운 비유
+        </div>
+        <h1>겨울철 당뇨 비상! 인슐린 흡수 느려지고 '당뇨발' 부르는 한파 속 3대 생존 수칙 (의사 칼럼)</h1>
+<blockquote>**카테고리**: 의학/건강 칼럼<br></blockquote>
+<blockquote>**타깃 키워드**: 겨울철 당뇨, 당뇨발 예방, 인슐린 보관 온도<br></blockquote>
+<blockquote>**타깃 독자**: 당뇨 환자, 인슐린 자가 투여 환자 및 가족 보호자<br></blockquote>
+<blockquote>**작성일자**: 2026년 11월 9일<br></blockquote>
+<blockquote>**GitHub**: [content/2026-11-09-06](https://github.com/kst104/github.com-new/tree/main/content/2026-11-09-06)</blockquote>
+<p>
+---<br>
+</p>
+<h2>📌 제목 옵션 (CTR 최적화)</h2>
+<p>
+1. **[검색 중심]** 겨울철 당뇨 비상, 기온 뚝 떨어지면 인슐린 흡수 안 되는 이유와 당뇨발 예방법<br>
+2. **[호기심 유발]** 전기장판 켰다가 응급실? 겨울철 당뇨 환자 발바닥에 벌어지는 조용한 참극<br>
+3. **[의사 권위형]** 응급실 의사가 매일 아침 인슐린 맞으며 지키는 '겨울철 당뇨 & 발 관리 3대 수칙'<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>🔍 메타 디스크립션 (Search Snippet)</h2>
+<p>
+겨울철 한파 속에서는 피부 모세혈관이 수축해 주사한 인슐린 흡수가 지연되고, 감각이 둔해진 발에 저온 화상과 궤양(당뇨발)이 빈발합니다. 응급의학과 의사가 알려주는 올바른 인슐린 보관 온도와 겨울철 당뇨발 3대 예방 수칙을 확인하세요.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>💡 도입부 (Hooking)</h2>
+<p>
+"원장님, 평소랑 똑같이 인슐린 맞고 식사했는데 겨울만 되면 점심 전 혈당이 200 넘게 치솟아요. 그러다 오후 늦게 갑자기 저혈당이 와서 식은땀이 나고요."<br>
+</p>
+<p>
+찬 바람이 부는 초겨울, 당뇨 환자분들이 가장 많이 호소하시는 '겨울철 혈당 롤러코스터' 현상입니다.<br>
+</p>
+<p>
+겨울철에는 단순한 활동량 감소뿐 아니라, **추위로 인한 피하 혈관 수축 때문에 주사한 인슐린이 제때 혈액으로 흡수되지 않는 혈류역학적 문제**가 발생합니다. 더 심각한 것은 당뇨병성 말초신경병증으로 감각이 무뎌진 발을 전기장판이나 핫팩에 장시간 대고 있다가 피부가 괴사되어 실려 오시는 '당뇨발 저온 화상' 환자분들입니다.<br>
+</p>
+<p>
+오늘 칼럼에서는 응급실 현장에서 수없이 마주하는 겨울철 당뇨 합병증을 막기 위한 **인슐린 보관·투여 요령과 당뇨발 3대 생존 수칙**을 명쾌하게 정리해 드립니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>1. 겨울철 한파가 부르는 '혈당 롤러코스터'의 비밀</h2>
+<h3>① 피하 혈류 감소와 인슐린 작용 지연</h3>
+<p>
+인슐린은 피하 지방층에 주사된 뒤 모세혈관을 통해 전신 혈액으로 서서히 흡수되어야 합니다. 그러나 겨울철 기온이 급락하면 우리 몸은 체온 손실을 막기 위해 피부와 피하 모세혈관을 강하게 수축시킵니다.<br>
+<li>**아침 식전 주사 후 흡수 지연**: 피하 혈류가 줄어 인슐린 흡수 속도가 정상 대비 20~40% 지연됩니다.</li>
+<li>**식후 고혈당 발생**: 식사로 섭취한 당분은 흡수되는데 인슐린이 혈액으로 들어오지 않아 식후 혈당이 급상승합니다.</li>
+<li>**뒤늦은 저혈당 역습**: 난방이 잘된 실내에서 활동하며 뒤늦게 혈관이 열리면 지연 흡수된 인슐린이 한꺼번에 방출되어 오후 3~4시경 급성 저혈당 쇼크를 유발합니다.</li>
+</p>
+<h3>② 펜 인슐린의 적정 보관 온도와 주의점</h3>
+<p>
+인슐린은 단백질 제제이므로 영하의 기온에 단 한 번만 얼어도 단백질 변성이 일어나 약효가 완전히 소실됩니다.<br>
+<li>**개봉 전 인슐린**: 냉장고 냉기 분출구를 피해 2~8℃에서 보관.</li>
+<li>**현재 사용 중인 인슐린 펜**: 실온(15~25℃)에서 보관하되, 베란다나 창가, 외투 바깥 주머니에 두어 동결 위험에 노출되지 않도록 안주머니에 소지해야 합니다.</li>
+<li>**절대 얼었던 인슐린을 녹여서 재사용하지 마세요!** 육안상 침전물이 생겼거나 뿌옇게 변했다면 즉시 폐기해야 합니다.</li>
+</p>
+<p>
+---<br>
+</p>
+<h2>2. 응급실 의사가 경고하는 '겨울철 당뇨발 저온 화상'</h2>
+<p>
+당뇨병을 오래 앓으신 분들은 고혈당으로 인해 발끝 말초신경이 손상되는 '당뇨병성 말초신경병증'을 동반하는 경우가 흔합니다. 발끝의 통각과 온도 감각이 마비되어 뜨겁거나 아픈 자극을 전혀 느끼지 못하게 됩니다.<br>
+</p>
+<h3>⚠️ '전기장판과 핫팩'의 치명적 함정</h3>
+<li>건강한 사람은 40~45℃의 온열기구에 닿으면 뜨거워서 반사적으로 발을 뺍니다.</li>
+<li>하지만 당뇨 환자는 42℃ 정도의 미열에도 감각을 못 느껴 1~2시간 이상 피부가 닿은 채 잠이 들고, 결국 진피층과 피하지방층까지 익어버리는 **3도 저온 화상(궤양)**으로 이어집니다.</li>
+<li>상처 부위에 말초 혈류 장애로 면역 세포와 항생제가 도달하지 못하면 며칠 만에 뼈까지 감염되는 골수염이나 괴저로 진행하여 절단 수술이 필요해지는 비극이 발생합니다.</li>
+<p>
+---<br>
+</p>
+<h2>3. 겨울철 당뇨 환자의 3대 발 관리 안전 수칙</h2>
+<h3>수칙 1. 온열기구 직접 접촉 절대 금지 (간접 난방 원칙)</h3>
+<li>전기장판, 옥매트 위에 발을 맨살로 직접 대고 주무시지 마세요.</li>
+<li>침대 위에 두꺼운 요나 패드를 깔아 온열선이 발에 직접 닿지 않도록 하고, 취침 전 미리 데워둔 뒤 주무실 때는 온도를 미열로 낮추거나 끄는 것이 안전합니다.</li>
+<li>신발 속 붙이는 핫팩은 당뇨 환자에게는 절대 금기입니다.</li>
+<h3>수칙 2. 매일 저녁 거울로 발바닥 점검 (Daily Foot Check)</h3>
+<li>시력이 약하거나 허리를 굽히기 힘든 분들은 바닥에 손거울을 놓고 발바닥, 발뒤꿈치, 발가락 사이를 매일 저녁 환한 불빛 아래서 점검하세요.</li>
+<li>붉은 반점(홍반), 물집(수포), 굳은살의 갈라짐, 진물이나 피멍이 보이면 자가 치료(연고 바르기, 각질 깎기)를 절대 하지 말고 **그 즉시 병원/응급실로 내원**해야 합니다.</li>
+<h3>수칙 3. 면양말 착용과 보습 관리 (발가락 사이는 뽀송하게)</h3>
+<li>실내에서도 맨발로 다니지 말고 항상 땀 흡수가 잘되는 부드러운 밝은색 면양말을 신으세요 (상처 발생 시 진물이나 피가 양말에 묻어 쉽게 발견할 수 있습니다).</li>
+<li>발을 미온수로 씻은 후 보습 크림(바세린, 유레아 연고)을 발등과 발바닥에 듬뿍 바르되, **발가락 사이는 습진과 곰팡이 감염 위험이 있으므로 크림을 바르지 말고 건조하게 유지**해야 합니다.</li>
+<p>
+---<br>
+</p>
+<h2>4. 자주 묻는 질문 (FAQ)</h2>
+<p>
+**Q. 겨울에는 혈당 측정을 더 자주 해야 하나요?**<br><br>
+그렇습니다. 계절 변화로 인한 흡수율 변동과 식사량 변화를 모니터링하기 위해 기상 직후 공복 혈당과 식후 2시간 혈당, 취침 전 혈당을 평소보다 더 면밀히 기록하여 주치의와 상의해야 합니다.<br>
+</p>
+<p>
+**Q. 굳은살이나 티눈이 생겼는데 손톱깎이나 티눈 밴드로 제거해도 되나요?**<br><br>
+절대 안 됩니다! 당뇨 환자가 손톱깎이나 칼로 발바닥 각질을 깎다가 생긴 1mm의 미세 상처가 심부 감염으로 번져 발을 잃는 경우가 응급실에 너무나 많습니다. 반드시 피부과나 당뇨발 전문 클리닉에서 무균적으로 처치받으셔야 합니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>💡 요약 및 마무리</h2>
+<p>
+1. 겨울철 피하 모세혈관 수축으로 인슐린 흡수가 지연되어 식후 고혈당과 뒤늦은 저혈당 롤러코스터가 발생합니다.<br>
+2. 개봉한 인슐린 펜은 실온(15~25℃) 안주머니에 보관하고 절대 얼지 않게 주의하세요.<br>
+3. 무감각한 발바닥에 핫팩과 전기장판 직접 접촉을 엄금하고, 매일 거울로 발바닥 상처를 확인하세요.<br>
+</p>
+<p>
+당뇨 관리는 혈당 수치뿐 아니라 매일 저녁 내 발바닥을 들여다보는 정성에서 시작됩니다. 소중한 당뇨 환자 가족분들께 이 수칙을 꼭 전해 주세요!<br>
+</p>
+<p>
+---<br>
+</p>
+<p>
+#겨울철당뇨 #당뇨발 #인슐린흡수 #저온화상 #당뇨합병증 #당뇨발예방 #혈당스파이크 #가정혈당관리 #응급의학과의사 #인슐린보관<br>
+</p>
+      </div>
+    </section>
+
+    <!-- 전문가용 임상 심층 칼럼 영역 -->
+    <section class="column clinical" id="col-clinical">
+      <div class="column-header clinical">
+        <h2 class="col-title clinical">🩺 전문가용 에디션 (Clinical In-Depth)</h2>
+        <span class="badge badge-clinical">Dr. K's Wiki · Tintinalli · 응급 프로토콜</span>
+      </div>
+      <div class="content-body">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+          <strong>🏛️ 연동 지식베이스</strong>: <code>kst104/wikiwi</code> (닥터 K 의학 위키, ACS & 대동맥 박리 프로토콜)<br>
+          <strong>📋 핵심 타깃</strong>: 의사, 응급실 의료진, 임상 연구자, 의학 전문 독자<br>
+          <strong>🔬 강조 포인트</strong>: SVR & 카테콜아민 분비 기전, DAPT 로딩, Nicardipine/Labetalol 감압 프로토콜
+        </div>
+        <h1>[임상 심층 칼럼] 한랭 노출 시 당뇨병 환자의 피하 인슐린 약동학적 변동과 당뇨발(Diabetic Foot) 급성 감염 및 저온 화상의 응급 처치 프로토콜</h1>
+<blockquote>**저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br></blockquote>
+<blockquote>**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine (8th Ed Ch.224 Diabetic Emergencies), ADA Standards of Care 2026, IWGDF (국제당뇨발학회 가이드라인)<br></blockquote>
+<blockquote>**대상 독자**: 내분비내과 및 응급의학과 의료진, 상처치료 전문의, 임상 간호사 및 고관여 당뇨 환자<br></blockquote>
+<blockquote>**분류**: Endocrinology & Metabolic Emergencies / Pharmacokinetics / Wound Care</blockquote>
+<p>
+---<br>
+</p>
+<h2>1. Clinical Abstract (임상 초록)</h2>
+<li>**약동학적 기전 변동**: 한랭 환경(외부 기온 < 5℃) 노출 시 피부 및 피하 모세혈관의 반사적 수축으로 피하 혈류량(Subcutaneous Blood Flow, SBF)이 최대 50%까지 감소하여, 피하 투여된 속효성/기저 인슐린의 최고 혈중 농도 도달 시간(Tmax)이 30~60분 유의미하게 지연된다.</li>
+<li>**이상성 혈당 변동 (Biphasic Dysglycemia)**: 식후 조기 인슐린 결핍에 의한 현저한 식후 고혈당(Postprandial Hyperglycemia)에 이어, 온난 실내 이동 후 혈관 재확장(Vasodilation) 시 누적된 인슐린이 급속 방출되어 후기 중증 저혈당(Late Severe Hypoglycemia)을 초래한다.</li>
+<li>**당뇨병성 족부 궤양(DFU) 및 저온 화상**: 말초 감각신경병증(Sensory Neuropathy)으로 통각 및 온각 역치가 소실된 상태에서 42~45℃의 저온 온열기구에 장시간 노출 시 무통성 심부 진피 화상(Wagner Grade 2~3)이 발생하며, 미세혈관병증 및 백혈구 식균 작용 저하로 급속한 습성 괴저(Wet Gangrene) 및 패혈증(Sepsis)으로 진행한다.</li>
+<li>**응급 진료실 대원칙**: 당뇨발 급성 감염 내원 시 광범위 정주 항생제 즉각 투여, 골수염(Osteomyelitis) 감별을 위한 Probe-to-Bone 검사 및 영상 평가, 조기 외과적 절제 및 배농(Urgent Surgical Debridement)을 신속히 가동해야 한다.</li>
+<p>
+---<br>
+</p>
+<h2>2. Pathophysiology & Insulin Pharmacokinetics (병태생리 및 인슐린 약동학)</h2>
+<h3>2.1. 한랭 유발 피하 모세혈관 수축과 인슐린 흡수 지연</h3>
+<p>
+인슐린의 피하 흡수는 피하 간질액에서 모세혈관 내피세포막을 통과하는 확산율과 국소 모세혈관 관류량(Local Capillary Perfusion)에 정비례한다.<br>
+<li>**말초 혈류 수축 메커니즘**: 한랭 자극 $\rightarrow$ 피부 교감신경 말단 노르에피네프린 분비 $\rightarrow$ 혈관 평활근 $\alpha_1, \alpha_2$ 수용체 활성화 $\rightarrow$ 피하 모세혈관층 션트 폐쇄 및 관류압 급감.</li>
+<li>**단량체 확산 장벽**: 초속효성(Aspart, Lispro) 및 레귤러 인슐린(RI)의 피하 해리 속도는 온도 하강 시 지연되며, $T_{\max}$가 정상 40~60분에서 90~120분으로 지연된다.</li>
+<li>**동결 시 단백질 변성**: 인슐린 펜이 0℃ 이하에 노출될 경우 3차 구조의 비가역적 응집 및 침전(Fibrillation)이 발생하여 생물학적 활성도가 완전히 상실된다.</li>
+</p>
+<h3>2.2. 당뇨병성 신경병증과 저온 화상 메커니즘</h3>
+<li>**소신경 섬유 소실 (Small Fiber Neuropathy)**: C-fiber 및 A-delta fiber의 변성으로 유해 열 자극(Thermal Nociception) 전달 경로가 차단됨.</li>
+<li>**단백질 변성 및 허혈성 괴사**: 정상 조직에서는 $42\sim44^\circ\mathrm{C}$ 접촉 시 축삭 반사(Axon Reflex)로 혈류가 증가하여 열을 발산하지만, 당뇨 환자는 자율신경병증으로 혈류 발산이 불가능하여 열 축적에 의한 단백질 열 변성이 $1\sim2$시간 내에 급속 진행된다.</li>
+<p>
+---<br>
+</p>
+<h2>3. Diabetic Foot Ulcer (DFU) Wagner Classification & Workup</h2>
+<code>| Wagner Grade | 병변 깊이 및 특성 | 임상 처치 방향 |</code><br>
+<code>| :--- | :--- | :--- |</code><br>
+<code>| **Grade 0** | 궤양 없음, 고위험 족부 (굳은살, 변형, 홍반) | 환자 교육, 맞춤형 신발, 체중 부하 분산 |</code><br>
+<code>| **Grade 1** | 표재성 궤양 (피하 조직 침범 없음) | 외래 무균 드레싱, 감압 요법, 혈당 정상화 |</code><br>
+<code>| **Grade 2** | 심부 궤양 (건, 관절포, 인대 침범 / 골 침범 없음) | 광범위 절제, 무균 배양 검사, 경구/정맥 항생제 |</code><br>
+<code>| **Grade 3** | 심부 궤양 + 골수염(Osteomyelitis) 또는 농양 형성 | **입원 집중 치료, 정주 항생제, 외과적 소파술** |</code><br>
+<code>| **Grade 4** | 족부 전방 또는 발가락 국소 괴저(Gangrene) | 혈관 재개통술(PTA) 평가 + 절단술(Minor Amputation) |</code><br>
+<code>| **Grade 5** | 전 족부 광범위 괴저 (Systemic Toxicity 동반) | **응급 광범위 절단술(Major Amputation: BKA/AKA)** |</code><br>
+<p>
+---<br>
+</p>
+<h2>4. Emergency Management Protocols (응급 처치 프로토콜)</h2>
+<h3>4.1. 당뇨발 패혈성 감염 (Septic Diabetic Foot) 초기 처치</h3>
+<p>
+*출처: Dr. K's Wiki (`kst104/wikiwi/wiki/medical/emergency/sepsis.md`)*<br>
+</p>
+<p>
+1. **활력징후 안정화 및 패혈증 감별 (qSOFA / Sepsis-3)**:<br>
+<li>SBP $< 100\,\mathrm{mmHg}$, $\mathrm{RR} \ge 22$, 의식 변화 감시.</li>
+<li>1시간 이내 크리스탈로이드 수액 $30\,\mathrm{mL/kg}$ IV 급속 부하 (목표 MAP $\ge 65\,\mathrm{mmHg}$).</li>
+2. **경험적 광범위 정맥 항생제 투여 (Door-to-Antibiotic $\le 1$시간)**:<br>
+<li>당뇨발 중증 감염은 다균성(Polymicrobial: G+, G-, 혐기성균) 감염이 80% 이상임.</li>
+<li>**1차 추천 처방**:</li>
+<li>`Piperacillin/Tazobactam` 4.5g IV q8h **또는** `Meropenem` 1g IV q8h</li>
+<li>MRSA 고위험군(이전 입원력, 보균자): `Vancomycin` 15~20mg/kg IV q12h 병용</li>
+3. **골수염(Osteomyelitis) 감별**:<br>
+<li>**Probe-to-Bone (PTB) Test**: 멸균 금속 탐침이 단단한 뼈 표면에 직접 닿는 경우 골수염 양성 예측도 89%.</li>
+<li>Plain Foot X-ray (골 파괴, 가스 음영) 및 조기 Foot MRI 시행.</li>
+</p>
+<h3>4.2. 저혈당 쇼크 (Severe Hypoglycemia) 응급 교정</h3>
+<li>의식 저하 환자 혈당 $< 70\,\mathrm{mg/dL}$ 즉시 확인.</li>
+<li>**50% 포도당수액 (D50W)** $50\,\mathrm{mL}$ IV push $\rightarrow$ $10\%$ 포도당수액(D10W) 지속 점적.</li>
+<li>정맥로 확보 불가 시: Glucagon 1mg IM/SC 투여.</li>
+<li>15분 후 혈당 재측정하여 혈당 $100\,\mathrm{mg/dL}$ 이상 회복 확인.</li>
+<p>
+---<br>
+</p>
+<h2>5. References (참고 문헌)</h2>
+<p>
+1. **Tintinalli, J. E., et al.** *Tintinalli's Emergency Medicine: A Comprehensive Study Guide*, 8th Ed. McGraw-Hill, Chapter 224: Type 1 and Type 2 Diabetes Mellitus, Chapter 225: Diabetic Ketoacidosis and Hyperosmolar Hyperglycemic State.<br>
+2. **Dr. K's Emergency Medicine Wiki (`kst104/wikiwi`)**: `wiki/medical/emergency/sepsis.md` (패혈증 초기 소생술), `wiki/medical/protocols/acs.md`.<br>
+3. **American Diabetes Association (ADA)**. Standards of Care in Diabetes—2026. *Diabetes Care*, 49(Suppl. 1):S1-S270.<br>
+4. **IWGDF Guidelines**. Practical Guidelines on the prevention and management of diabetic foot disease (IWGDF 2023 update). *Diabetes Metab Res Rev*, 40(3):e3650.<br>
+5. **Heinemann, L.** Variability of insulin absorption and insulin action. *Diabetes Technol Ther*, 4(5):673-682.<br>
+</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function setView(mode) {
+      const p = document.getElementById('col-public');
+      const c = document.getElementById('col-clinical');
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(b => b.classList.remove('active', 'clinical-active'));
+
+      if (mode === 'both') {
+        p.style.display = 'block';
+        c.style.display = 'block';
+        btns[0].classList.add('active');
+      } else if (mode === 'public') {
+        p.style.display = 'block';
+        c.style.display = 'none';
+        btns[1].classList.add('active');
+      } else if (mode === 'clinical') {
+        p.style.display = 'none';
+        c.style.display = 'block';
+        btns[2].classList.add('clinical-active');
+      }
+    }
+  </script>
+</body>
+</html>
