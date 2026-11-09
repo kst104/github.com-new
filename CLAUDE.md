@@ -33,6 +33,7 @@
    - 허브가 켜져 있으면: `curl -s "http://localhost:8787/api/med/search?q=diabetic+ketoacidosis&limit=5"` (책 지정: `&book=harrisons|braunwald|tintinalli`)
    - 허브 없이: `python3 hub/medref.py search "diabetic ketoacidosis" --book tintinalli`
    - 색인이 없으면 `python3 hub/medref.py index` (7070이 켜져 있어야 함, 이 기기에만 저장)
+   - 결과가 없으면 동의어·옛 용어로 다시 찾습니다 (예: HbA1c → A1C, 2008년 전후 판이라 최신 용어가 없을 수 있음). 그래도 없을 때만 '없음'으로 판단합니다.
    - 이미 모아 둔 근거는 `content/<id>/evidence.json` 에 있습니다 (번호 n = 각주 m번호).
 2. **주석 달기**
    - 7070 근거로 뒷받침되는 문장 끝에 `[^m번호]`, 글 끝 `## 각주`에

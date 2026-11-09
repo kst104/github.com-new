@@ -63,7 +63,7 @@ def html_to_text(src):
     s = re.sub(r"[ \t\r\f\v]+", " ", s)
     s = re.sub(r"\n\s*\n+", "\n", s)
     # 인쇄용 페이지 머리말 제거
-    s = re.sub(r"^.*?(Note: Large images and tables on this page may necessitate printing in landscape mode\.)", "", s, count=1, flags=re.S)
+    s = re.sub(r"^.*?Note:\s*Large images and tables on this page may necessitate\s+printing in\s+landscape mode\.", "", s, count=1, flags=re.S)
     s = re.sub(r"Copyright\s*(©|\(c\))[^\n]*", " ", s, flags=re.I)
     s = re.sub(r"^[\s|]+", "", s)
     return s.strip()

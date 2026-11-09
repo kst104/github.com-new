@@ -384,7 +384,7 @@ function locOf(r) { return r.section === r.chapter ? r.chapter : `${r.chapter} �
 function renderMedResults(err) {
   const box = $('#medRes'); if (!box) return;
   if (err) { box.innerHTML = `<div class="err">${esc(err)}</div>`; return }
-  if (!MEDRES.length) { box.innerHTML = MEDQ ? `<div class="hint">“${esc(MEDQ)}” — <b>7070 의학서적에 없음</b>. 이 내용을 쓰면 문장 끝에 ⚠️[7070 없음]을 붙여 주세요. <button id="flagNow">⚠️ 표시 넣기</button></div>` : ''; if ($('#flagNow')) $('#flagNow').onclick = () => insertAtCursor(' ⚠️[7070 없음]'); return }
+  if (!MEDRES.length) { box.innerHTML = MEDQ ? `<div class="hint">“${esc(MEDQ)}” — <b>7070 의학서적에 없음</b>. 같은 뜻의 다른 표현(예: HbA1c → A1C, heart attack → myocardial infarction)이나 더 짧은 검색어로도 찾아보세요. 그래도 없으면 문장 끝에 ⚠️[7070 없음]을 붙여 주세요. <button id="flagNow">⚠️ 표시 넣기</button></div>` : ''; if ($('#flagNow')) $('#flagNow').onclick = () => insertAtCursor(' ⚠️[7070 없음]'); return }
   box.innerHTML = MEDRES.map((r, i) => `<div class="res">
       <div class="src"><b>${esc(r.book_title)}</b> · ${esc(locOf(r))}</div>
       <div class="sn">${esc(r.snippet).replace(/\[\[/g, '<mark>').replace(/\]\]/g, '</mark>')}</div>
