@@ -261,6 +261,7 @@ class GitSync:
                         upstream = ""
                 if upstream:
                     behind = int(self.git("rev-list", "--count", "HEAD..@{u}", check=False) or 0)
+                    before = self.git("rev-parse", "HEAD", check=False)
                     if behind:
                         r = subprocess.run(["git", "rebase", "-q", "@{u}"], cwd=ROOT, capture_output=True, text=True,
                                            env=dict(os.environ, GIT_TERMINAL_PROMPT="0", GIT_EDITOR="true"))
@@ -271,6 +272,9 @@ class GitSync:
                                                "내 변경은 이 기기에 그대로 있어요. '충돌 정리하기'를 누르면 "
                                                "다른 기기 버전을 받고 내 버전은 사본 파일로 남겨요.")
                         pulled = True
+                        changed = self.git("diff", "--name-only", before, "HEAD", check=False).splitlines()
+                        if any(c.startswith("hub/") and c.endswith(".py") for c in changed):
+                            self._schedule_restart()
                     ahead = int(self.git("rev-list", "--count", "@{u}..HEAD", check=False) or 0)
                     if ahead:
                         self.git("push", "-q", "origin", "HEAD", timeout=120)
@@ -295,6 +299,15 @@ class GitSync:
             return {"ok": False, "message": err}
         finally:
             self.lock.release()
+
+    def _schedule_restart(self):
+        """다른 기기에서 허브 코드가 바뀌어 들어오면 새 코드로 다시 시작"""
+        def go():
+            print("\n허브 코드가 업데이트되어 다시 시작해요…", flush=True)
+            args = [a for a in sys.argv if a != "--open"]
+            os.execv(sys.executable, [sys.executable] + args)
+        self._note("허브 코드 업데이트 → 2초 뒤 재시작")
+        threading.Timer(2.0, go).start()
 
     def resolve(self):
         """충돌 정리: 다른 기기 버전을 기본으로 받고, 내 버전은 '파일명.충돌-기기이름.md' 사본으로 보존"""
