@@ -1,0 +1,11 @@
+# 비밀값 — 절대 올리지 않기
+.env
+# 파이썬/시스템 찌꺼기
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+._*
+# 편집기
+.vscode/
+.idea/

@@ -9,6 +9,7 @@ import sys
 import argparse
 import datetime
 import re
+import json
 
 # 상위 경로를 모듈 탐색 경로에 추가
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -24,7 +25,7 @@ def clean_filename(text: str) -> str:
     cleaned = cleaned.replace(" ", "_").strip()
     return cleaned[:40]
 
-def run_single_generation(topic: str, keyword: str, audience: str = "일반 독자", category: str = "전문 칼럼", provider: str = "claude", page_id: str = None, dry_run: bool = False):
+def run_single_generation(topic: str, keyword: str, audience: str = "일반 독자", category: str = "전문 칼럼", provider: str = "claude", page_id: str = None, dry_run: bool = False, hub_id: str = None):
     print(f"\n=======================================================")
     print(f"🚀 콘텐츠 자동 생성 시작")
     print(f"- 주제: {topic}")
@@ -91,20 +92,42 @@ def run_single_generation(topic: str, keyword: str, audience: str = "일반 독�
             print("[2/2] OpenAI GPT-4o로 다채널 광고 카피 10종 생성 중...")
             ad_content = generate_ads_with_openai(topic, keyword, blog_content[:500])
 
-    # 1. 파일 시스템에 영구 저장 (Git 커밋 대상)
+    # 1. content/<허브ID>/ 에 저장 (로컬 작업 허브와 같은 구조, Git 커밋 대상)
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    posts_dir = os.path.join(base_dir, "posts")
-    ads_dir = os.path.join(base_dir, "ads")
-    os.makedirs(posts_dir, exist_ok=True)
-    os.makedirs(ads_dir, exist_ok=True)
+    content_dir = os.path.join(base_dir, "content")
+    os.makedirs(content_dir, exist_ok=True)
+    if not hub_id or not os.path.isdir(os.path.join(content_dir, hub_id)):
+        n = 1
+        while os.path.exists(os.path.join(content_dir, f"{today_str}-{n:02d}")):
+            n += 1
+        hub_id = hub_id if hub_id and re.fullmatch(r"[\w\-]+", hub_id) else f"{today_str}-{n:02d}"
+    item_dir = os.path.join(content_dir, hub_id)
+    os.makedirs(item_dir, exist_ok=True)
 
-    post_filepath = os.path.join(posts_dir, f"{today_str}_{slug}.md")
-    ad_filepath = os.path.join(ads_dir, f"{today_str}_{slug}_ads.md")
-
+    post_filepath = os.path.join(item_dir, "post.md")
+    ad_filepath = os.path.join(item_dir, "ads.md")
     with open(post_filepath, "w", encoding="utf-8") as f:
         f.write(blog_content)
     with open(ad_filepath, "w", encoding="utf-8") as f:
         f.write(ad_content)
+
+    meta_path = os.path.join(item_dir, "meta.json")
+    meta = {}
+    if os.path.exists(meta_path):
+        with open(meta_path, encoding="utf-8") as f:
+            meta = json.load(f)
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).replace(microsecond=0).isoformat()
+    meta.update({"id": hub_id, "title": meta.get("title") or topic, "keyword": keyword, "category": category,
+                 "audience": audience, "engine": "Claude" if provider == "claude" else "OpenAI",
+                 "status": "검토", "updated": now})
+    meta.setdefault("channels", ["블로그", "인스타", "페이스북", "파워링크", "쇼츠"])
+    meta.setdefault("created", now)
+    if dry_run:
+        meta["note"] = "모의 실행 샘플이에요 (실제 원고 아님)"
+    if page_id:
+        meta["notion_page_id"] = page_id
+    with open(meta_path, "w", encoding="utf-8") as f:
+        f.write(json.dumps(meta, ensure_ascii=False, indent=2) + "\n")
 
     print(f"✅ 블로그 원고 저장 완료: {post_filepath}")
     print(f"✅ 광고 카피 저장 완료: {ad_filepath}")
@@ -114,7 +137,7 @@ def run_single_generation(topic: str, keyword: str, audience: str = "일반 독�
         print(f"[Notion] 페이지 {page_id} 상태 업데이트 및 본문 추가 중...")
         full_text = f"## 📝 {provider.upper()} 자동 생성 원고\n\n{blog_content}\n\n---\n\n## 📢 다채널 광고 카피\n\n{ad_content}"
         append_content_to_page(page_id, full_text)
-        update_page_status(page_id, "초안완료")
+        update_page_status(page_id, "검토", {"허브ID": {"rich_text": [{"text": {"content": hub_id}}]}})
         print(f"✅ 노션 업데이트 완료!")
 
     return post_filepath, ad_filepath
@@ -145,36 +168,25 @@ def main():
     print("[Notion] 대기 중인 콘텐츠 아이디어 조회 중...")
     pending_items = query_pending_items()
     if not pending_items:
-        print("[Notion] 대기 중인 항목이 없습니다. 기본 데모 포스팅을 1건 생성합니다.")
-        demo_topic = "의사가 알려주는 당뇨 환자의 겨울철 혈당 관리 3대 원칙"
-        demo_keyword = "겨울철 당뇨 혈당 관리"
-        run_single_generation(
-            topic=demo_topic,
-            keyword=demo_keyword,
-            audience="당뇨 환자 및 건강 관심층",
-            category="의학/건강",
-            provider=args.provider,
-            dry_run=True
-        )
+        print("[Notion] '생성요청' 상태인 항목이 없어요. 할 일이 없으니 종료합니다.")
         return
 
     for item in pending_items:
         item_id = item["id"]
         props = item.get("properties", {})
-        title_list = props.get("제목", {}).get("title", []) or props.get("Name", {}).get("title", [])
-        topic = title_list[0]["plain_text"] if title_list else "무제"
-        
-        kw_list = props.get("타깃 키워드", {}).get("rich_text", [])
-        keyword = kw_list[0]["plain_text"] if kw_list else topic
+        def _text(name):
+            rt = props.get(name, {}).get("rich_text", []) or props.get(name, {}).get("title", [])
+            return "".join(x.get("plain_text", "") for x in rt).strip()
+        def _select(name, default):
+            sel = props.get(name, {}).get("select") or {}
+            return sel.get("name", default)
 
-        cat_prop = props.get("카테고리", {}).get("select", {})
-        category = cat_prop.get("name", "칼럼") if cat_prop else "칼럼"
-
-        aud_prop = props.get("타깃 독자", {}).get("select", {})
-        audience = aud_prop.get("name", "일반 독자") if aud_prop else "일반 독자"
-
-        model_prop = props.get("엔진", {}).get("select", {})
-        provider = model_prop.get("name", args.provider).lower() if model_prop else args.provider
+        topic = _text("제목") or _text("Name") or "무제"
+        keyword = _text("키워드") or _text("타깃 키워드") or topic
+        category = _select("카테고리", "칼럼")
+        audience = _text("타깃 독자") or "일반 독자"
+        provider = _select("엔진", args.provider).lower()
+        hub_id = _text("허브ID") or None
 
         run_single_generation(
             topic=topic,
@@ -183,7 +195,8 @@ def main():
             category=category,
             provider=provider,
             page_id=item_id,
-            dry_run=args.dry_run
+            dry_run=args.dry_run,
+            hub_id=hub_id
         )
 
 if __name__ == "__main__":

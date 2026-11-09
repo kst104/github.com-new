@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>콘텐츠 작업 허브</title>
+<style>
+:root{
+  --bg:#f6f4ef; --panel:#ffffff; --ink:#1f1d1a; --muted:#6f6a62; --line:#e6e1d8;
+  --accent:#e8590c; --accent-soft:#fff1e8; --ok:#2f9e44; --warn:#e67700; --err:#c92a2a;
+  --s0:#868e96; --s1:#1c7ed6; --s2:#ae3ec9; --s3:#2f9e44;
+  --radius:12px; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#171614;--panel:#211f1c;--ink:#f1eee8;--muted:#a39d93;--line:#34312c;--accent:#ff8a3d;--accent-soft:#3a2516}
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+  font:14px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 12px}
+button:hover{border-color:var(--muted)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button.ghost{background:transparent;border-color:transparent}
+a{color:var(--accent)}
+header{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:5;flex-wrap:wrap}
+header h1{font-size:16px;margin:0;letter-spacing:-.01em}
+header .sp{flex:1}
+.links a{margin-left:10px;text-decoration:none;font-size:13px;color:var(--muted)}
+.links a:hover{color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:12.5px;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--s0)}
+.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.err{background:var(--err)}
+.tabs{display:flex;gap:4px}
+.tabs button{border-color:transparent;background:transparent;color:var(--muted)}
+.tabs button.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+main{display:grid;grid-template-columns:300px 1fr;height:calc(100vh - 57px)}
+aside{border-right:1px solid var(--line);overflow:auto;padding:14px}
+.search{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip{font-size:12px;padding:3px 9px;border-radius:999px}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.item{padding:10px 12px;border-radius:10px;cursor:pointer;margin-bottom:4px;border:1px solid transparent}
+.item:hover{background:var(--panel)}
+.item.on{background:var(--panel);border-color:var(--line);box-shadow:var(--shadow)}
+.item .t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .m{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-top:2px}
+.st{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:6px;color:#fff;background:var(--s0)}
+.st[data-s="생성요청"]{background:var(--accent)}.st[data-s="작성중"]{background:var(--s1)}.st[data-s="검토"]{background:var(--s2)}.st[data-s="발행완료"]{background:var(--s3)}
+section.detail{overflow:auto;padding:20px 28px}
+.empty{color:var(--muted);text-align:center;margin-top:18vh}
+.head{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
+.head input.title{font-size:22px;font-weight:700;border:none;background:transparent;flex:1;min-width:240px;padding:2px 0;outline:none}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;color:var(--muted);font-size:13px}
+.row input,.row select{border:1px solid var(--line);border-radius:8px;padding:5px 8px;background:var(--panel)}
+.row label{display:flex;gap:6px;align-items:center}
+.files{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 10px}
+.files button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.editor{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:calc(100vh - 345px);min-height:320px}
+.editor.single{grid-template-columns:1fr}
+textarea.ed{width:100%;height:100%;resize:none;border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:var(--panel);font:13.5px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace;outline:none}
+textarea.ed:focus{border-color:var(--accent)}
+.preview{overflow:auto;border:1px solid var(--line);border-radius:var(--radius);padding:16px 22px;background:var(--panel)}
+.preview h1{font-size:20px}.preview h2{font-size:17px;border-bottom:1px solid var(--line);padding-bottom:4px}.preview h3{font-size:15px}
+.preview table{border-collapse:collapse;width:100%}.preview td,.preview th{border:1px solid var(--line);padding:4px 8px}
+.preview blockquote{margin:0;padding:4px 12px;border-left:3px solid var(--accent);color:var(--muted)}
+.bar{display:flex;gap:8px;align-items:center;margin-top:10px;color:var(--muted);font-size:12.5px}
+video,img.media{max-width:100%;max-height:60vh;border-radius:var(--radius);background:#000}
+/* 보드 */
+.board{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:14px;padding:20px;overflow:auto;height:calc(100vh - 57px)}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px;min-height:200px}
+.col h3{margin:0 0 10px;font-size:13px;display:flex;justify-content:space-between}
+.card{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;background:var(--bg);cursor:grab}
+.card .t{font-weight:600}.card .m{font-size:12px;color:var(--muted)}
+.col.drop{outline:2px dashed var(--accent)}
+/* 동기화 패널 */
+.drawer{position:fixed;right:16px;top:64px;width:380px;max-width:calc(100vw - 32px);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 40px rgba(0,0,0,.15);padding:16px;z-index:20;display:none}
+.drawer.open{display:block}
+.drawer h4{margin:0 0 8px}
+.drawer pre{background:var(--bg);border-radius:8px;padding:8px;font-size:11.5px;max-height:180px;overflow:auto;white-space:pre-wrap}
+.err{color:var(--err)}
+dialog{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink);padding:20px;width:min(460px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.3)}
+dialog label{display:block;margin:10px 0 4px;font-size:13px;color:var(--muted)}
+dialog input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:13px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+@media (max-width:820px){main{grid-template-columns:1fr;height:auto}aside{border-right:none;border-bottom:1px solid var(--line);max-height:40vh}.editor{grid-template-columns:1fr;height:auto}.editor .preview{display:none}textarea.ed{height:60vh}.board{grid-template-columns:repeat(5,240px)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>콘텐츠 작업 허브</h1>
+  <div class="tabs"><button id="tabList" class="on">작업</button><button id="tabBoard">보드</button></div>
+  <span class="sp"></span>
+  <span class="links" id="links"></span>
+  <button class="pill" id="syncPill" title="동기화 상태 보기"><span class="dot" id="syncDot"></span><span id="syncText">확인 중…</span></button>
+  <button id="syncNow">지금 동기화</button>
+  <button class="primary" id="newBtn">+ 새 콘텐츠</button>
+</header>
+
+<main id="listView">
+  <aside>
+    <input class="search" id="q" placeholder="제목·키워드 검색">
+    <div class="chips" id="chips"></div>
+    <div id="items"></div>
+  </aside>
+  <section class="detail" id="detail"><div class="empty">왼쪽에서 콘텐츠를 고르거나 <b>+ 새 콘텐츠</b>를 눌러 시작하세요.</div></section>
+</main>
+<div class="board" id="boardView" style="display:none"></div>
+
+<div class="drawer" id="drawer">
+  <h4>깃허브 동기화</h4>
+  <div id="syncInfo"></div>
+  <label style="display:flex;gap:8px;align-items:center;margin:10px 0"><input type="checkbox" id="autoSync"> 자동 동기화</label>
+  <pre id="syncLog"></pre>
+</div>
+
+<dialog id="newDlg">
+  <form method="dialog" id="newForm">
+    <h3 style="margin:0">새 콘텐츠</h3>
+    <label>주제 (제목)</label><input id="nTitle" required placeholder="예: 겨울철 실내 탈취 꿀팁">
+    <label>핵심 키워드</label><input id="nKeyword" placeholder="예: 탈취제 추천, 신발장 냄새">
+    <label>카테고리</label><select id="nCat" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg)"></select>
+    <label>타깃 독자</label><input id="nAud" placeholder="예: 4050 당뇨 환자">
+    <label>채널</label><div class="chips" id="nChannels"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+      <button value="cancel" type="button" onclick="newDlg.close()">취소</button>
+      <button class="primary" value="ok">만들기</button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const api = async (path, opt = {}) => {
+  const r = await fetch(path, { ...opt, headers: { 'Content-Type': 'application/json', 'X-Hub': '1', ...(opt.headers || {}) } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+};
+const post = (p, b) => api(p, { method: 'POST', body: JSON.stringify(b || {}) });
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600); };
+const fmtTime = iso => iso ? new Date(iso).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+
+let CFG = {}, ITEMS = [], CUR = null, CURFILE = null, FILTER = '전체', DIRTY = false, MTIME = null;
+
+// ---------- 아주 작은 마크다운 미리보기
+function md(src) {
+  const lines = src.replace(/\r/g, '').split('\n'); let out = [], inList = null, inTable = false;
+  const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>').replace(/\[(.+?)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+  const close = () => { if (inList) { out.push(`</${inList}>`); inList = null } if (inTable) { out.push('</table>'); inTable = false } };
+  for (const l of lines) {
+    let m;
+    if (/^\s*\|/.test(l)) {
+      if (/^\s*\|[\s\-:|]+\|\s*$/.test(l)) continue;
+      if (!inTable) { close(); out.push('<table>'); inTable = true }
+      out.push('<tr>' + l.trim().replace(/^\||\|$/g, '').split('|').map(c => `<td>${inline(c.trim())}</td>`).join('') + '</tr>'); continue;
+    }
+    if ((m = l.match(/^(#{1,4})\s+(.*)/))) { close(); out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); continue }
+    if ((m = l.match(/^\s*[-*]\s+(.*)/))) { if (inList !== 'ul') { close(); out.push('<ul>'); inList = 'ul' } out.push(`<li>${inline(m[1])}</li>`); continue }
+    if ((m = l.match(/^\s*\d+\.\s+(.*)/))) { if (inList !== 'ol') { close(); out.push('<ol>'); inList = 'ol' } out.push(`<li>${inline(m[1])}</li>`); continue }
+    if ((m = l.match(/^>\s?(.*)/))) { close(); out.push(`<blockquote>${inline(m[1])}</blockquote>`); continue }
+    close(); if (l.trim()) out.push(`<p>${inline(l)}</p>`);
+  }
+  close(); return out.join('\n');
+}
+
+// ---------- 목록
+async function loadItems(keep = true) {
+  ITEMS = await api('/api/items');
+  renderList(); renderBoard();
+  if (keep && CUR) { const it = ITEMS.find(i => i.id === CUR.id); if (it) { CUR = it; } }
+}
+function renderChips() {
+  $('#chips').innerHTML = ['전체', ...CFG.statuses].map(s => `<button class="chip ${s === FILTER ? 'on' : ''}" data-s="${s}">${s}</button>`).join('');
+  $('#chips').querySelectorAll('button').forEach(b => b.onclick = () => { FILTER = b.dataset.s; renderChips(); renderList(); });
+}
+function renderList() {
+  const q = $('#q').value.trim().toLowerCase();
+  const list = ITEMS.filter(i => (FILTER === '전체' || i.status === FILTER) && (!q || (i.title + ' ' + i.keyword).toLowerCase().includes(q)));
+  $('#items').innerHTML = list.length ? list.map(i => `
+    <div class="item ${CUR && CUR.id === i.id ? 'on' : ''}" data-id="${esc(i.id)}">
+      <div class="t">${esc(i.title)}</div>
+      <div class="m"><span class="st" data-s="${esc(i.status)}">${esc(i.status)}</span>${esc(i.keyword || '')}</div>
+    </div>`).join('') : '<div class="empty" style="margin-top:20px">아직 없어요</div>';
+  $('#items').querySelectorAll('.item').forEach(el => el.onclick = () => openItem(el.dataset.id));
+}
+
+// ---------- 상세
+async function openItem(id, file) {
+  if (DIRTY && !confirm('저장하지 않은 변경이 있어요. 버리고 이동할까요?')) return;
+  DIRTY = false;
+  CUR = ITEMS.find(i => i.id === id); if (!CUR) return;
+  renderList();
+  const order = ['post.md', 'ads.md', 'shorts.md'];
+  const files = [...CUR.files].sort((a, b) => (order.indexOf(a.name) + 1 || 99) - (order.indexOf(b.name) + 1 || 99));
+  const label = n => ({ 'post.md': '블로그', 'ads.md': '광고 소재', 'shorts.md': '쇼츠 대본' }[n] || n);
+  CURFILE = file || (files[0] && files[0].path);
+  $('#detail').innerHTML = `
+    <div class="head">
+      <input class="title" id="dTitle" value="${esc(CUR.title)}">
+      <button id="copyPrompt" title="Claude 프로젝트에 붙여넣을 요청문 복사">Claude 요청문 복사</button>
+      <button id="openFolder">폴더 열기</button>
+      ${CFG.notion_api ? '<button id="toNotion">노션 반영</button>' : ''}
+    </div>
+    <div class="row">
+      <label>상태 <select id="dStatus">${CFG.statuses.map(s => `<option ${s === CUR.status ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
+      <label>키워드 <input id="dKeyword" value="${esc(CUR.keyword)}" size="26"></label>
+      <label>채널 ${CFG.channels.map(c => `<label style="gap:3px"><input type="checkbox" class="dCh" value="${c}" ${CUR.channels.includes(c) ? 'checked' : ''}>${c}</label>`).join('')}</label>
+      <label>카테고리 <select id="dCat"><option value="">-</option>${CFG.categories.map(c => `<option ${c === CUR.category ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
+      <label>타깃 독자 <input id="dAud" value="${esc(CUR.audience || '')}" size="16"></label>
+      <label>엔진 <select id="dEng">${CFG.engines.map(c => `<option ${c === (CUR.engine || 'Claude') ? 'selected' : ''}>${c}</option>`).join('')}</select></label>
+      <label>발행 URL <input id="dUrl" value="${esc(CUR.published_url || '')}" size="24" placeholder="https://"></label>
+      <button id="saveMeta">정보 저장</button>
+    </div>
+    ${CUR.note ? `<div class="row" style="color:var(--warn)">※ ${esc(CUR.note)}</div>` : ''}
+    ${CUR.notion_page_id ? `<div class="row"><a href="https://www.notion.so/${esc(CUR.notion_page_id.replace(/-/g, ''))}" target="_blank">노션에서 열기 ↗</a></div>` : ''}
+    <div class="files">${files.map(f => `<button data-p="${esc(f.path)}" class="${f.path === CURFILE ? 'on' : ''}">${esc(label(f.name))}</button>`).join('')}</div>
+    <div id="fileArea"></div>`;
+  $('#detail').querySelectorAll('.files button').forEach(b => b.onclick = () => openItem(CUR.id, b.dataset.p));
+  $('#saveMeta').onclick = saveMeta;
+  $('#dStatus').onchange = saveMeta;
+  $('#openFolder').onclick = () => post('/api/open', { path: CUR.folder }).catch(e => toast(e.message));
+  $('#copyPrompt').onclick = copyPrompt;
+  if ($('#toNotion')) $('#toNotion').onclick = async () => { try { await post('/api/notion/push', { id: CUR.id }); toast('노션에 반영했어요'); } catch (e) { toast(e.message) } };
+  const f = files.find(x => x.path === CURFILE);
+  if (!f) { $('#fileArea').innerHTML = '<div class="empty">파일이 없어요</div>'; return }
+  if (f.text) {
+    const { content, mtime } = await api('/api/file?path=' + encodeURIComponent(f.path)); MTIME = mtime;
+    $('#fileArea').innerHTML = `<div class="editor"><textarea class="ed" id="ed" spellcheck="false"></textarea><div class="preview" id="pv"></div></div>
+      <div class="bar"><button class="primary" id="saveFile">저장 (⌘S)</button><span id="saveState">저장됨</span><span class="sp"></span><span>${esc(f.path)}</span></div>`;
+    const ed = $('#ed'); ed.value = content; $('#pv').innerHTML = md(content);
+    ed.oninput = () => { DIRTY = true; $('#saveState').textContent = '저장 안 됨'; $('#pv').innerHTML = md(ed.value) };
+    $('#saveFile').onclick = () => saveFile();
+  } else {
+    const url = '/api/raw?path=' + encodeURIComponent(f.path);
+    const ext = f.name.split('.').pop().toLowerCase();
+    $('#fileArea').innerHTML = ['mp4', 'mov', 'webm'].includes(ext) ? `<video src="${url}" controls></video>`
+      : ['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(ext) ? `<img class="media" src="${url}">`
+      : `<div class="empty">미리보기를 지원하지 않는 파일이에요 (${(f.size / 1048576).toFixed(1)}MB)</div>`;
+  }
+}
+async function saveFile(force = false) {
+  try {
+    const r = await post('/api/file', { path: CURFILE, content: $('#ed').value, base_mtime: MTIME, force });
+    MTIME = r.mtime; DIRTY = false; $('#saveState').textContent = '저장됨 ' + new Date().toLocaleTimeString('ko-KR'); toast('저장했어요 · 다음 동기화 때 깃허브로 올라가요');
+  } catch (e) {
+    if (/바뀌었어요/.test(e.message)) {
+      if (confirm(e.message + '\n\n[확인] 내 내용으로 덮어쓰기\n[취소] 내 내용을 클립보드에 복사하고 최신 파일 다시 열기')) return saveFile(true);
+      try { await navigator.clipboard.writeText($('#ed').value) } catch (_) {}
+      DIRTY = false; await loadItems(); openItem(CUR.id, CURFILE); toast('내 내용은 클립보드에 있어요');
+    } else toast('저장 실패: ' + e.message);
+  }
+}
+async function saveMeta() {
+  try {
+    const r = await post('/api/items/' + CUR.id, { title: $('#dTitle').value.trim(), keyword: $('#dKeyword').value.trim(), status: $('#dStatus').value, channels: [...document.querySelectorAll('.dCh:checked')].map(x => x.value), published_url: $('#dUrl').value.trim(), category: $('#dCat').value, audience: $('#dAud').value.trim(), engine: $('#dEng').value });
+    toast(r.notion ? '저장했어요 · ' + r.notion : '저장했어요'); const keep = CURFILE; await loadItems(); DIRTY = false; openItem(CUR.id, keep);
+  } catch (e) { toast(e.message) }
+}
+function copyPrompt() {
+  const text = `주제: ${CUR.title}\n키워드: ${CUR.keyword || '(키워드)'}\n채널: ${CUR.channels.join(', ') || '전체'}\n\n프로젝트 지침의 출력 구조대로 블로그 포스팅 1편과 다채널 마케팅 광고 소재를 작성해 주세요.\n결과는 post.md(블로그) / ads.md(광고 소재 4종) / shorts.md(60초 대본) 세 부분으로 나눠 주세요.\n(허브 ID: ${CUR.id})`;
+  navigator.clipboard.writeText(text).then(() => toast('복사했어요 · Claude 프로젝트에 붙여넣으세요'), () => prompt('복사해서 쓰세요', text));
+  if (CFG.claude_project_url) window.open(CFG.claude_project_url, '_blank');
+}
+
+// ---------- 보드
+function renderBoard() {
+  $('#boardView').innerHTML = CFG.statuses.map(s => {
+    const list = ITEMS.filter(i => i.status === s);
+    return `<div class="col" data-s="${s}"><h3><span class="st" data-s="${s}">${s}</span><span>${list.length}</span></h3>
+      ${list.map(i => `<div class="card" draggable="true" data-id="${esc(i.id)}"><div class="t">${esc(i.title)}</div><div class="m">${esc(i.keyword || '')} · ${fmtTime(i.updated)}</div></div>`).join('')}</div>`;
+  }).join('');
+  document.querySelectorAll('.card').forEach(c => {
+    c.ondragstart = e => e.dataTransfer.setData('text', c.dataset.id);
+    c.ondblclick = () => { showView('list'); openItem(c.dataset.id) };
+  });
+  document.querySelectorAll('.col').forEach(col => {
+    col.ondragover = e => { e.preventDefault(); col.classList.add('drop') };
+    col.ondragleave = () => col.classList.remove('drop');
+    col.ondrop = async e => {
+      e.preventDefault(); col.classList.remove('drop'); const id = e.dataTransfer.getData('text');
+      try { const r = await post('/api/items/' + id, { status: col.dataset.s }); toast(r.notion || `${col.dataset.s}(으)로 옮겼어요`); await loadItems(); } catch (er) { toast(er.message) }
+    };
+  });
+}
+function showView(v) {
+  $('#listView').style.display = v === 'list' ? '' : 'none'; $('#boardView').style.display = v === 'board' ? '' : 'none';
+  $('#tabList').classList.toggle('on', v === 'list'); $('#tabBoard').classList.toggle('on', v === 'board');
+}
+
+// ---------- 동기화
+async function refreshSync() {
+  try {
+    const s = await api('/api/sync');
+    let cls = 'ok', txt = '동기화됨';
+    if (!s.repo) { cls = 'err'; txt = '깃 연결 전' }
+    else if (s.last_error) { cls = 'err'; txt = '동기화 오류' }
+    else if ((s.changes || []).length) { cls = 'warn'; txt = `변경 ${s.changes.length}개 대기` }
+    else if (!s.last_sync) { cls = ''; txt = '확인 중' }
+    if (s.repo && !s.auto) txt += ' · 자동 꺼짐';
+    $('#syncDot').className = 'dot ' + cls; $('#syncText').textContent = txt;
+    $('#autoSync').checked = s.auto;
+    $('#syncInfo').innerHTML = `
+      <div>저장소: ${esc(s.remote || '없음')} ${s.branch ? '(' + esc(s.branch) + ')' : ''}</div>
+      <div>마지막 동기화: ${s.last_sync ? fmtTime(s.last_sync) + ' · ' + esc(s.last_result) : '아직 없음'}</div>
+      <div>주기: ${s.interval}초 · 대기 중인 변경 ${(s.changes || []).length}개</div>
+      ${s.excluded && s.excluded.length ? `<div class="err">50MB 넘어 동기화 제외: ${s.excluded.map(esc).join(', ')}</div>` : ''}
+      ${s.last_error ? `<div class="err" style="margin-top:6px">${esc(s.last_error)}</div>` : ''}
+      ${s.last_error && /충돌/.test(s.last_error) ? '<button class="primary" id="resolveBtn" style="margin-top:8px">충돌 정리하기</button>' : ''}`;
+    if ($('#resolveBtn')) $('#resolveBtn').onclick = async () => { const r = await post('/api/sync/resolve'); toast(r.message); await refreshSync(); await loadItems(); };
+    $('#syncLog').textContent = (s.log || []).slice().reverse().join('\n') || '기록 없음';
+  } catch (e) { $('#syncDot').className = 'dot err'; $('#syncText').textContent = '허브 서버 꺼짐' }
+}
+
+// ---------- 시작
+(async function init() {
+  CFG = await api('/api/config');
+  const L = [];
+  if (CFG.github_url) L.push(`<a href="${esc(CFG.github_url)}" target="_blank">GitHub</a>`);
+  if (CFG.notion_board_url) L.push(`<a href="${esc(CFG.notion_board_url)}" target="_blank">Notion 보드</a>`);
+  if (CFG.claude_project_url) L.push(`<a href="${esc(CFG.claude_project_url)}" target="_blank">Claude 프로젝트</a>`);
+  $('#links').innerHTML = L.join('');
+  renderChips();
+  $('#nChannels').innerHTML = CFG.channels.map(c => `<label style="display:flex;gap:4px;margin:0;color:var(--ink)"><input type="checkbox" value="${c}" checked style="width:auto">${c}</label>`).join('');
+  $('#nCat').innerHTML = '<option value="">선택 안 함</option>' + CFG.categories.map(c => `<option>${c}</option>`).join('');
+  $('#q').oninput = renderList;
+  $('#tabList').onclick = () => showView('list'); $('#tabBoard').onclick = () => showView('board');
+  $('#newBtn').onclick = () => { $('#newForm').reset(); newDlg.showModal(); $('#nTitle').focus() };
+  $('#newForm').onsubmit = async e => {
+    if (e.submitter && e.submitter.value !== 'ok') return;
+    try {
+      const it = await post('/api/items', { title: $('#nTitle').value, keyword: $('#nKeyword').value, channels: [...document.querySelectorAll('#nChannels input:checked')].map(x => x.value), category: $('#nCat').value, audience: $('#nAud').value });
+      await loadItems(); showView('list'); openItem(it.id); toast('만들었어요');
+    } catch (er) { toast(er.message) }
+  };
+  $('#syncPill').onclick = () => $('#drawer').classList.toggle('open');
+  $('#syncNow').onclick = async () => { $('#syncText').textContent = '동기화 중…'; const r = await post('/api/sync'); toast(r.message); await refreshSync(); await loadItems(); if (CUR && !DIRTY) openItem(CUR.id, CURFILE) };
+  $('#autoSync').onchange = async e => { await post('/api/sync/auto', { enabled: e.target.checked }); refreshSync() };
+  document.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 's' && $('#ed')) { e.preventDefault(); saveFile() } });
+  window.addEventListener('beforeunload', e => { if (DIRTY) { e.preventDefault(); e.returnValue = '' } });
+  await loadItems(false);
+  refreshSync(); setInterval(refreshSync, 15000);
+  // 다른 기기에서 받은 변경을 목록에 반영 (편집 중이 아닐 때만)
+  setInterval(async () => { if (!DIRTY) { await loadItems(); } }, 60000);
+})();
+</script>
+</body>
+</html>

@@ -17,22 +17,14 @@ def get_notion_headers():
     }
 
 def query_pending_items(database_id: str = None):
-    """'진행 상태'가 '생성요청' 또는 '대기'인 데이터베이스 행 조회"""
+    """콘텐츠 보드에서 '상태'가 '생성요청'인 행 조회"""
     db_id = database_id or NOTION_DATABASE_ID or os.getenv("NOTION_DATABASE_ID")
     if not db_id:
         print("[Notion] NOTION_DATABASE_ID가 없어 로컬/파라미터 모드로 작동합니다.")
         return []
     
     url = f"https://api.notion.com/v1/databases/{db_id}/query"
-    payload = {
-        "filter": {
-            "or": [
-                {"property": "진행 상태", "status": {"equals": "생성요청"}},
-                {"property": "상태", "select": {"equals": "생성요청"}},
-                {"property": "Status", "status": {"equals": "Ready"}}
-            ]
-        }
-    }
+    payload = {"filter": {"property": "상태", "select": {"equals": "생성요청"}}}
     req = urllib.request.Request(
         url,
         data=json.dumps(payload).encode("utf-8"),
@@ -51,14 +43,13 @@ def query_pending_items(database_id: str = None):
         print(f"[Notion] 연결 오류: {e}")
         return []
 
-def update_page_status(page_id: str, new_status: str = "초안완료"):
+def update_page_status(page_id: str, new_status: str = "검토", extra_props: dict = None):
     """페이지의 진행 상태 업데이트"""
     url = f"https://api.notion.com/v1/pages/{page_id}"
-    payload = {
-        "properties": {
-            "진행 상태": {"status": {"name": new_status}}
-        }
-    }
+    props = {"상태": {"select": {"name": new_status}}}
+    if extra_props:
+        props.update(extra_props)
+    payload = {"properties": props}
     req = urllib.request.Request(
         url,
         data=json.dumps(payload).encode("utf-8"),
