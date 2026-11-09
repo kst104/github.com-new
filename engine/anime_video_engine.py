@@ -268,6 +268,70 @@ def build_day1_anime_shorts():
     if os.path.exists(dest_dir):
         subprocess.run(["cp", out_file, os.path.join(dest_dir, "anime_reel_video.mp4")])
         print(f"✅ 애니 쇼츠 깃허브 아카이브 완료: anime_reel_video.mp4")
+    return out_file
+
+def build_day2_anime_shorts():
+    scenes = [
+        {
+            "badge": "⚠️ 긴급 경고",
+            "sfx": "화들짝!!",
+            "anime_img": "/workspace/assets/anime/day2/scene1_heatpad.png",
+            "main_text": "전기장판에 발 대고\n절대 주무시지 마세요!",
+            "sub_text": "신경 마비로 3도 저온 화상 위험",
+            "voice": "당뇨 환자분들, 겨울철에 전기장판이나 핫팩 발에 대고 주무시면 발을 잃을 수 있습니다."
+        },
+        {
+            "badge": "❄️ 한파 인슐린 쇼크",
+            "sfx": "위잉!!",
+            "anime_img": "/workspace/assets/anime/day2/scene2_insulin_shock.png",
+            "main_text": "추위에 모세혈관 수축!\n오후 급성 저혈당 쇼크",
+            "sub_text": "인슐린 흡수 지연 후 한꺼번에 방출",
+            "voice": "게다가 날씨가 추우면 피부 모세혈관이 수축해서, 아침에 맞은 인슐린이 흡수가 안 되다가 오후에 한꺼번에 퍼져 급성 저혈당 쇼크가 옵니다."
+        },
+        {
+            "badge": "💡 의사의 3대 처방",
+            "sfx": "반짝✨",
+            "anime_img": "/workspace/assets/anime/day2/scene3_doctor_mirror.png",
+            "main_text": "매일 저녁 손거울로\n발바닥 상처 확인!",
+            "sub_text": "1. 맨살 접촉 금지  2. 손거울 점검  3. 인슐린 실온 보관",
+            "voice": "딱 3가지만 기억하세요! 첫째, 전기장판 맨살 접촉 금지. 둘째, 매일 저녁 손거울로 발바닥 상처 확인. 셋째, 인슐린 펜은 절대 얼리지 말고 실온 안주머니 보관!"
+        },
+        {
+            "badge": "🚨 응급실 직행 신호",
+            "sfx": "콰앙!!",
+            "anime_img": "/workspace/assets/anime/day2/scene4_warning_foot.png",
+            "main_text": "작은 물집·피멍 생기면\n집에서 절대 짜지 마세요!",
+            "sub_text": "세균 감염·괴사 위험, 즉시 병원으로 달려가야",
+            "voice": "발에 작은 물집이나 피멍이 보이면 집에서 짜지 마시고 그 즉시 병원으로 달려오셔야 합니다."
+        },
+        {
+            "badge": "📲 부모님 필수 공유",
+            "sfx": "훈훈~",
+            "anime_img": "/workspace/assets/anime/day2/scene5_family_socks.png",
+            "main_text": "소중한 부모님의\n평생 걸음을 지켜주세요!",
+            "sub_text": "오늘 저녁 부모님 발 한번 꼭 살펴봐 드리세요",
+            "voice": "매일 저녁 발을 살피는 작은 습관이 평생 보행을 지킵니다. 부모님께 지금 꼭 공유해 주세요."
+        }
+    ]
+    
+    out_file = "/workspace/downloads/Day2_겨울철_당뇨_인슐린_발관리_90s애니_쇼츠.mp4"
+    render_anime_shorts(scenes, out_file, temp_dir="/tmp/day2_anime_shorts_build")
+    
+    # 저장소 동기화
+    dest_dir = "/workspace/work/content-automation-engine/content/2026-11-09-06/instagram"
+    if os.path.exists(dest_dir):
+        subprocess.run(["cp", out_file, os.path.join(dest_dir, "anime_reel_video.mp4")])
+        print(f"✅ Day 2 애니 쇼츠 깃허브 아카이브 완료: anime_reel_video.mp4")
+    return out_file
 
 if __name__ == "__main__":
-    build_day1_anime_shorts()
+    import argparse
+    parser = argparse.ArgumentParser(description="90s Retro Anime Video Engine")
+    parser.add_argument("--day", type=int, default=1, choices=[1, 2], help="제작할 Day 번호 (기본: 1)")
+    args = parser.parse_args()
+    
+    if args.day == 1:
+        build_day1_anime_shorts()
+    elif args.day == 2:
+        build_day2_anime_shorts()
+

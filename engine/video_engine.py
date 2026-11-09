@@ -291,7 +291,7 @@ def render_full_shorts_v2(scenes: list, output_mp4: str, temp_dir: str = "/tmp/s
     print(f"\n✅ 최종 개편 릴스/쇼츠 완성! -> {output_mp4}")
     return output_mp4
 
-def build_v2_sample(style: str = "both"):
+def build_v2_sample(style: str = "both", day: int = 1):
     """
     쇼츠 스타일 선택 지원:
     - standard: 기존 겅태 3D 마스코트 + 우측 상황 카드
@@ -300,66 +300,83 @@ def build_v2_sample(style: str = "both"):
     """
     outputs = {}
     
-    if style in ("standard", "both"):
-        scenes_standard = [
-            {
-                "badge": "⚠️ 긴급 주의보",
-                "character": f"{CHAR_DIR}/01_doctor_front.png" if os.path.exists(f"{CHAR_DIR}/01_doctor_front.png") else f"{CHAR_DIR}/doctor_front.png",
-                "main_text": "겨울철 아침에\n벌떡 일어나지 마세요!",
-                "sub_text": "순간적으로 혈압이 15mmHg 치솟습니다",
-                "voice": "겨울철 아침, 알람 울렸다고 이불 밖으로 벌떡 일어나시는 분들, 정말 위험합니다."
-            },
-            {
-                "badge": "🏥 응급실 현장 리포트",
-                "character": f"{CHAR_DIR}/06_sweat_worry.png" if os.path.exists(f"{CHAR_DIR}/06_sweat_worry.png") else f"{CHAR_DIR}/expr_worried.png",
-                "main_text": "오전 6시 ~ 9시\n심뇌혈관 환자 급증",
-                "sub_text": "밤새 끈적해진 혈액 + 찬 공기 노출",
-                "voice": "응급실에 있으면 매년 겨울 기온이 뚝 떨어질 때마다 아침 6시에서 9시 사이에 실려 오시는 분들을 너무 많이 봅니다."
-            },
-            {
-                "badge": "💡 의사의 3분 처방",
-                "character": f"{CHAR_DIR}/02_doctor_point.png" if os.path.exists(f"{CHAR_DIR}/02_doctor_point.png") else f"{CHAR_DIR}/pose_point.png",
-                "main_text": "내일부터 딱 3분!\n기상 공식을 지키세요",
-                "sub_text": "1. 손발 털기  2. 걸터앉기  3. 겉옷 입기",
-                "voice": "내일부터 딱 3분만 지켜보세요. 누운 채로 기지개 켜고 손발 1분 털기, 침대에 걸터앉아 1분 호흡하기, 그리고 겉옷 입고 방 밖으로 나가기."
-            },
-            {
-                "badge": "❌ 절대 금지",
-                "character": f"{CHAR_DIR}/07_doctor_surprise.png" if os.path.exists(f"{CHAR_DIR}/07_doctor_surprise.png") else f"{CHAR_DIR}/expr_surprise.png",
-                "main_text": "겨울철 새벽 조깅은\n보약이 아니라 독입니다",
-                "sub_text": "운동은 반드시 해 뜬 낮이나 실내에서!",
-                "voice": "그리고 새벽 야외 조깅은 겨울철엔 보약이 아니라 독입니다. 운동은 해 뜨고 낮에 하세요."
-            },
-            {
-                "badge": "📲 가족 공유 필수",
-                "character": f"{CHAR_DIR}/04_cheer_jump.png" if os.path.exists(f"{CHAR_DIR}/04_cheer_jump.png") else f"{CHAR_DIR}/pose_cheer.png",
-                "main_text": "소중한 부모님께\n지금 바로 공유하세요!",
-                "sub_text": "3분 습관 하나가 소중한 생명을 지킵니다",
-                "voice": "이 3분 습관 하나가 소중한 생명을 지킵니다. 부모님께 지금 꼭 공유해 주세요."
-            }
-        ]
-        out_std = "/workspace/downloads/Day1_겨울철_혈압_주의보_겅태_쇼츠_데모_v2.mp4"
-        render_full_shorts_v2(scenes_standard, out_std)
-        outputs["standard"] = out_std
-        
-        # 깃허브 content 폴더 동기화
-        dest_dir = "/workspace/work/content-automation-engine/content/2026-11-09-05/instagram"
-        if os.path.exists(dest_dir):
-            subprocess.run(["cp", out_std, os.path.join(dest_dir, "standard_reel_video.mp4")])
-            subprocess.run(["cp", out_std, os.path.join(dest_dir, "reel_video.mp4")])
+    if day == 1:
+        if style in ("standard", "both"):
+            scenes_standard = [
+                {
+                    "badge": "⚠️ 긴급 주의보",
+                    "character": f"{CHAR_DIR}/01_doctor_front.png" if os.path.exists(f"{CHAR_DIR}/01_doctor_front.png") else f"{CHAR_DIR}/doctor_front.png",
+                    "main_text": "겨울철 아침에\n벌떡 일어나지 마세요!",
+                    "sub_text": "순간적으로 혈압이 15mmHg 치솟습니다",
+                    "voice": "겨울철 아침, 알람 울렸다고 이불 밖으로 벌떡 일어나시는 분들, 정말 위험합니다."
+                },
+                {
+                    "badge": "🏥 응급실 현장 리포트",
+                    "character": f"{CHAR_DIR}/06_sweat_worry.png" if os.path.exists(f"{CHAR_DIR}/06_sweat_worry.png") else f"{CHAR_DIR}/expr_worried.png",
+                    "main_text": "오전 6시 ~ 9시\n심뇌혈관 환자 급증",
+                    "sub_text": "밤새 끈적해진 혈액 + 찬 공기 노출",
+                    "voice": "응급실에 있으면 매년 겨울 기온이 뚝 떨어질 때마다 아침 6시에서 9시 사이에 실려 오시는 분들을 너무 많이 봅니다."
+                },
+                {
+                    "badge": "💡 의사의 3분 처방",
+                    "character": f"{CHAR_DIR}/02_doctor_point.png" if os.path.exists(f"{CHAR_DIR}/02_doctor_point.png") else f"{CHAR_DIR}/pose_point.png",
+                    "main_text": "내일부터 딱 3분!\n기상 공식을 지키세요",
+                    "sub_text": "1. 손발 털기  2. 걸터앉기  3. 겉옷 입기",
+                    "voice": "내일부터 딱 3분만 지켜보세요. 누운 채로 기지개 켜고 손발 1분 털기, 침대에 걸터앉아 1분 호흡하기, 그리고 겉옷 입고 방 밖으로 나가기."
+                },
+                {
+                    "badge": "❌ 절대 금지",
+                    "character": f"{CHAR_DIR}/07_doctor_surprise.png" if os.path.exists(f"{CHAR_DIR}/07_doctor_surprise.png") else f"{CHAR_DIR}/expr_surprise.png",
+                    "main_text": "겨울철 새벽 조깅은\n보약이 아니라 독입니다",
+                    "sub_text": "운동은 반드시 해 뜬 낮이나 실내에서!",
+                    "voice": "그리고 새벽 야외 조깅은 겨울철엔 보약이 아니라 독입니다. 운동은 해 뜨고 낮에 하세요."
+                },
+                {
+                    "badge": "📲 가족 공유 필수",
+                    "character": f"{CHAR_DIR}/04_cheer_jump.png" if os.path.exists(f"{CHAR_DIR}/04_cheer_jump.png") else f"{CHAR_DIR}/pose_cheer.png",
+                    "main_text": "소중한 부모님께\n지금 바로 공유하세요!",
+                    "sub_text": "3분 습관 하나가 소중한 생명을 지킵니다",
+                    "voice": "이 3분 습관 하나가 소중한 생명을 지킵니다. 부모님께 지금 꼭 공유해 주세요."
+                }
+            ]
+            out_std = "/workspace/downloads/Day1_겨울철_혈압_주의보_겅태_쇼츠_데모_v2.mp4"
+            render_full_shorts_v2(scenes_standard, out_std)
+            outputs["standard"] = out_std
             
-    if style in ("anime", "both"):
-        try:
-            from engine.anime_video_engine import build_day1_anime_shorts
-            build_day1_anime_shorts()
-            outputs["anime"] = "/workspace/downloads/Day1_겨울철_혈압_주의보_90s애니_쇼츠.mp4"
-        except Exception as e:
-            print(f"⚠️ 애니 쇼츠 렌더 오류: {e}")
-            
+            # 깃허브 content 폴더 동기화
+            dest_dir = "/workspace/work/content-automation-engine/content/2026-11-09-05/instagram"
+            if os.path.exists(dest_dir):
+                subprocess.run(["cp", out_std, os.path.join(dest_dir, "standard_reel_video.mp4")])
+                subprocess.run(["cp", out_std, os.path.join(dest_dir, "reel_video.mp4")])
+                
+        if style in ("anime", "both"):
+            try:
+                from engine.anime_video_engine import build_day1_anime_shorts
+                build_day1_anime_shorts()
+                outputs["anime"] = "/workspace/downloads/Day1_겨울철_혈압_주의보_90s애니_쇼츠.mp4"
+            except Exception as e:
+                print(f"⚠️ 애니 쇼츠 렌더 오류: {e}")
+                
+    elif day == 2:
+        if style in ("standard", "both"):
+            try:
+                subprocess.run(["python3", "render_day2_video.py"], check=True)
+                outputs["standard"] = "/workspace/downloads/Day2_겨울철_당뇨_인슐린_발관리_겅태_쇼츠.mp4"
+            except Exception as e:
+                print(f"⚠️ Day 2 일반 쇼츠 렌더 오류: {e}")
+                
+        if style in ("anime", "both"):
+            try:
+                from engine.anime_video_engine import build_day2_anime_shorts
+                outputs["anime"] = build_day2_anime_shorts()
+            except Exception as e:
+                print(f"⚠️ Day 2 애니 쇼츠 렌더 오류: {e}")
+                
     return outputs
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Shorts & Reels Video Engine")
     parser.add_argument("--style", choices=["standard", "anime", "both"], default="both", help="쇼츠 비주얼 스타일 선택 (기본: both)")
+    parser.add_argument("--day", type=int, default=1, choices=[1, 2], help="제작할 Day 번호 (기본: 1)")
     args = parser.parse_args()
-    build_v2_sample(style=args.style)
+    build_v2_sample(style=args.style, day=args.day)
