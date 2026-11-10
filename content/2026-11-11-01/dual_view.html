@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>닥터 K 콘텐츠 이원화 듀얼 뷰어 (대중용 vs 전문가용)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --clinical: #0f766e;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Nanum Gothic", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-bar {
+      display: flex;
+      gap: 8px;
+    }
+    .tab-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .tab-btn.clinical-active {
+      background: var(--clinical);
+      color: white;
+      border-color: var(--clinical);
+    }
+    .main-wrapper {
+      display: flex;
+      max-width: 1600px;
+      margin: 20px auto;
+      gap: 20px;
+      padding: 0 20px;
+    }
+    .column {
+      flex: 1;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      min-width: 0;
+    }
+    .column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .column-header.public { border-bottom-color: var(--primary); }
+    .column-header.clinical { border-bottom-color: var(--clinical); }
+    .col-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+    }
+    .col-title.public { color: var(--primary); }
+    .col-title.clinical { color: var(--clinical); }
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .badge-public { background: #eff6ff; color: #1d4ed8; }
+    .badge-clinical { background: #f0fdf4; color: #15803d; }
+    .content-body {
+      font-size: 15px;
+      line-height: 1.8;
+      word-break: break-all;
+    }
+    .content-body h1 { font-size: 22px; color: #1e293b; margin-top: 24px; }
+    .content-body h2 { font-size: 18px; color: #334155; margin-top: 20px; }
+    .content-body h3 { font-size: 16px; color: #475569; margin-top: 16px; }
+    .content-body blockquote {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 10px 16px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .clinical .content-body blockquote {
+      border-left-color: var(--clinical);
+    }
+    @media (max-width: 1024px) {
+      .main-wrapper { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🩺 닥터 K 임상·대중 이원화 콘텐츠 허브 (Day 1)</h1>
+    <div class="toggle-bar">
+      <button class="tab-btn active" onclick="setView('both')">나란히 비교 (Dual)</button>
+      <button class="tab-btn" onclick="setView('public')">대중용만 보기</button>
+      <button class="tab-btn" onclick="setView('clinical')">전문가용만 보기</button>
+    </div>
+  </header>
+
+  <div class="main-wrapper" id="wrapper">
+    <!-- 대중용 칼럼 & 쇼츠 영역 -->
+    <section class="column public" id="col-public">
+      <div class="column-header public">
+        <h2 class="col-title public">📱 대중용 에디션 (General Public)</h2>
+        <span class="badge badge-public">블로그 · 릴스 · 쇼츠 · 광고 10종</span>
+      </div>
+      <div class="content-body">
+        <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+          <strong>🎬 제작 완료 숏폼 영상</strong>: <a href="Day1_겨울철_혈압_주의보_겅태_쇼츠_데모_v2.mp4" target="_blank">Day 1 겅태 쇼츠 데모 v2 (MP4) 재생</a><br>
+          <strong>📋 핵심 타깃</strong>: 4050 직장인, 고혈압 환자 및 가족 보호자<br>
+          <strong>💡 강조 포인트</strong>: 3분 기상 공식, 생활 속 금기 사항, 쉬운 비유
+        </div>
+        <h1>겨울철 심근경색 전조증상 비상, 단순 소화불량인 줄 알았다가 심장 멎는 이유 (의사 칼럼)</h1>
+<blockquote>**카테고리**: 의학/건강 칼럼<br></blockquote>
+<blockquote>**타깃 키워드**: 겨울철 심근경색, 심근경색 전조증상, 가슴통증 응급처치<br></blockquote>
+<blockquote>**타깃 독자**: 40~70대 중장년층, 고혈압·당뇨 환자 및 가족 보호자<br></blockquote>
+<blockquote>**작성일자**: 2026년 11월 11일<br></blockquote>
+<blockquote>**GitHub**: [content/2026-11-11-01](https://github.com/kst104/github.com-new/tree/main/content/2026-11-11-01)</blockquote>
+<p>
+---<br>
+</p>
+<h2>📌 제목 옵션 (CTR 최적화)</h2>
+<p>
+1. **[검색 중심]** 겨울철 심근경색 전조증상과 가슴 통증 감별법: 응급실 의사가 밝히는 2시간 골든타임<br>
+2. **[경각심 환기형]** 단순 급체인 줄 알고 손 땄다가 심정지? 한파에 혈관 막히는 3대 위험 신호<br>
+3. **[의사 권위형]** 응급실에서 매년 겨울 목격하는 안타까운 지체: 심장 멎기 전 내 몸이 보내는 마지막 경고<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>🔍 메타 디스크립션 (Search Snippet)</h2>
+<p>
+기온이 급락하는 겨울철에는 찬 공기 노출 즉시 혈관이 수축하며 급성 심근경색 위험이 평소보다 3배 이상 치솟습니다. 전형적인 쥐어짜는 흉통 외에도 턱 통증, 왼쪽 어깨 방사통, 명치 답답함 같은 비전형적 전조증상을 정확히 알아야 합니다. 응급의학과 의사가 전하는 119 구급차 호출 원칙과 2시간 골든타임 대처법을 확인하세요.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>💡 응급실 현장 리포트: 소화제 먹고 4시간 지체한 대가</h2>
+<p>
+새벽 5시, 체감온도가 영하 8도까지 곤두박질친 날이었습니다. 응급실 문을 박차고 119 구급대원들이 헐떡이며 진입했습니다.<br>
+</p>
+<p>
+"58세 남성, 새벽 1시부터 명치가 체한 것처럼 꽉 막히고 식은땀이 비 오듯 흘렀다고 합니다. 소화제와 청심환을 먹고 버티다가 30분 전 의식을 잃고 쓰러졌습니다."<br>
+</p>
+<p>
+침상으로 옮겨진 환자는 낯빛이 잿빛이었고 혈압은 70/40mmHg로 곤두박질쳐 있었습니다. 심전도 모니터를 연결하자마자 2번, 3번, aVF 유도에서 ST분절이 불길하게 치솟아 있는 급성 하벽 심근경색(STEMI) 파형이 선명하게 나타났습니다.<br>
+</p>
+<p>
+심장혈관 중 하나가 혈전으로 100% 완전히 막혀 심장 근육이 빠르게 썩어 들어가고 있던 상황이었습니다. 심장내과 중재시술팀을 긴급 호출해 스텐트 삽입술을 진행하여 혈관은 가까스로 뚫었으나, 이미 4시간 넘게 허혈 상태에 방치되었던 심장 근육의 절반은 영구적으로 괴사하여 평생 심부전 약을 안고 살아가야 하는 안타까운 결과를 맞았습니다.<br>
+</p>
+<p>
+보호자로 오신 부인께서는 자책하며 오열하셨습니다. "어젯밤 늦게 돼지고기를 먹고 자서 단순 급체인 줄 알았어요. 가슴이 뻐근하다길래 손을 따주고 소화제만 먹였는데, 그게 심장병일 줄은 꿈에도 몰랐습니다."<br>
+</p>
+<p>
+응급실에서 마주하는 심근경색 환자의 30% 이상은 전형적인 가슴 정중앙 흉통이 아니라, 명치 답답함이나 체기, 턱 통증 같은 비전형적 증상으로 시작합니다. 초기 신호를 놓치고 집에서 시간을 허비하는 순간, 생존 확률은 1분마다 급격히 떨어집니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>1. 왜 겨울철 아침에 심근경색이 폭발적으로 발생할까요?</h2>
+<p>
+심근경색은 심장에 산소와 영양분을 공급하는 3가닥의 관상동맥이 혈전(피떡)에 의해 갑자기 막혀 심장 근육이 괴사하는 질환입니다. 질병관리청 급성심장정지조사 보고서를 보면 동절기(12월~2월) 심혈관 질환 사망자 수는 여름철 대비 20% 이상 급증합니다.<br>
+</p>
+<h3>① 찬 공기 노출과 급격한 혈관 수축</h3>
+<p>
+따뜻한 이불 속에 있다가 새벽에 일어나 찬 공기를 들이마시는 순간, 뇌의 교감신경계가 비상 체제로 돌입합니다. 피부와 말초 혈관이 순식간에 수축하면서 혈압이 20~30mmHg 이상 급상승하고 심박수가 빨라집니다. 심장은 더 많은 산소를 필요로 하는데, 혈관은 좁아지는 악조건이 만들어집니다.<br>
+</p>
+<h3>② 혈소판 활성화와 혈전 형성</h3>
+<p>
+기온이 내려가면 체온 유지를 위해 혈액 점도가 높아집니다. 혈관 내벽에 쌓여 있던 기름 찌꺼기(죽상동맥경화반)가 급격한 혈압 변화를 견디지 못하고 터지면, 이를 상처로 인식한 혈소판들이 순식간에 엉겨 붙어 거대한 혈전 덩어리를 만들어 혈관을 완전히 차단합니다.<br>
+</p>
+<h3>③ 아침 6시~10시의 취약 시간대</h3>
+<p>
+신체 리듬상 기상 직후에는 코르티솔과 카테콜라민 호르몬이 대량 분비되어 혈소판 응집력이 하루 중 가장 높아집니다. 겨울철 새벽 운동이나 아침 첫 외출 때 심근경색 환자가 집중되는 이유입니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>2. 흉통만이 전부가 아닙니다: 놓치기 쉬운 3대 전조증상</h2>
+<p>
+많은 분들이 심근경색이라고 하면 영화처럼 가슴을 부여잡고 비명을 지르며 쓰러지는 장면만 떠올립니다. 하지만 실제 임상에서는 훨씬 은밀하고 모호하게 찾아옵니다.<br>
+</p>
+<h3>⚠️ 신호 1. 가슴 중앙의 짓누르는 압박감 (코끼리 발바닥 느낌)</h3>
+<p>
+바늘로 콕콕 찌르는 통증이나 칼로 베는 느낌은 근육통이나 신경통일 확률이 높습니다. 심근경색의 전형적인 통증은 '가슴을 주먹으로 쥐어짜는 듯한 압박감', '가슴 위에 무거운 맷돌이나 코끼리가 올라앉은 듯한 답답함'입니다. 통증 부위를 손가락 하나로 가리킬 수 없고, 손바닥 전체로 가슴을 문지르게 됩니다. 통증이 20분 이상 쉬어도 가라앉지 않는다면 즉각적인 응급 신호입니다.<br>
+</p>
+<h3>⚠️ 신호 2. 턱, 치아, 목, 왼쪽 어깨로 뻗치는 '방사통'</h3>
+<p>
+심장 신경과 척수 신경이 연결되어 있어 통증 신호가 주변으로 번집니다. 가슴 통증과 함께 왼쪽 어깨, 왼팔 안쪽, 목덜미, 턱 끝, 심지어 아래쪽 치아까지 묵직하게 아파옵니다. 치과에 갔는데 치아에 이상이 없다고 하거나, 오십견인 줄 알고 어깨 찜질만 하다가 병을 키우는 환자가 적지 않습니다.<br>
+</p>
+<h3>⚠️ 신호 3. 명치 답답함과 소화불량, 비오듯 쏟아지는 식은땀</h3>
+<p>
+특히 당뇨병 환자나 고령자, 여성 환자에게서 빈번하게 나타납니다. 통증 감각이 둔화되어 흉통 대신 "체한 것처럼 명치가 답답하다", "속이 메스껍고 토할 것 같다"며 내과나 소화기과를 찾는 경우가 흔합니다. 이때 단순 소화불량과 구별되는 결정적 차이는 바로 **'비 오듯 쏟아지는 식은땀'과 '숨찬 느낌(호흡곤란)'**입니다. 명치가 답답하면서 식은땀으로 옷이 흠뻑 젖는다면 1분도 지체해서는 안 됩니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>3. 심근경색 의심 시 절대로 하지 말아야 할 3가지 실수</h2>
+<p>
+시간을 다투는 응급 상황에서 민간요법에 의존하다가 골든타임을 놓치는 일이 응급실에서 매일 반복됩니다.<br>
+</p>
+<p>
+1. **손가락 따기, 우황청심환 먹이기 금기**:<br>
+<li>손가락을 따는 자극은 혈압을 오히려 교란하고 감염 위험을 키웁니다.</li>
+<li>의식이 흐려지거나 구역질을 하는 환자에게 물이나 청심환을 억지로 먹이면 기도로 넘어가 급성 흡인성 폐렴을 일으키거나 질식을 유발합니다.</li>
+2. **"조금 누워 있으면 낫겠지" 기다리기 금기**:<br>
+<li>협심증은 휴식을 취하면 5~10분 내에 가라앉지만, 심근경색은 쉬어도 통증이 지속됩니다. 20분 이상 지속되는 가슴 통증은 이미 혈관이 막혔다는 뜻입니다.</li>
+3. **직접 운전해서 병원 가기 금기**:<br>
+<li>자가용이나 택시를 타고 이동하다가 도중에 치명적인 심실세동(심정지)이 발생하면 차 안에서 속수무책으로 사망에 이릅니다. 반드시 119 구급차를 불러야 합니다.</li>
+</p>
+<p>
+---<br>
+</p>
+<h2>4. 생명을 살리는 2시간 골든타임 행동 지침</h2>
+<p>
+심장 혈관이 막힌 순간부터 심장 근육 세포는 분당 수백만 개씩 괴사합니다. 혈관을 다시 뚫어주는 풍선확장술 및 스텐트 삽입술(Primary PCI)은 **증상 발생 후 2시간(120분) 이내**에 완료되어야 영구적인 심장 손상을 막을 수 있습니다.<br>
+</p>
+<h3>수칙 1. 지체 없이 119에 전화하세요</h3>
+<p>
+119 구급차에는 심장 제세동기와 산소 공급 장치, 심전도 전송 장비가 갖추어져 있습니다. 구급대원이 차 안에서 심전도를 측정해 병원 응급실로 전송하면, 환자가 도착하기 전에 심장내과 시술팀이 수술실을 열고 대기할 수 있습니다. 또한 24시간 응급 관상동맥 중재술이 가능한 심뇌혈관센터로 환자를 곧바로 이송해 줍니다.<br>
+</p>
+<h3>수칙 2. 평안한 자세로 환자를 안정시키세요</h3>
+<p>
+환자를 눕히되 상체를 비스듬히 45도 세워주면 심장으로 돌아오는 혈액량이 줄어들어 심장 부담이 덜어집니다. 넥타이, 허리띠, 단추를 풀어 숨쉬기 편하게 해주고, 차가운 공기가 직접 닿지 않도록 겉옷을 덮어 체온을 유지해야 합니다.<br>
+</p>
+<h3>수칙 3. 의식이 없고 호흡이 멈추면 즉시 심폐소생술(CPR)</h3>
+<p>
+심근경색의 50%는 심실세동이라는 치명적 부정맥으로 인해 발병 수 시간 내에 심정지로 이어집니다. 환자가 의식을 잃고 숨을 쉬지 않는다면 119 구급대원이 올 때까지 가슴 중앙을 분당 100~120회 속도로 5cm 깊이로 강하고 빠르게 압박해야 합니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>💡 요약 및 마무리</h2>
+<p>
+1. 기온 급락 시 찬 공기 노출은 급격한 혈관 수축과 혈전 생성을 유발해 심근경색을 일으킵니다.<br>
+2. 20분 이상 지속되는 쥐어짜는 흉통, 턱과 왼쪽 어깨 방사통, 식은땀을 동반한 명치 답답함은 심장의 긴급 SOS입니다.<br>
+3. 소화제를 먹거나 손을 따지 마시고, 자가 운전 대신 즉시 119 구급차를 불러 2시간 골든타임 안에 병원에 도착해야 합니다.<br>
+</p>
+<p>
+오늘 부모님과 가족들에게 안부 전화를 걸어 가슴 통증과 식은땀이 날 때는 참지 말고 즉시 119를 부르시라고 당부해 주세요. 신속한 지식 하나가 소중한 생명을 지켜냅니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<p>
+#겨울철심근경색 #심근경색전조증상 #가슴통증 #심혈관질환 #협심증 #심근경색골든타임 #119구급차 #응급의학과의사 #심근경색응급처치 #부모님건강<br>
+</p>
+      </div>
+    </section>
+
+    <!-- 전문가용 임상 심층 칼럼 영역 -->
+    <section class="column clinical" id="col-clinical">
+      <div class="column-header clinical">
+        <h2 class="col-title clinical">🩺 전문가용 에디션 (Clinical In-Depth)</h2>
+        <span class="badge badge-clinical">Dr. K's Wiki · Tintinalli · 응급 프로토콜</span>
+      </div>
+      <div class="content-body">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+          <strong>🏛️ 연동 지식베이스</strong>: <code>kst104/wikiwi</code> (닥터 K 의학 위키, ACS & 대동맥 박리 프로토콜)<br>
+          <strong>📋 핵심 타깃</strong>: 의사, 응급실 의료진, 임상 연구자, 의학 전문 독자<br>
+          <strong>🔬 강조 포인트</strong>: SVR & 카테콜아민 분비 기전, DAPT 로딩, Nicardipine/Labetalol 감압 프로토콜
+        </div>
+        <h1>[임상 심층 칼럼] 동절기 급성 관상동맥 증후군(Acute Coronary Syndrome)의 병태생리와 응급실 조기 재관류 요법(Primary PCI) 및 항혈소판 프로토콜</h1>
+<blockquote>**저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br></blockquote>
+<blockquote>**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine (Ch. 48: Chest Pain, Ch. 49: Acute Coronary Syndromes), 2023 ESC Guidelines for ACS, ACC/AHA STEMI Guidelines, 대한심장학회(KSC) 급성심근경색 진료지침<br></blockquote>
+<blockquote>**대상 독자**: 응급의학과·순환기내과 의료진, 심혈관 중재시술팀, 중증 외상 및 응급 간호팀<br></blockquote>
+<blockquote>**분류**: Cardiovascular Emergency / Acute Coronary Syndrome / Interventional Cardiology</blockquote>
+<p>
+---<br>
+</p>
+<h2>1. Clinical Abstract (임상 초록)</h2>
+<li>**역학 및 계절적 변동성**: 급성 관상동맥 증후군(Acute Coronary Syndrome, ACS)은 동절기 외기 온도 급락 시 발병률 및 원외 심정지(OHCA) 발생률이 20~30% 급증한다. 이는 한랭 자극에 의한 알파-아드레날린성 혈관 수축, 혈소판 응집능 항진, 피브리노겐 농도 상승 및 혈압 변동성에 기인한다.</li>
+<li>**병태생리학적 핵심**: 죽상경화반의 파열(Plaque Rupture) 또는 미란(Erosion) 부위에 형성된 혈소판 풍부 백색 혈전 및 피브린 적색 혈전이 관상동맥 내경을 급격히 폐색한다. 완전 폐색은 ST분절 상승 심근경색(STEMI)을, 불완전 폐색 또는 미세 색전증은 NSTE-ACS(NSTEMI 및 불안정형 협심증)를 야기한다.</li>
+<li>**초기 시간 지표의 절대성**:</li>
+<li>**ECG Acquisition Time**: 내원 10분 이내 12유도 심전도 판독.</li>
+<li>**Door-to-Balloon (D2B) Time**: 응급실 도착 후 90분 이내 일차적 관상동맥 중재술(Primary PCI) 완료.</li>
+<li>**First Medical Contact-to-Device Time**: 120분 이내 완수. 120분 초과 지연 예상 시 30분 이내 섬유소용해술(Fibrinolysis) 고려.</li>
+<li>**응급 약물요법의 근간**: 즉각적인 이중 항혈소판 요법(DAPT: Aspirin + 강력한 P2Y12 억제제 Ticagrelor/Prasugrel), 미분획 헤파린(UFH) 항응고 요법, 고용량 스타틴 조기 투여. 하벽 경색 시 우심실 경색(RV Infarction)을 반드시 감별하여 나이트로글리세린 투여에 따른 급성 저혈압 쇼크를 예방해야 한다.</li>
+<p>
+---<br>
+</p>
+<h2>2. Pathophysiology & Biomarkers (병태생리 및 심근 효소 동역학)</h2>
+<h3>2.1. 한랭 스트레스와 플라크 파열 기전</h3>
+<p>
+한랭 자극은 피부 한랭 수용체를 자극하여 전신 혈관 저항(SVR)과 심근 산소 소비량(MVO2)을 급격히 증가시킨다. 전단 응력(Shear Stress)이 임계점을 초과하면 섬유성 피막(Fibrous Cap)이 얇은 취약 죽상반(Vulnerable Plaque)이 파열되고, 조직 인자(Tissue Factor)가 순환 혈액에 노출되면서 외인성 응고 경로가 폭발적으로 활성화된다.<br>
+</p>
+<h3>2.2. 고감도 트로포닌 (High-Sensitivity Cardiac Troponin, hs-cTn)</h3>
+<li>**동역학적 가치**: 심근 괴사 발생 1~3시간 내에 혈중 방출되어 10~14일간 지속된다.</li>
+<li>**ESC 0h/1h 및 0h/2h 신속 배제/확진 알고리즘**:</li>
+<li>Baseline hs-cTn 농도가 매우 낮고 1시간 델타($\Delta$)가 미미한 경우 Rule-out.</li>
+<li>초기 수치가 현저히 높거나 1시간 내 유의미한 상승($\Delta \ge Cutoff$)을 보이는 경우 즉시 Rule-in 및 침습적 관류 전략 수립.</li>
+<li>**주의 요인**: 신부전, 패혈증, 폐색전증, 심근염 등에서도 비허혈성 hs-cTn 상승이 발생할 수 있으므로 임상 증상 및 심전도 변화와 반드시 병합 평가한다.</li>
+<p>
+---<br>
+</p>
+<h2>3. Diagnostic Algorithm & ECG Localization (심전도 국소화)</h2>
+<h3>3.1. STEMI 심전도 진단 기준 (Fourth Universal Definition of MI)</h3>
+<p>
+연속된 2개 이상의 유도에서 J-point ST분절 상승이 다음 기준을 충족해야 한다.<br>
+<li>**V2-V3 유도**: 40세 미만 남성 $\ge 2.5\text{mm}$, 40세 이상 남성 $\ge 2.0\text{mm}$, 여성(연령 무관) $\ge 1.5\text{mm}$.</li>
+<li>**기타 유도**: $\ge 1.0\text{mm}$.</li>
+</p>
+<h3>3.2. 관상동맥 해부학적 병변 부위 국소화</h3>
+<code>| 심전도 유도 (Leads) | 경색 부위 (Anatomic Location) | 책임 관상동맥 (Culprit Artery) | 임상적 주의사항 |</code><br>
+<code>| :--- | :--- | :--- | :--- |</code><br>
+<code>| **II, III, aVF** | 하벽 (Inferior Wall) | 우관상동맥(RCA 85%) / LCx(15%) | 서맥, 방실차단 동반 빈번. V4R 유도 측정 필수 |</code><br>
+<code>| **V1, V2** | 중격 (Septal) | 좌전하행지 근위부 (LAD) | 심실중격 파열(VSD) 및 번들 차단 위험 |</code><br>
+<code>| **V3, V4** | 전벽 (Anterior Wall) | 좌전하행지 (LAD) | 대량 심근 괴사, 급성 심부전, 심인성 쇼크 |</code><br>
+<code>| **I, aVL, V5, V6** | 측벽 (Lateral Wall) | 좌회선지 (LCx) 또는 LAD 대각지 | 미세 심전도 변화로 간과되기 쉬움 |</code><br>
+<code>| **V7, V8, V9** | 후벽 (Posterior Wall) | LCx 또는 RCA 후하행지 | V1-V3의 ST 하강 및 키 큰 R파 감별 |</code><br>
+<code>| **V4R, V5R** | 우심실 (Right Ventricle) | 우관상동맥 근위부 (Proximal RCA) | **전부하(Preload) 의존적 $\rightarrow$ NTG 및 이뇨제 절대 금기** |</code><br>
+<p>
+---<br>
+</p>
+<h2>4. Emergency Pharmacotherapy & Reperfusion Protocol</h2>
+<h3>4.1. 초기 약물 처방 프로토콜</h3>
+<p>
+*출처: Dr. K's Medical Wiki (`kst104/wikiwi/wiki/medical/protocols/acs.md`)*<br>
+</p>
+<p>
+1. **항혈소판 요법 (Antiplatelet Therapy)**:<br>
+<li>**아스피린(Aspirin)**: 300mg 경구 저작 투여 (비장용정 저작을 통해 15분 내 혈소판 억제 달성).</li>
+<li>**P2Y12 억제제 로딩**:</li>
+<li>Ticagrelor 180mg PO 로딩 (또는 Prasugrel 60mg, 75세 미만·체중 60kg 초과 시).</li>
+<li>Clopidogrel 600mg은 신약 사용 불가 또는 출혈 고위험군에서 차선책으로 적용.</li>
+2. **항응고 요법 (Anticoagulation)**:<br>
+<li>미분획 헤파린(UFH): 60~70 U/kg IV 볼루스 (최대 4,000~5,000 U), 목표 aPTT 50~70초 유지.</li>
+3. **증상 완화 및 주의 약물**:<br>
+<li>**나이트로글리세린(Nitroglycerin)**: 설하 0.6mg 매 5분간 최대 3회 투여. 수축기 혈압 $< 90\text{mmHg}$, 서맥($< 50\text{bpm}$), 타다라필/실데나필 24~48시간 내 복용자, **우심실 경색(RV Infarction) 시 절대 금기**.</li>
+<li>**산소 투여**: SpO2 $< 90\%$ 또는 호흡곤란 환자에게만 투여 (정상 산소포화도 환자에게 과도한 고농도 산소는 관상동맥 수축을 유발함).</li>
+</p>
+<h3>4.2. 일차적 관상동맥 중재술(Primary PCI) 프로세스</h3>
+<li>STEMI 진단 즉시 심장혈관조영실(Cath Lab) One-Call 활성화.</li>
+<li>천자 부위: 요골동맥 접근법(Radial Approach)이 대퇴동맥 대비 출혈 합병증 및 전신 사망률을 유의미하게 감소시킴.</li>
+<li>혈전 흡인(Thrombectomy) 및 약물방출 스텐트(DES) 삽입.</li>
+<p>
+---<br>
+</p>
+<h2>5. Post-Resuscitation & Fatal Complication Management</h2>
+<p>
+1. **치명적 부정맥 (VF / Pulseless VT)**:<br>
+<li>STEMI 환자 심정지의 주원인. 즉시 200J 양방향 제세동(Biphasic Defibrillation) 및 고품질 CPR.</li>
+<li>Amiodarone 300mg IV 볼루스 투여 후 ROSC 달성 시 즉시 PCI 시행.</li>
+2. **심인성 쇼크 (Cardiogenic Shock)**:<br>
+<li>광범위 전벽 경색 또는 유두근 파열. Norepinephrine을 1차 혈압상승제로 적용하고, 필요 시 체외막산소공급(ECMO) 또는 대동맥 내 풍선펌프(IABP) 조기 도입.</li>
+3. **기계적 합병증 감별**:<br>
+<li>급성 심잡음(Systolic Murmur) 발생 시 심실중격 결손(VSD) 또는 승모판 건삭 파열 초음파(Bedside Echo) 즉시 평가.</li>
+</p>
+<p>
+---<br>
+</p>
+<h2>6. References (참고 문헌)</h2>
+<p>
+1. **Tintinalli, J. E., et al.** *Tintinalli's Emergency Medicine: A Comprehensive Study Guide*, 8th Ed. McGraw-Hill, Chapter 48: Chest Pain, Chapter 49: Acute Coronary Syndromes.<br>
+2. **Dr. K's Emergency Medicine Wiki (`kst104/wikiwi`)**: `wiki/medical/protocols/acs.md` (급성 관상동맥 증후군 프로토콜), `wiki/medical/emergency/cardiac-arrest.md`.<br>
+3. **Byrne, R. A., et al.** 2023 ESC Guidelines for the management of acute coronary syndromes. *European Heart Journal*, 44(38):3720-3826.<br>
+4. **O'Gara, P. T., et al.** 2013 ACCF/AHA Guideline for the Management of ST-Elevation Myocardial Infarction. *Circulation*, 127(4):e362-e425.<br>
+5. **Thygesen, K., et al.** Fourth Universal Definition of Myocardial Infarction (2018). *J Am Coll Cardiol*, 72(18):2231-2264.<br>
+</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function setView(mode) {
+      const p = document.getElementById('col-public');
+      const c = document.getElementById('col-clinical');
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(b => b.classList.remove('active', 'clinical-active'));
+
+      if (mode === 'both') {
+        p.style.display = 'block';
+        c.style.display = 'block';
+        btns[0].classList.add('active');
+      } else if (mode === 'public') {
+        p.style.display = 'block';
+        c.style.display = 'none';
+        btns[1].classList.add('active');
+      } else if (mode === 'clinical') {
+        p.style.display = 'none';
+        c.style.display = 'block';
+        btns[2].classList.add('clinical-active');
+      }
+    }
+  </script>
+</body>
+</html>

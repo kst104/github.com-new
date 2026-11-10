@@ -378,10 +378,64 @@ def build_day3_anime_shorts():
         print(f"✅ Day 3 애니 쇼츠 깃허브 아카이브 완료: anime_reel_video.mp4")
     return out_file
 
+def build_day4_anime_shorts():
+    scenes = [
+        {
+            "badge": "⚠️ 긴급 경고",
+            "sfx": "콰앙!!",
+            "anime_img": "/workspace/assets/anime/day4/scene1_chest_pain.png",
+            "main_text": "겨울철 새벽 가슴 통증\n단순 급체로 넘기지 마세요!",
+            "sub_text": "찬 공기 노출 즉시 혈관 급수축 심근경색",
+            "voice": "겨울철 새벽에 가슴을 쥐어짜는 통증이 찾아오면, 절대 단순 소화불량으로 넘기시면 안 됩니다."
+        },
+        {
+            "badge": "🏥 응급실 현장 진실",
+            "sfx": "위잉!!",
+            "anime_img": "/workspace/assets/anime/day4/scene2_ambulance_ecg.png",
+            "main_text": "식은땀과 명치 답답함\n심장의 위험한 SOS 신호!",
+            "sub_text": "심근경색 30%는 비전형 증상으로 시작",
+            "voice": "실제 응급실 환자의 30%는 가슴 흉통 대신 명치 답답함과 비 오듯 쏟아지는 식은땀으로 시작합니다."
+        },
+        {
+            "badge": "💡 의사의 골든타임",
+            "sfx": "반짝✨",
+            "anime_img": "/workspace/assets/anime/day4/scene3_doctor_heart.png",
+            "main_text": "혈관 막히면 2시간!\n스텐트 시술 120분 골든타임",
+            "sub_text": "시간 지체 시 심장 근육 영구 괴사",
+            "voice": "심장 혈관이 완전히 막히면 2시간 안에 뚫어야 심장 근육의 괴사를 막을 수 있습니다."
+        },
+        {
+            "badge": "🚨 119 즉시 호출",
+            "sfx": "삐뽀!!",
+            "anime_img": "/workspace/assets/anime/day4/scene4_call_119.png",
+            "main_text": "손 따거나 운전하지 말고\n즉시 119 구급차 부르세요!",
+            "sub_text": "구급차 내 심전도 전송 및 심장센터 직행",
+            "voice": "소화제 먹거나 직접 운전하지 마시고, 그 즉시 119를 불러 심혈관센터로 직행하셔야 합니다."
+        },
+        {
+            "badge": "👨‍👩‍👧 가족 사랑 실천",
+            "sfx": "훈훈~",
+            "anime_img": "/workspace/assets/anime/day4/scene5_warm_family.png",
+            "main_text": "소중한 가족의 심장 건강\n빠른 119 신고가 지킵니다",
+            "sub_text": "부모님과 지인들께 꼭 공유해 주세요",
+            "voice": "소중한 우리 가족의 건강한 심장, 신속한 119 신고가 지킵니다. 지금 꼭 공유해 주세요."
+        }
+    ]
+    
+    out_file = "/workspace/downloads/Day4_겨울철_심근경색_전조증상_골든타임_90s애니_쇼츠.mp4"
+    render_anime_shorts(scenes, out_file, temp_dir="/tmp/day4_anime_shorts_build")
+    
+    # 저장소 동기화
+    dest_dir = "/workspace/work/content-automation-engine/content/2026-11-11-01/instagram"
+    if os.path.exists(dest_dir):
+        subprocess.run(["cp", out_file, os.path.join(dest_dir, "anime_reel_video.mp4")])
+        print(f"✅ Day 4 애니 쇼츠 깃허브 아카이브 완료: anime_reel_video.mp4")
+    return out_file
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="90s Retro Anime Video Engine")
-    parser.add_argument("--day", type=int, default=1, choices=[1, 2, 3], help="제작할 Day 번호 (기본: 1)")
+    parser.add_argument("--day", type=int, default=1, choices=[1, 2, 3, 4], help="제작할 Day 번호 (기본: 1)")
     args = parser.parse_args()
     
     if args.day == 1:
@@ -390,4 +444,6 @@ if __name__ == "__main__":
         build_day2_anime_shorts()
     elif args.day == 3:
         build_day3_anime_shorts()
+    elif args.day == 4:
+        build_day4_anime_shorts()
 
