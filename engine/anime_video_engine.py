@@ -324,14 +324,70 @@ def build_day2_anime_shorts():
         print(f"✅ Day 2 애니 쇼츠 깃허브 아카이브 완료: anime_reel_video.mp4")
     return out_file
 
+def build_day3_anime_shorts():
+    scenes = [
+        {
+            "badge": "⚠️ 긴급 경고",
+            "sfx": "꽈당!!",
+            "anime_img": "/workspace/assets/anime/day3/scene1_fall.png",
+            "main_text": "겨울철 부모님 엉덩방아\n절대 가볍게 보지 마세요!",
+            "sub_text": "대퇴골 골절 시 1년 내 사망률 20% 돌파",
+            "voice": "겨울철 어르신들 엉덩방아 찧으시는 거, 절대 단순 타박상으로 넘기시면 안 됩니다."
+        },
+        {
+            "badge": "🏥 응급실 현장 진실",
+            "sfx": "위잉!!",
+            "anime_img": "/workspace/assets/anime/day3/scene2_ambulance_xray.png",
+            "main_text": "빙판길보다 안방 화장실이\n3배 더 위험합니다",
+            "sub_text": "실내 낙상 60% 차지, 부동 폐렴 합병증",
+            "voice": "실제 응급실에 실려 오시는 고관절 골절의 60% 이상은 눈길이 아니라 집 안 화장실과 침실에서 일어납니다."
+        },
+        {
+            "badge": "💡 의사의 골든타임",
+            "sfx": "반짝✨",
+            "anime_img": "/workspace/assets/anime/day3/scene3_doctor_pelvis.png",
+            "main_text": "골절 시 억지로 세우지 말고\n48시간 내 수술 골든타임!",
+            "sub_text": "다리 외회전 변형 즉시 119 신고",
+            "voice": "넘어지신 뒤 못 일어나시면 억지로 부축하지 마시고, 48시간 이내에 수술을 받아야 생명을 지킵니다."
+        },
+        {
+            "badge": "🛡️ 실내 안전 3대 처방",
+            "sfx": "착!!",
+            "anime_img": "/workspace/assets/anime/day3/scene4_home_safety.png",
+            "main_text": "화장실 안전 손잡이와\n복도 야간 센서등 설치!",
+            "sub_text": "미끄럼 방지 양말 착용 필수",
+            "voice": "지금 당장 부모님 댁 화장실에 안전 손잡이 달아드리고, 새벽 복도에 야간 센서등을 꼭 붙여주세요."
+        },
+        {
+            "badge": "👨‍👩‍👧 가족 사랑 실천",
+            "sfx": "훈훈~",
+            "anime_img": "/workspace/assets/anime/day3/scene5_family_walk.png",
+            "main_text": "부모님의 건강한 보행\n자녀의 작은 관심이 지킵니다",
+            "sub_text": "소중한 가족과 지인께 꼭 공유하세요",
+            "voice": "부모님이 평생 스스로 걸으실 수 있도록, 이번 주말에 꼭 확인해 보세요."
+        }
+    ]
+    
+    out_file = "/workspace/downloads/Day3_겨울철_노인_낙상_대퇴골골절_90s애니_쇼츠.mp4"
+    render_anime_shorts(scenes, out_file, temp_dir="/tmp/day3_anime_shorts_build")
+    
+    # 저장소 동기화
+    dest_dir = "/workspace/work/content-automation-engine/content/2026-11-10-01/instagram"
+    if os.path.exists(dest_dir):
+        subprocess.run(["cp", out_file, os.path.join(dest_dir, "anime_reel_video.mp4")])
+        print(f"✅ Day 3 애니 쇼츠 깃허브 아카이브 완료: anime_reel_video.mp4")
+    return out_file
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="90s Retro Anime Video Engine")
-    parser.add_argument("--day", type=int, default=1, choices=[1, 2], help="제작할 Day 번호 (기본: 1)")
+    parser.add_argument("--day", type=int, default=1, choices=[1, 2, 3], help="제작할 Day 번호 (기본: 1)")
     args = parser.parse_args()
     
     if args.day == 1:
         build_day1_anime_shorts()
     elif args.day == 2:
         build_day2_anime_shorts()
+    elif args.day == 3:
+        build_day3_anime_shorts()
 
