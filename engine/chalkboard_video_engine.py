@@ -118,12 +118,30 @@ def create_chalkboard_scene_frame(
         
         img.paste(cropped_img, (art_x1, art_y1), mask)
         
-    # 분필 핵심 키워드 태그 (우측 상단 오버레이)
+    # 분필 핵심 키워드 태그 (우측 상단 오버레이 - 글자 길이에 맞춰 동적 크기 계산)
     if chalk_keyword:
-        kw_box_x = art_x2 - 250
-        kw_box_y = art_y1 + 30
-        draw.rounded_rectangle([(kw_box_x, kw_box_y), (kw_box_x + 220, kw_box_y + 80)], radius=16, fill=(16, 28, 22, 230), outline=(250, 204, 21), width=3)
-        draw.text((kw_box_x + 110, kw_box_y + 40), chalk_keyword, font=font_keyword, fill=(253, 224, 71), anchor="mm")
+        bbox = font_keyword.getbbox(chalk_keyword)
+        text_w = bbox[2] - bbox[0]
+        text_h = bbox[3] - bbox[1]
+        
+        pad_x = 32
+        pad_y = 18
+        box_w = text_w + pad_x * 2
+        box_h = text_h + pad_y * 2
+        
+        box_right = art_x2 - 30
+        box_left = box_right - box_w
+        box_top = art_y1 + 30
+        box_bottom = box_top + box_h
+        
+        draw.rounded_rectangle(
+            [(box_left, box_top), (box_right, box_bottom)],
+            radius=18, fill=(16, 28, 22, 240), outline=(250, 204, 21), width=4
+        )
+        draw.text(
+            ((box_left + box_right) // 2, (box_top + box_bottom) // 2),
+            chalk_keyword, font=font_keyword, fill=(253, 224, 71), anchor="mm"
+        )
         
     # 3. 하단 칠판 필기 자막 박스 (y: 1275 ~ 1840)
     sub_top = 1275
