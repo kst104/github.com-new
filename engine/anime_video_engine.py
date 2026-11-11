@@ -410,7 +410,7 @@ def build_day4_anime_shorts():
             "anime_img": "/workspace/assets/anime/day4/scene4_call_119.png",
             "main_text": "손 따거나 운전하지 말고\n즉시 119 구급차 부르세요!",
             "sub_text": "구급차 내 심전도 전송 및 심장센터 직행",
-            "voice": "소화제 먹거나 직접 운전하지 마시고, 그 즉시 119를 불러 심혈관센터로 직행하셔야 합니다."
+            "voice": "소화제 먹거나 직접 운전하지 마시고, 그 즉시 일일구를 불러 심혈관센터로 직행하셔야 합니다."
         },
         {
             "badge": "👨‍👩‍👧 가족 사랑 실천",
@@ -418,7 +418,7 @@ def build_day4_anime_shorts():
             "anime_img": "/workspace/assets/anime/day4/scene5_warm_family.png",
             "main_text": "소중한 가족의 심장 건강\n빠른 119 신고가 지킵니다",
             "sub_text": "부모님과 지인들께 꼭 공유해 주세요",
-            "voice": "소중한 우리 가족의 건강한 심장, 신속한 119 신고가 지킵니다. 지금 꼭 공유해 주세요."
+            "voice": "소중한 우리 가족의 건강한 심장, 신속한 일일구 신고가 지킵니다. 지금 꼭 공유해 주세요."
         }
     ]
     
