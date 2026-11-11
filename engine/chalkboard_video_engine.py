@@ -287,12 +287,69 @@ def build_day4_chalkboard_shorts():
     out_file = "/workspace/downloads/Day4_겨울철_심근경색_칠판드로잉_쇼츠.mp4"
     render_chalkboard_shorts(scenes, out_file, temp_dir="/tmp/day4_chalk_shorts_build")
     
-    # 깃허브 아카이브
     dest_dir = "/workspace/work/content-automation-engine/content/2026-11-11-01/chalkboard"
     os.makedirs(dest_dir, exist_ok=True)
     subprocess.run(["cp", out_file, os.path.join(dest_dir, "chalkboard_shorts_video.mp4")])
     print(f"✅ Day 4 칠판 쇼츠 깃허브 아카이브 완료: chalkboard_shorts_video.mp4")
     return out_file
 
+def build_day5_chalkboard_shorts():
+    scenes = [
+        {
+            "badge": "⚠️ 겨울철 은근한 덫",
+            "keyword": "40도 열기의 배신",
+            "chalk_img": "/workspace/assets/chalkboard/day5/scene1_electric_mat_sleep.png",
+            "main_text": "따뜻한 전기장판 위의 꿀잠\n자고 일어나니 다리에 물집이?",
+            "sub_text": "40~50도 은근한 열기가 만드는 저온 화상",
+            "voice": "겨울철에 따뜻한 전기장판 틀어놓고 푹 자고 일어났는데, 다리에 누런 물집이 잡혀 놀라신 적 있으신가요?"
+        },
+        {
+            "badge": "🏥 응급실 현장 진실",
+            "keyword": "안 아픈 게 더 위험",
+            "chalk_img": "/workspace/assets/chalkboard/day5/scene2_skin_burn_anatomy.png",
+            "main_text": "통증이 전혀 없는 이유\n신경까지 타버린 3도 화상!",
+            "sub_text": "피하지방층 괴사 및 감각 신경 완전 마비",
+            "voice": "하나도 안 아프다고 방치하시면 안 됩니다. 감각 신경까지 열기로 타버린 심각한 3도 화상이기 때문입니다."
+        },
+        {
+            "badge": "💡 의사의 온도 법칙",
+            "keyword": "44도 6시간 괴사",
+            "chalk_img": "/workspace/assets/chalkboard/day5/scene3_doctor_burn_lecture.png",
+            "main_text": "44도에서 6시간 노출 시\n피부 단백질이 완전히 변성",
+            "sub_text": "당뇨 환자·음주 수면 시 치명적 피부 괴사",
+            "voice": "체온보다 조금 높은 44도에서도 6시간 이상 노출되면 피부 단백질이 익어버려 괴사하기 시작합니다."
+        },
+        {
+            "badge": "🚨 절대 금기 민간요법",
+            "keyword": "물집·얼음 금지!",
+            "chalk_img": "/workspace/assets/chalkboard/day5/scene4_burn_contraindications.png",
+            "main_text": "물집 바늘로 터뜨리거나\n얼음·소주 바르면 피부 괴사!",
+            "sub_text": "2차 감염과 패혈증 위험, 절대 건드리지 마세요",
+            "voice": "물집을 바늘로 터뜨리거나 얼음을 직접 대시면 안 됩니다. 혈관이 수축해 괴사가 더 깊어집니다."
+        },
+        {
+            "badge": "👨‍👩‍👧 올바른 응급처치",
+            "keyword": "미온수 15분 쿨링",
+            "chalk_img": "/workspace/assets/chalkboard/day5/scene5_proper_burn_firstaid.png",
+            "main_text": "15도 미온수로 15분 식히고\n깨끗한 거즈 후 병원 가세요!",
+            "sub_text": "우리 가족의 안전한 겨울, 지금 꼭 공유해 주세요",
+            "voice": "흐르는 미온수로 15분간 서서히 식힌 뒤 깨끗한 거즈로 보호하고 즉시 병원에 가셔야 합니다. 소중한 가족을 위해 꼭 공유해 주세요."
+        }
+    ]
+    
+    out_file = "/workspace/downloads/Day5_겨울철_저온화상_칠판드로잉_쇼츠.mp4"
+    render_chalkboard_shorts(scenes, out_file, temp_dir="/tmp/day5_chalk_shorts_build")
+    
+    dest_dir = "/workspace/work/content-automation-engine/content/2026-11-12-01/chalkboard"
+    os.makedirs(dest_dir, exist_ok=True)
+    subprocess.run(["cp", out_file, os.path.join(dest_dir, "chalkboard_shorts_video.mp4")])
+    print(f"✅ Day 5 칠판 쇼츠 깃허브 아카이브 완료: chalkboard_shorts_video.mp4")
+    return out_file
+
 if __name__ == "__main__":
-    build_day4_chalkboard_shorts()
+    if len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "5":
+        build_day5_chalkboard_shorts()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "4":
+        build_day4_chalkboard_shorts()
+    else:
+        build_day5_chalkboard_shorts()
