@@ -346,10 +346,65 @@ def build_day5_chalkboard_shorts():
     print(f"✅ Day 5 칠판 쇼츠 깃허브 아카이브 완료: chalkboard_shorts_video.mp4")
     return out_file
 
+def build_day6_chalkboard_shorts():
+    scenes = [
+        {
+            "badge": "⚠️ 기온 급강하 경고",
+            "keyword": "39도 고열·오한",
+            "chalk_img": "/workspace/assets/chalkboard/day6/scene1_sudden_high_fever_chills.png",
+            "main_text": "기온 뚝 떨어지자마자\n39도 고열과 온몸 근육통?",
+            "sub_text": "단순 감기 아닌 인플루엔자 독감의 시작",
+            "voice": "날씨가 갑자기 추워지며 38도 이상의 고열과 두들겨 맞은 듯한 온몸 근육통이 찾아왔다면 단순 감기가 아닙니다."
+        },
+        {
+            "badge": "🏥 독감 vs 감기 감별",
+            "keyword": "갑작스러운 폭격",
+            "chalk_img": "/workspace/assets/chalkboard/day6/scene2_doctor_flu_cold_diagram.png",
+            "main_text": "감기는 미열과 콧물 서서히\n독감은 몇 시간 만에 고열 폭탄!",
+            "sub_text": "인플루엔자 바이러스의 급성 전신 침투",
+            "voice": "감기는 콧물과 미열로 서서히 오지만, 독감은 몇 시간 만에 고열과 오한이 한꺼번에 덮치는 것이 결정적 차이입니다."
+        },
+        {
+            "badge": "💡 치료의 골든타임",
+            "keyword": "48시간 사수!",
+            "chalk_img": "/workspace/assets/chalkboard/day6/scene3_antiviral_golden_time_clock.png",
+            "main_text": "증상 시작 후 이틀 안에!\n타미플루·페라미플루 48시간",
+            "sub_text": "바이러스 증식 차단하는 치료 골든타임",
+            "voice": "증상이 시작되고 사십팔시간 안에 항바이러스제를 투약해야 바이러스 증식을 막고 합병증을 피할 수 있습니다."
+        },
+        {
+            "badge": "🚨 치명적 합병증 경고",
+            "keyword": "폐렴 신호 주의",
+            "chalk_img": "/workspace/assets/chalkboard/day6/scene4_pneumonia_warning_signs.png",
+            "main_text": "호흡곤란과 누런 가래\n2차 세균성 폐렴 위험 신호!",
+            "sub_text": "어르신·당뇨 환자 쇼크 주의, 즉시 응급실",
+            "voice": "숨이 차거나 누런 가래가 나오면 2차 세균성 폐렴 신호입니다. 어르신과 만성질환자는 즉시 병원에 가셔야 합니다."
+        },
+        {
+            "badge": "👨‍👩‍👧 가족 건강 지키기",
+            "keyword": "초기 검사 필수",
+            "chalk_img": "/workspace/assets/chalkboard/day6/scene5_family_recovery_care.png",
+            "main_text": "열나면 참지 말고 검사받고\n수분 섭취와 충분한 휴식!",
+            "sub_text": "우리 가족의 건강한 겨울, 지금 꼭 공유해 주세요",
+            "voice": "열나면 참지 마시고 신속항원 검사를 받으세요. 소중한 우리 가족을 위해 이 정보를 지금 꼭 공유해 주세요."
+        }
+    ]
+    
+    out_file = "/workspace/downloads/Day6_겨울철_독감_감기감별_칠판드로잉_쇼츠.mp4"
+    render_chalkboard_shorts(scenes, out_file, temp_dir="/tmp/day6_chalk_shorts_build")
+    
+    dest_dir = "/workspace/work/content-automation-engine/content/2026-11-13-01/chalkboard"
+    os.makedirs(dest_dir, exist_ok=True)
+    subprocess.run(["cp", out_file, os.path.join(dest_dir, "chalkboard_shorts_video.mp4")])
+    print(f"✅ Day 6 칠판 쇼츠 깃허브 아카이브 완료: chalkboard_shorts_video.mp4")
+    return out_file
+
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "5":
+    if len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "6":
+        build_day6_chalkboard_shorts()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "5":
         build_day5_chalkboard_shorts()
     elif len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "4":
         build_day4_chalkboard_shorts()
     else:
-        build_day5_chalkboard_shorts()
+        build_day6_chalkboard_shorts()
