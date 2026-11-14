@@ -399,8 +399,63 @@ def build_day6_chalkboard_shorts():
     print(f"✅ Day 6 칠판 쇼츠 깃허브 아카이브 완료: chalkboard_shorts_video.mp4")
     return out_file
 
+def build_day7_chalkboard_shorts():
+    scenes = [
+        {
+            "badge": "⚠️ 겨울철 난방 경고",
+            "keyword": "정면 바람 금지!",
+            "chalk_img": "/workspace/assets/chalkboard/day7/scene1_heater_dry_eyes.png",
+            "main_text": "히터 바람 정면으로 쐬면\n눈이 뻑뻑해집니다",
+            "sub_text": "난방으로 실내 습도가 떨어지면 눈물이 빨리 마릅니다",
+            "voice": "겨울철에 히터 바람을 얼굴로 직접 쐬면 눈이 뻑뻑해지고 침침해집니다. 실내 공기가 건조해지기 때문입니다."
+        },
+        {
+            "badge": "🏥 눈물막의 비밀",
+            "keyword": "눈물막 증발",
+            "chalk_img": "/workspace/assets/chalkboard/day7/scene2_tear_film_breakup.png",
+            "main_text": "눈물막이 마르면\n각막에 미세한 상처!",
+            "sub_text": "기름막이 부족하면 물을 채워도 금세 마릅니다",
+            "voice": "난방으로 실내 습도가 떨어지면 눈물막이 빠르게 증발하고, 각막 표면에 미세한 상처가 생깁니다."
+        },
+        {
+            "badge": "💡 의사의 점안법",
+            "keyword": "첫 방울은 버리기",
+            "chalk_img": "/workspace/assets/chalkboard/day7/scene3_eyedrop_technique.png",
+            "main_text": "무방부제 일회용 인공눈물\n첫 방울은 버리세요",
+            "sub_text": "결막낭에 한 방울, 개봉 후 재사용 금지",
+            "voice": "인공눈물은 무방부제 일회용으로 고르시고, 첫 방울은 버린 뒤 결막낭에 한 방울만 넣으세요. 개봉한 제품은 다시 쓰지 마세요."
+        },
+        {
+            "badge": "🏠 실내 환경 관리",
+            "keyword": "습도 사십에서 육십",
+            "chalk_img": "/workspace/assets/chalkboard/day7/scene4_humidity_guard.png",
+            "main_text": "실내 적정 습도\n사십에서 육십 퍼센트",
+            "sub_text": "가습기 물은 매일 교체, 히터 방향 돌리기",
+            "voice": "실내 습도는 사십에서 육십 퍼센트로 유지하고, 가습기 물은 매일 갈아 주셔야 합니다. 히터 방향도 얼굴에서 돌려 주세요."
+        },
+        {
+            "badge": "🚨 응급 위험 신호",
+            "keyword": "각막 손상 신호",
+            "chalk_img": "/workspace/assets/chalkboard/day7/scene5_red_flag_eye.png",
+            "main_text": "갑작스러운 시력 저하\n심한 안통은 응급 신호!",
+            "sub_text": "각막 손상 의심, 즉시 안과 진료",
+            "voice": "갑자기 시력이 떨어지거나 눈이 심하게 아프면 각막 손상 신호입니다. 지금 꼭 공유해 주세요."
+        }
+    ]
+
+    out_file = "/workspace/downloads/Day7_겨울철_안구건조증_인공눈물_칠판드로잉_쇼츠.mp4"
+    render_chalkboard_shorts(scenes, out_file, temp_dir="/tmp/day7_chalk_shorts_build")
+
+    dest_dir = "/workspace/work/content-automation-engine/content/2026-11-14-01/chalkboard"
+    os.makedirs(dest_dir, exist_ok=True)
+    subprocess.run(["cp", out_file, os.path.join(dest_dir, "chalkboard_shorts_video.mp4")])
+    print(f"✅ Day 7 칠판 쇼츠 깃허브 아카이브 완료: chalkboard_shorts_video.mp4")
+    return out_file
+
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "6":
+    if len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "7":
+        build_day7_chalkboard_shorts()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "6":
         build_day6_chalkboard_shorts()
     elif len(sys.argv) > 1 and sys.argv[1] == "--day" and sys.argv[2] == "5":
         build_day5_chalkboard_shorts()
