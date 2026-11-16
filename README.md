@@ -115,6 +115,23 @@ gh auth setup-git
 
 ---
 
+## 5. 주식·선물옵션 트랙 연결 (`kst104/stock-future`)
+
+주식시장 마감 시황과 외국인 현·선물·옵션 수급은 이 허브가 아니라 **전용 저장소**에서 다룹니다. 원고·쇼츠·엔진을 한곳에 모아 두고, 이 허브는 발행·상태 관리만 맡습니다.
+
+- **저장소**: <https://github.com/kst104/stock-future> (public)
+- **실측 데이터**: `kst104/futureoption`(로컬 8766, 투기지수 S·현물/선물 수급) · `kst104/futureoption1`(로컬 18901, 감마·GEX/VEX)
+- **산출물**: `content/<날짜>/01_market_daily_insight.md` · `02_foreign_flow_analysis.md` · `03_shorts_market/` · `04_shorts_foreign_flow/` (mp4·gif·씬 이미지·대본·검증 리포트)
+- **이 허브와의 연결**: 원고는 노션 `📋 콘텐츠 보드`의 같은 행에서 상태를 관리하고, 보드 행의 `GitHub` 속성에 stock-future의 회차 링크를 넣습니다. 쇼츠는 이 허브의 영상 엔진이 아니라 stock-future의 칠판 엔진(`engine/stock_chalkboard_engine.py`)으로 렌더링합니다.
+- **1회차(2026-11-16)**: 장마감 시황·외국인 수급 원고 2건 + 칠판 드로잉 쇼츠 2편. 아래 명령으로 그대로 재생성됩니다.
+  ```bash
+  git clone https://github.com/kst104/stock-future.git
+  cd stock-future && pip install -r requirements.txt
+  python3 scripts/generate_stock_1116_shorts.py
+  ```
+
+---
+
 ## 폴더 구조
 ```
 content/<YYYY-MM-DD-NN>/   콘텐츠 1건 (meta.json, post.md, ads.md, shorts.md, 미디어)
