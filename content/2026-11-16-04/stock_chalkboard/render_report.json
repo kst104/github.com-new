@@ -1,0 +1,27 @@
+{
+  "file": "/workspace/downloads/Stock2_1116_외국인_현선물옵션_수급_칠판드로잉_쇼츠.mp4",
+  "duration": 57.82,
+  "size_mb": 3.07,
+  "streams": [
+    {
+      "type": "video",
+      "codec": "h264",
+      "w": 1080,
+      "h": 1920,
+      "fps": "25"
+    },
+    {
+      "type": "audio",
+      "codec": "aac",
+      "w": null,
+      "h": null,
+      "fps": null
+    }
+  ],
+  "gif": "/workspace/downloads/Stock2_1116_칠판쇼츠_움직이는미리보기.gif",
+  "captures": [
+    "/workspace/downloads/Stock2_1116_씬1_미리보기.png",
+    "/workspace/downloads/Stock2_1116_씬2_미리보기.png",
+    "/workspace/downloads/Stock2_1116_씬3_미리보기.png"
+  ]
+}
