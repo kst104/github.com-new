@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알코올 노출과 저체온증의 병태생리, 심부체온 단계별 심전도 변화, 재가온 전략과 동상 급속 재가온 프로토콜 - Dr. K's Clinical Column</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #3b82f6;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --red-alert: #dc2626;
+      --red-bg: #fef2f2;
+      --code-bg: #1e293b;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Nanum Gothic", "Noto Sans KR", sans-serif;
+      line-height: 1.8;
+      color: var(--text);
+      background-color: var(--bg);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .badge-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #eff6ff;
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+    }
+    .badge-alert {
+      background: var(--red-bg);
+      color: var(--red-alert);
+      border: 1px solid #fecaca;
+    }
+    .journal-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 16px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 16px;
+    }
+    .journal-h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 36px;
+      margin-bottom: 16px;
+      border-left: 5px solid var(--primary);
+      padding-left: 12px;
+    }
+    .journal-h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    th {
+      background-color: #f1f5f9;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    blockquote {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary-light);
+      padding: 14px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-radius: 0 8px 8px 0;
+    }
+    pre {
+      background: var(--code-bg);
+      color: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge-bar">
+      <span class="badge">🩺 전문가용 임상 칼럼</span>
+      <span class="badge">Dr. K's Wiki 연동</span>
+      <span class="badge badge-alert">응급의학 프로토콜</span>
+    </div>
+    <h1 class="journal-title">[Clinical Review] 알코올 매개 저체온증의 병태생리와 Swiss staging, 재가온 전략 및 동상의 급속 재가온 프로토콜</h1>
+
+> <strong>저자</strong>: 응급의학과 전문의 김승태<br>
+> <strong>발행처</strong>: 닥터 K 임상 의학 리뷰 (Doctor K Clinical Review Series)<br>
+> <strong>참고 문헌</strong>: Tintinalli's Emergency Medicine: A Comprehensive Study Guide (9th ed.), Environmental Injuries (Accidental Hypothermia, Frostbite); European Resuscitation Council Guidelines 2021, Cardiac Arrest in Special Circumstances (Hypothermic Cardiac Arrest); Wilderness Medical Society Practice Guidelines for the Out-of-Hospital Evaluation and Treatment of Accidental Hypothermia (2019 Update) and for the Prevention and Treatment of Frostbite (2019 Update); Brown DJA, Brugger H, Boyd J, Paal P. Accidental hypothermia. N Engl J Med 2012;367:1930-8; Paal P. et al. Advances in the domain of accidental hypothermia (Scand J Trauma Resusc Emerg Med); Cauchy E. et al. A new proposal for management of severe frostbite (Wilderness Environ Med).<br>
+> <strong>국내 위키 반영</strong>: `kst104/wikiwi` 의 `medical/emergency/trauma-adults.md` 에 기술된 외상성 응고병증과 산혈증 교정 원칙을 저체온성 응고병증 절에 연결했다.
+
+---
+
+<h2 class="journal-h2">1. 개요 및 역학 (Introduction & Epidemiology)</h2>
+
+저체온증(Accidental Hypothermia)은 비의도적으로 심부체온이 35도 미만으로 하강한 상태다. 응급실에서 마주치는 저체온증은 두 갈래로 나뉜다. 하나는 고산·설상·익수 같은 야외 노출이며, 다른 하나는 도시형 저체온증이다. 도시형의 전형은 노숙, 고령, 정신질환, 그리고 알코올 또는 진정수면제 중독이다. 국내 겨울철 응급실에서 가장 흔한 조합은 회식 후 음주 상태로 야간에 귀가하던 중 실외에서 노출된 사례다.
+
+알코올은 저체온증의 독립 위험 인자이면서 동시에 중증도를 높이는 인자다. 음주 상태의 저체온 환자는 초기 체온이 더 낮고, 발견까지 걸린 시간이 길며, 저혈당과 외상이 동반된 비율이 높다. 사망 사례 분석에서는 말기 저체온 환자의 20~50%에서 역설적 탈의(paradoxical undressing)가 관찰된다고 보고된다. 심부체온이 30도 부근으로 떨어질 때 피부 혈관이 역설적으로 확장되면서 환자가 극심한 작열감을 느껴 옷을 벗어버리는 현상이다. 현장에서 옷이 벗겨진 채 발견된 음주 환자를 두고 타살이나 성폭력으로 오인하는 경우가 생기는 이유이기도 하다. 심한 저체온에서는 좁은 공간에 숨는 hide and die 행동이 뒤따르는 경우도 있다.
+
+저체온증의 예후는 체온 자체보다 동반 손상과 심정지 여부가 좌우한다. 심정지 없이 내원한 중등도 저체온증의 생존율은 병원 전 처치가 적절하면 90%를 넘지만, 심정지 상태로 내원한 심부 저체온(체온 28도 미만)은 재가온 방법에 따라 생존율 차이가 크다. 체외순환 가온(ECMO)을 적용한 심부 저체온 심정지 코호트의 생존 퇴원율은 40~50%대까지 보고된다.
+
+---
+
+<h2 class="journal-h2">2. 열 균형과 알코올의 병태생리 (Thermoregulation & Alcohol)</h2>
+
+<h3 class="journal-h3">2.1. 열 생산과 소실의 균형</h3>
+체온은 열 생산과 열 소실의 차이로 결정된다. 기초 대사는 성인에서 시간당 약 1 kcal/kg 수준이며, 떨림성 열생산(shivering thermogenesis)은 골격근의 불수의적 수축을 통해 대사율을 기초치의 최대 5배까지 끌어올린다. 비떨림성 열생산은 갈색지방조직의 미토콘드리아 언커플링 단백(UCP1)에 의존하며 성인에서는 기여도가 제한적이다.
+
+열 소실은 네 경로로 일어난다. 복사(Radiation)가 실내 환경에서 가장 큰 비중을 차지하고, 전도(Conduction)는 물에 젖었을 때 급격히 증가한다. 같은 온도의 공기와 물을 비교하면 열전도율 차이가 약 25배에 이르기 때문에, 눈에 젖은 옷 한 겹이 마른 옷 여러 겹보다 치명적일 수 있다. 대류(Convection)는 바람에 의해 경계층이 벗겨지면서 소실을 가속하고, 증발(Evaporation)은 호흡과 발한을 통해 지속적으로 열을 빼앗는다.
+
+<h3 class="journal-h3">2.2. 알코올의 네 가지 작용점</h3>
+알코올은 열 균형의 양쪽을 동시에 무너뜨린다.
+
+<strong>첫째, 피부 혈관 확장과 열 소실 증가.</strong> 에탄올은 피부 혈관의 α-아드레날린성 수축 기전을 억제하고 피부 혈류를 증가시킨다. 손과 얼굴의 피부 온도가 올라가 따뜻한 감각이 생기지만, 동시에 심부 열이 피부 표면으로 이동해 복사와 대류로 소실된다. 저체온 환경에서 음주는 전신 열저항을 떨어뜨려 심부체온 하강 속도를 증가시킨다.
+
+<strong>둘째, 시상하부 체온 조절 역치의 하향 이동.</strong> 알코올은 시상하부의 온도 조절 지점을 낮추고, 중심 체온과 말초 체온 신호의 통합을 흐트러뜨린다. 그 결과 혈관 수축과 떨림이 시작되는 체온 역치가 아래로 밀려 방어 반응의 개시가 늦어진다.
+
+<strong>셋째, 떨림 열생산의 억제.</strong> 알코올은 떨림 반사를 직접 억제하고, 근육의 젖산 대사와 열생산 효율을 떨어뜨린다. 임상적으로 중요한 것은 이 억제가 심부체온 35도 전후의 경증 구간에서부터 나타난다는 점이다. 따라서 "떨지 않는다"는 관찰 소견을 추위에 적응한 상태로 해석하면 안 되고, 방어 기전 상실의 신호로 읽어야 한다.
+
+<strong>넷째, 인지 손상과 행동 노출.</strong> 전전두엽 기능 저하로 위험 판단이 무너져 부적절한 복장, 귀가 경로 선택, 장시간 야외 체류가 발생한다. 음주는 또한 항이뇨호르몬 분비를 억제해 삼투성 이뇨를 일으킨다. 추위에 의한 cold diuresis와 겹치면 혈장량이 감소하고 혈액 점도가 상승해 말초 미세순환이 악화된다. 음주 후 식사를 거른 경우 간의 당신생이 억제되어 저혈당이 동반되며, 이는 의식 저하의 감별에서 저체온증과 경합하는 축이다.
+
+<h3 class="journal-h3">2.3. 냉각에 따른 단계적 생리 붕괴</h3>
+심부체온이 내려가면 생리 반응은 순차적으로 진행한다. 35~34도에서 혈관 수축과 떨림이 최대가 되고, 34도 부근에서 냉각 이뇨가 두드러진다. 33도 이하에서는 떨림이 감소하고 근육 경직과 운동 실조가 나타난다. 30도 부근에서 의식 수준이 떨어지고 동공이 산대하며, 심박수는 서맥으로 전환된다. 28도 이하에서는 심근 흥분성이 극단적으로 높아져 심실세동이 유발되기 쉬운 상태가 되고, 24도 부근에서는 무수축으로 진행할 수 있다. 이 과정에서 저칼륨혈증, 대사성 산증, 응고병증이 동반된다. 외상이 겹친 경우에는 저체온, 산혈증, 응고병증이 서로를 악화시키는 lethal triad가 성립하므로, 외상 환자의 체온 관리 목표는 36도 이상 유지로 설정한다.
+
+---
+
+<h2 class="journal-h2">3. 임상 단계와 심전도 (Clinical Staging & ECG)</h2>
+
+<h3 class="journal-h3">3.1. Swiss staging system</h3>
+현장과 응급실에서 가장 실용적인 분류는 Swiss staging이다. 의식 수준과 떨림 유무로 구분하기 때문에 체온 측정이 지연되는 현장에서도 적용할 수 있다.
+
+| 단계 | 심부체온 | 의식 | 떨림 | 대표 소견 |
+| :--- | :--- | :--- | :--- | :--- |
+| HT I | 35~32도 | 명료 | 있음 | 말초 혈관 수축, 오한, 빈맥 |
+| HT II | 32~28도 | 저하 | 없음 | 운동 실조, 어눌한 발음, 서맥, 심방세동 |
+| HT III | 28~24도 | 혼수 | 없음 | 동공 반사 소실 가능, 활력징후 존재 |
+| HT IV | 24도 미만 | 혼수 | 없음 | 활력징후 소실, 겉보기 사망 |
+
+HT II와 HT III의 경계는 임상적으로 결정적이다. 떨림이 멈춘 시점부터는 환자가 스스로 열을 생산하지 못하며, 체온을 올리는 유일한 방법은 외부 가온과 내부 가온뿐이다.
+
+<h3 class="journal-h3">3.2. 심전도 소견</h3>
+저체온의 심전도는 체온에 따라 특징적인 변화를 보인다.
+
+1. <strong>Osborn wave (J wave).</strong> QRS 복합체 종말부에 생기는 양성 편향으로, 심부체온 32도 이하에서 흔히 관찰된다. 병리 생리학적으로는 심실 재분극의 초기 단계에서 전위차가 커지면서 생기는 것으로 설명된다. 저체온에 특이적인 소견은 아니어서 고칼슘혈증에서도 나타나지만, 추위 노출 병력이 있는 환자에서 J파가 보이면 저체온증의 진단적 근거로 활용한다.
+2. <strong>서맥과 전도 지연.</strong> PR, QRS, QT 간격이 체온 저하와 함께 연장된다. 체온 1도당 심박수가 분당 4~5회 감소하는 경향이 있다.
+3. <strong>심방성 부정맥.</strong> 심방세동이 가장 흔하고, 심한 경우 심실세동으로 이행한다.
+4. <strong>심실 흥분성 증가.</strong> 28도 이하에서 심실세동 역치가 급격히 낮아진다. 이 구간에서는 중심정맥관 삽입, 기관내삽관, 거친 이동, 심한 가슴압박 같은 기계적 자극이 심실세동을 유발할 수 있다. 저체온 환자의 처치는 최소한의 자극 원칙 위에 세워야 한다.
+
+<h3 class="journal-h3">3.3. 체온 측정의 함정</h3>
+비접촉 적외선 체온계와 고막 체온계는 저체온 범위에서 정확도가 떨어지고, 겨드랑이 체온은 심부체온을 3~4도 과소평가할 수 있다. 저체온이 의심되면 직장, 식도, 또는 방광 체온으로 측정한다. 식도 체온은 중심부를 반영하면서 재가온 중 추세를 볼 때 가장 유용하지만, 의식 저하 환자에서는 기관내삽관 후에 배치한다. 측정 단위는 저체온용 프로브로 설정해야 하며, 일반 체온계의 표시 하한을 벗어난 값은 의미가 없다.
+
+---
+
+<h2 class="journal-h2">4. 초기 평가와 검사 (Initial Assessment)</h2>
+
+현장 처치의 우선순위는 노출 차단과 이동 최소화다. 젖은 옷을 제거하고 바람을 막고 단열재로 감싼 뒤, 들것으로 조심스럽게 운반한다. 의식이 있더라도 스스로 걷게 하면 말초의 찬 혈액이 중심으로 유입되면서 심부체온이 추가로 떨어지는 afterdrop이 악화된다.
+
+응급실 도착 후 평가는 ABCDE 순서로 진행하되, 체온을 활력징후의 정식 항목으로 취급한다. 확인해야 할 검사는 다음과 같다.
+
+1. <strong>혈당.</strong> 음주와 저체온이 겹친 의식 저하의 흔한 가역 원인이다. 현장과 응급실에서 즉시 측정한다.
+2. <strong>동맥혈 가스분석.</strong> 저체온에서는 혈액이 냉각되어 용해된 기체량이 늘어나기 때문에, 37도에서 측정한 PaO2와 PaCO2는 실제보다 높게 나온다. 산증의 정도와 산소화를 판단할 때 이 보정 문제를 염두에 둔다.
+3. <strong>전해질과 신기능.</strong> cold diuresis에 의한 탈수, 급성신손상, 횡문근융해를 확인한다.
+4. <strong>응고 검사와 혈소판.</strong> 저체온은 혈소판 기능과 응고 인자 활성을 떨어뜨린다. 검사실 응고 검사는 37도에서 시행되므로 실제 출혈 경향을 과소평가할 수 있다.
+5. <strong>심전도와 흉부 방사선.</strong> 부정맥, 흡인성 폐렴, 폐부종을 확인한다.
+6. <strong>독성 검사와 두부 영상.</strong> 음주 병력이 확인되어도 두부 외상, 뇌졸중, 저혈당, 약물 중독의 가능성은 배제하지 않는다. 의식 회복이 기대보다 늦으면 반드시 영상 검사를 시행한다.
+7. <strong>손상 부위 사진 기록.</strong> 동상 부위는 재가온 전후를 촬영해 두면 경과 판단과 후속 치료 결정에 도움이 된다.
+
+---
+
+<h2 class="journal-h2">5. 재가온 전략 (Rewarming)</h2>
+
+<h3 class="journal-h3">5.1. 적응증에 따른 선택</h3>
+재가온 방법은 침습도에 따라 세 단계로 나눈다.
+
+1. <strong>수동 외부 가온(Passive external rewarming).</strong> 담요, 단열 매트, 실내 온도 유지. 자체 열생산이 가능한 HT I에서 적용하며, 시간당 0.5~1도 상승을 기대한다. 젖은 옷을 반드시 제거해야 효과가 있다.
+2. <strong>능동 외부 가온(Active external rewarming).</strong> 온풍 가온기, 가온 매트, 화학 패드. 겨드랑이, 목, 사타구니 같은 중심부에 적용한다. 사지 전체를 먼저 데우면 말초 혈관이 확장되어 심부체온이 일시적으로 더 떨어지고 혈압이 하강하는 재가온 쇼크(rewarming shock)가 발생할 수 있으므로, 중심부 우선 원칙을 지킨다.
+3. <strong>능동 내부 가온(Active internal rewarming).</strong> 가온 정맥수액(38~42도), 가온 가습 산소(40~45도), 흉강 또는 복강 세척, 방광 세척, 체외순환 가온. HT II 이상, 혹은 심혈관 기능이 불안정한 경우에 적용한다.
+
+<h3 class="journal-h3">5.2. Afterdrop과 재가온 쇼크</h3>
+Afterdrop은 재가온을 시작한 뒤에도 심부체온이 1~3도 추가로 하강하는 현상이다. 기전은 두 갈래로 설명된다. 하나는 사지에 남아 있던 찬 혈액이 혈관 확장과 함께 중심 순환으로 돌아오는 것이고, 다른 하나는 몸통 표면에서 중심부로 열이 전도되어 오히려 중심이 냉각되는 것이다. 따라서 재가온 초기의 체온 하락은 처치 실패가 아니라 예상된 경과이며, 이 시기에 혈압과 리듬을 집중 감시한다.
+
+재가온 속도는 가온 방법에 따라 다르다. 능동 외부 가온은 시간당 1~2도, 체강 세척은 시간당 1~2도, 체외순환 가온은 시간당 6~8도 수준이다. 심정지가 동반된 심부 저체온에서는 재가온 속도 자체가 예후 인자이므로 체외순환 가온이 우선 고려된다.
+
+<h3 class="journal-h3">5.3. 저체온성 심정지에서의 처치</h3>
+저체온성 심정지는 "따뜻해지기 전에는 죽었다고 말하지 않는다"는 원칙 위에 처치가 세워진다. 핵심은 다음과 같다.
+
+1. <strong>심폐소생술을 지속한다.</strong> 저체온에서는 뇌와 심장이 낮은 대사 상태로 견디기 때문에, 일반적인 시간 기준을 적용해 소생을 포기하지 않는다.
+2. <strong>제세동과 약물의 시점.</strong> 유럽소생위원회 2021 지침은 심실세동이 있을 때 제세동을 시도하되, 반복 제세동에도 반응하지 않으면 심부체온이 30도 이상으로 오를 때까지 추가 제세동을 보류하는 전략을 제시한다. 약물은 30도 미만에서 보류하고, 30~35도에서는 투여 간격을 늘려 적용한다.
+3. <strong>체외순환 가온 적응.</strong> 심정지, 혹은 심혈관 불안정이 동반된 28도 미만 저체온은 체외순환 가온의 적응이다. 칼륨이 12 mmol/L를 넘는 경우 소생 가능성이 낮은 지표로 활용된다.
+4. <strong>기계적 자극 최소화.</strong> 삽관과 중심정맥 확보는 심실세동을 유발할 수 있으므로, 가능하면 리듬이 안정된 상태에서 최소 횟수로 시행한다.
+
+<h3 class="journal-h3">5.4. 흔한 오류</h3>
+현장에서 반복되는 오류는 다음과 같다. 알코올을 먹여 몸을 덥히려는 시도, 뜨거운 물에 전신을 담그는 처치, 문지르기, 의식이 흐린 환자를 이불만 덮어 재우는 판단, 젖은 옷을 그대로 둔 채 담요만 추가하는 처치. 네 가지 모두 저체온의 진행을 앞당기거나 합병증을 추가한다.
+
+---
+
+<h2 class="journal-h2">6. 동상의 병태생리와 치료 (Frostbite)</h2>
+
+<h3 class="journal-h3">6.1. 병태생리</h3>
+동상은 조직이 빙점 이하로 냉각되며 발생하는 국소 손상이다. 세 단계로 진행한다.
+
+1. <strong>냉각 및 동결 단계.</strong> 세포외액이 먼저 얼면서 세포외 고장성 상태가 만들어지고, 삼투압 차이로 세포 내 수분이 빠져나가 세포가 탈수와 수축을 겪는다. 이후 세포내 결빙이 일어나면 세포막과 세포소기관이 기계적으로 파괴된다.
+2. <strong>재관류 및 염증 단계.</strong> 해동과 함께 재관류가 시작되면 유리기, 프로스타글란딘, 트롬복산, 류코트리엔이 분비되어 혈관 수축과 혈소판 응집이 일어난다. 미세혈관 내 혈전이 형성되면서 조직 저산소증이 진행한다.
+3. <strong>진행성 허혈 및 위축 단계.</strong> 24~48시간에 걸쳐 염증이 확장되고, 수주에 걸쳐 괴사 범위가 확정된다.
+
+<h3 class="journal-h3">6.2. 임상 분류</h3>
+표재성 동상은 피부가 창백하고 단단하지만 압박하면 약간의 유연성이 남고, 재가온 후 홍반과 투명한 수포가 생긴다. 심부 동상은 피부가 나무처럼 단단하고 감각이 완전히 소실되며, 재가온 후 출혈성 수포가 생기고 예후가 나쁘다. 4단계 분류(1도 홍반, 2도 수포, 3도 출혈성 수포와 피하조직 침범, 4도 골과 근육까지 침범)는 예후 판정에 사용된다.
+
+<h3 class="journal-h3">6.3. 급속 재가온 프로토콜</h3>
+1. <strong>현장 처치.</strong> 젖은 옷과 젖은 장갑, 신발을 제거한다. 얼어붙은 부위를 문지르거나 눈으로 비비지 않는다. 가능하면 환자를 운반하고, 얼어붙은 발로 걷지 않게 한다. 술과 담배는 금한다.
+2. <strong>급속 재가온.</strong> 37~39도의 물에 손상 부위를 15~30분간 담근다. 물온도는 온도계로 확인하며, 뜨거운 물을 부으면 감각이 없는 조직에 화상을 더한다. 재가온의 종료 기준은 피부가 붉게 변하고 유연해지며 감각이 돌아오는 시점이다. 재가온 과정의 통증은 상당하므로 진통제를 준비한다.
+3. <strong>재동결 금지.</strong> 재가온된 부위가 다시 얼면 손상이 배가된다. 재가온 후에는 마른 거즈로 느슨하게 감싸고 추가 냉각을 막는다.
+4. <strong>수포 처치.</strong> 현장에서 수포를 터뜨리지 않는다. 투명 수포와 출혈성 수포의 처치는 의료기관에서 결정한다.
+5. <strong>약물.</strong> 이부프로펠린은 프로스타글란딘 경로를 억제해 재관류 손상을 줄이는 목적으로 사용된다. 파상풍 예방과 적절한 진통이 함께 시행된다.
+6. <strong>전문 치료.</strong> 심부 동상, 특히 출혈성 수포가 있거나 다발성 손상인 경우 혈전용해제(tPA)를 24시간 안에 고려할 수 있고, 일로프로스트 주입이 대안으로 사용된다. 조기 절단은 금기이며, 괴사 경계가 확정될 때까지 수주간 기다린다.
+
+---
+
+<h2 class="journal-h2">7. 임상 요약 (Clinical Summary)</h2>
+
+1. <strong>떨림의 소실은 호전이 아니라 악화의 신호다.</strong> 알코올은 떨림 열생산을 억제하므로, 음주 상태의 저체온 환자는 의식이 비교적 유지되어도 중증도가 높을 수 있다.
+2. <strong>체온은 중심부에서 측정한다.</strong> 겨드랑이와 고막 측정값으로 중증도를 판정하지 않는다. 직장 또는 식도 체온을 기준으로 Swiss staging을 적용한다.
+3. <strong>재가온은 중심부부터, 속도는 서두르지 않는다.</strong> Afterdrop과 재가온 쇼크를 예상하고, 사지를 먼저 데우는 처치는 피한다. 심정지가 동반된 28도 미만에서는 체외순환 가온이 중심 축이다.
+4. <strong>동상은 문지르지 않고 37~39도에서 급속 재가온한다.</strong> 재동결을 막고, 조기 절단 결정을 피하며, 24시간 내 tPA 고려 여부를 전문기관과 상의한다.
+5. <strong>의식 저하에는 저체온 외의 원인이 겹쳐 있다.</strong> 저혈당, 두부 외상, 뇌졸중, 약물 중독을 함께 배제해야 하며, 의식 회복이 지연되면 영상 검사를 미루지 않는다.
+
+  </div>
+</body>
+</html>
