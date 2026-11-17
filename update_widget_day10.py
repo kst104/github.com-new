@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""Day 10 탭을 듀얼 뷰어 위젯에 반영한다. 여러 번 실행해도 같은 결과가 나오도록 작성했다."""
 import re
 from pathlib import Path
 
@@ -27,27 +28,34 @@ new_btn = '''<div class="day-selector">
 
 widget_html = re.sub(r'<div class="day-selector">.*?</div>', new_btn, widget_html, flags=re.DOTALL, count=1)
 
-# 2. data[10] 추가
-anchor = "\n      }\n    };\n\n    let currentDay"
-assert anchor in widget_html, "data anchor missing"
-widget_html = widget_html.replace(
-    anchor,
-    "\n      },\n      10: {\n        pub: `" + pub_clean + "`,\n        clin: `" + clin_clean + "`\n      }\n    };\n\n    let currentDay",
-    1,
-)
+# 2. data[10] 추가 또는 갱신
+data10 = "      10: {\n        pub: `" + pub_clean + "`,\n        clin: `" + clin_clean + "`\n      }"
+start = widget_html.find("\n      10: {")
+if start != -1:
+    end = widget_html.find("\n      }\n    };\n\n    let currentDay", start)
+    assert end != -1, "data10 end anchor missing"
+    widget_html = widget_html[:start] + "\n" + data10 + widget_html[end:]
+else:
+    anchor = "\n      }\n    };\n\n    let currentDay"
+    assert anchor in widget_html, "data anchor missing"
+    widget_html = widget_html.replace(
+        anchor,
+        "\n      },\n" + data10 + "\n    };\n\n    let currentDay",
+        1,
+    )
 
 # 3. currentDay = 10
 widget_html = re.sub(r'let currentDay = \d+;', 'let currentDay = 10;', widget_html)
 
-# 4. switchDay에 b10 처리 추가
-old_switch = """      const b7 = document.getElementById('dbtn-7');
+# 4. switchDay에 b10 처리 (없을 때만 추가)
+if "dbtn-10" not in widget_html.split("function switchDay")[-1]:
+    old_switch = """      const b7 = document.getElementById('dbtn-7');
       if (b7) b7.className = d === 7 ? 'day-btn active' : 'day-btn';"""
-new_switch = """      const b7 = document.getElementById('dbtn-7');
-      if (b7) b7.className = d === 7 ? 'day-btn active' : 'day-btn';
+    new_switch = old_switch + """
       const b10 = document.getElementById('dbtn-10');
       if (b10) b10.className = d === 10 ? 'day-btn active' : 'day-btn';"""
-assert old_switch in widget_html
-widget_html = widget_html.replace(old_switch, new_switch, 1)
+    assert old_switch in widget_html
+    widget_html = widget_html.replace(old_switch, new_switch, 1)
 
 # 5. 초기 표시 본문을 Day 10으로 교체
 p_start = widget_html.find('<div class="body-scroll" id="body-public">')
@@ -63,4 +71,4 @@ widget_html = widget_html[:c_start] + '<div class="body-scroll" id="body-clinica
 widget_file.write_text(widget_html, encoding="utf-8")
 print("✅ 위젯 index.html Day 10 반영 완료")
 print("   size:", len(widget_html))
-print("   dbtn-10:", widget_html.count('dbtn-10'), "| data key 10:", "10: {" in widget_html)
+print("   dbtn-10:", widget_html.count("dbtn-10"), "| data 10:", "\n      10: {" in widget_html)

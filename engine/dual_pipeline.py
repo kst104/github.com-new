@@ -22,6 +22,10 @@ def build_dual_view_html(content_dir: Path):
     """Builds an interactive side-by-side / toggle dual viewer HTML."""
     post_md = (content_dir / "post.md").read_text(encoding="utf-8") if (content_dir / "post.md").exists() else ""
     clinical_md = (content_dir / "clinical" / "clinical_column.md").read_text(encoding="utf-8") if (content_dir / "clinical" / "clinical_column.md").exists() else ""
+
+    from engine.md_tables import replace_markdown_tables, simple_table
+    post_md, _ = replace_markdown_tables(post_md, simple_table)
+    clinical_md, _ = replace_markdown_tables(clinical_md, simple_table)
     
     # Quick HTML conversion for previewing
     def simple_render(text):
@@ -44,6 +48,11 @@ def build_dual_view_html(content_dir: Path):
                 lines.append(f"<li>{line[2:]}</li>")
             elif line.startswith("> "):
                 lines.append(f"<blockquote>{line[2:]}</blockquote>")
+            elif line.startswith("<table"):
+                if in_p:
+                    lines.append("</p>")
+                    in_p = False
+                lines.append(line)
             elif line.startswith("|"):
                 lines.append(f"<code>{line}</code><br>")
             else:

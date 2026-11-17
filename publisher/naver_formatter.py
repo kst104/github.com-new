@@ -7,7 +7,10 @@
 import re
 import html
 
+from engine.md_tables import replace_markdown_tables, naver_table
+
 def markdown_to_naver_html(md_text: str) -> str:
+    md_text, _table_count = replace_markdown_tables(md_text, naver_table)
     lines = md_text.split("\n")
     html_lines = []
     
@@ -28,6 +31,14 @@ def markdown_to_naver_html(md_text: str) -> str:
             html_lines.append("<p style='line-height: 1.8; margin-bottom: 15px;'>&nbsp;</p>")
             continue
             
+        # 변환된 HTML 표는 그대로 삽입
+        if line_stripped.startswith("<table"):
+            if in_list:
+                html_lines.append("</ul>")
+                in_list = False
+            html_lines.append(line_stripped)
+            continue
+
         # 구분선
         if line_stripped in ("---", "***", "___"):
             html_lines.append("<hr style='border: 0; height: 1px; background: #e2e8f0; margin: 30px 0;' />")

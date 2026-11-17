@@ -214,6 +214,8 @@ $$MBPS = \\text{SBP}_{\\text{기상 후 2시간 평균}} - \\text{SBP}_{\\text{�
 
 def markdown_to_clinical_html(md_text, title="한랭 노출 및 아침 혈압 급상승(MBPS) 임상 심층 칼럼"):
     """Converts the clinical markdown into an academic medical journal web page."""
+    from engine.md_tables import replace_markdown_tables, clinical_table
+    md_text, _table_count = replace_markdown_tables(md_text, clinical_table)
     html_body = md_text
 
     # Basic markdown parsing for titles, blockquotes, tables, bold
