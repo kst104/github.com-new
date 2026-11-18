@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>닥터 K 콘텐츠 이원화 듀얼 뷰어 (대중용 vs 전문가용)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --clinical: #0f766e;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Nanum Gothic", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toggle-bar {
+      display: flex;
+      gap: 8px;
+    }
+    .tab-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .tab-btn.clinical-active {
+      background: var(--clinical);
+      color: white;
+      border-color: var(--clinical);
+    }
+    .main-wrapper {
+      display: flex;
+      max-width: 1600px;
+      margin: 20px auto;
+      gap: 20px;
+      padding: 0 20px;
+    }
+    .column {
+      flex: 1;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      min-width: 0;
+    }
+    .column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+    .column-header.public { border-bottom-color: var(--primary); }
+    .column-header.clinical { border-bottom-color: var(--clinical); }
+    .col-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+    }
+    .col-title.public { color: var(--primary); }
+    .col-title.clinical { color: var(--clinical); }
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .badge-public { background: #eff6ff; color: #1d4ed8; }
+    .badge-clinical { background: #f0fdf4; color: #15803d; }
+    .content-body {
+      font-size: 15px;
+      line-height: 1.8;
+      word-break: break-all;
+    }
+    .content-body h1 { font-size: 22px; color: #1e293b; margin-top: 24px; }
+    .content-body h2 { font-size: 18px; color: #334155; margin-top: 20px; }
+    .content-body h3 { font-size: 16px; color: #475569; margin-top: 16px; }
+    .content-body blockquote {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 10px 16px;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .clinical .content-body blockquote {
+      border-left-color: var(--clinical);
+    }
+    @media (max-width: 1024px) {
+      .main-wrapper { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🩺 닥터 K 임상·대중 이원화 콘텐츠 허브 (Day 1)</h1>
+    <div class="toggle-bar">
+      <button class="tab-btn active" onclick="setView('both')">나란히 비교 (Dual)</button>
+      <button class="tab-btn" onclick="setView('public')">대중용만 보기</button>
+      <button class="tab-btn" onclick="setView('clinical')">전문가용만 보기</button>
+    </div>
+  </header>
+
+  <div class="main-wrapper" id="wrapper">
+    <!-- 대중용 칼럼 & 쇼츠 영역 -->
+    <section class="column public" id="col-public">
+      <div class="column-header public">
+        <h2 class="col-title public">📱 대중용 에디션 (General Public)</h2>
+        <span class="badge badge-public">블로그 · 릴스 · 쇼츠 · 광고 10종</span>
+      </div>
+      <div class="content-body">
+        <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+          <strong>🎬 제작 완료 숏폼 영상</strong>: <a href="Day1_겨울철_혈압_주의보_겅태_쇼츠_데모_v2.mp4" target="_blank">Day 1 겅태 쇼츠 데모 v2 (MP4) 재생</a><br>
+          <strong>📋 핵심 타깃</strong>: 4050 직장인, 고혈압 환자 및 가족 보호자<br>
+          <strong>💡 강조 포인트</strong>: 3분 기상 공식, 생활 속 금기 사항, 쉬운 비유
+        </div>
+        <h1>"아침에 무릎이 안 펴져요"... 응급실 의사가 겨울철 관절 통증에 온찜질부터 권하지 않는 이유</h1>
+<blockquote>**카테고리**: 의학/건강 칼럼 (겨울철 건강관리 14일 기획 분류: 재활/운동)<br></blockquote>
+<blockquote>**타깃 키워드**: 겨울철 무릎 관절염, 오십견 스트레칭, 관절 통증 온찜질<br></blockquote>
+<blockquote>**타깃 독자**: 50~70대 무릎 관절염 환자와 가족, 어깨가 굳어 팔이 안 올라가는 40~60대, 겨울철 운동을 줄인 만성질환자<br></blockquote>
+<blockquote>**작성일자**: 2026년 11월 18일<br></blockquote>
+<blockquote>**GitHub**: [content/2026-11-18-01](https://github.com/kst104/github.com-new/tree/main/content/2026-11-18-01)</blockquote>
+<p>
+---<br>
+</p>
+<h2>📌 제목 옵션 (CTR 최적화)</h2>
+<p>
+1. **[검색 중심]** 겨울철 무릎 관절염: 온찜질과 냉찜질을 가르는 기준과 오십견 스트레칭 총정리<br>
+2. **[경각심 환기형]** "아침에 무릎이 안 펴져요" 겨울에 관절이 더 굳는 이유와 하루 15분 루틴<br>
+3. **[의사 권위형]** 응급실 의사가 본 겨울 관절 통증: 관절 통증 온찜질 원칙과 무릎·어깨 스트레칭 6가지<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>🔍 메타 디스크립션 (Search Snippet)</h2>
+<p>
+겨울 아침 무릎이 뻣뻣하고 계단이 무서워지는 이유는 기온과 활동량, 그리고 관절을 감싼 근육의 변화에 있습니다. 온찜질이 맞는 상태와 냉찜질이 맞는 상태를 가르는 기준, 온도와 시간, 해서는 안 되는 경우, 온찜질 뒤에 하는 무릎 스트레칭, 밤에 아픈 어깨가 오십견일 때의 단계별 스트레칭과 병원 진료 시점을 응급의학과 전문의가 정리했습니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>💡 현장 리포트: 겨울 아침 응급실에서 자주 듣는 말</h2>
+<p>
+12월 초 아침 일곱 시, 응급실 문이 열리면 계단에서 넘어진 분들이 들어옵니다. 대부분 무릎이나 손목을 짚고 오셨고, 공통적으로 같은 말을 하십니다. "발이 안 미끄러졌는데 다리가 갑자기 안 펴져서 넘어졌어요."<br>
+</p>
+<p>
+이맘때 진료실에서도 비슷한 하소연이 반복됩니다. 밤새 이불 속에서 따뜻했던 무릎이 아침에 일어나면 굳어 있고, 첫 계단을 내려갈 때 시큰합니다. 한 시간쯤 지나면 좀 풀리는데, 다음 날 아침에 또 같은 일이 생깁니다. 겨울 내내 이렇게 지내다가 봄에 병원에 오시는 분들이 적지 않습니다.<br>
+</p>
+<p>
+여기서 가장 자주 나오는 질문이 온찜질입니다. "따뜻하게 해 주면 낫는다고 해서 전기장판을 무릎에 대고 잤어요. 그런데 더 붓고 아파요."<br>
+</p>
+<p>
+이 글은 그 질문에 대한 답입니다. 온찜질이 도움이 되는 상태와 오히려 해가 되는 상태는 꽤 분명하게 갈립니다. 그리고 온찜질은 그 자체로 끝나는 치료가 아니라, 뒤에 오는 스트레칭을 위한 준비입니다. 겨울철 무릎 관절염과 오십견을 같은 원칙 위에서 정리해 보겠습니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>1. 겨울에 관절이 더 아픈 이유</h2>
+<h3>기온이 떨어지면 관절 안의 액체가 달라집니다</h3>
+<p>
+무릎 관절은 뼈와 뼈 사이에 활액이라는 액체가 차 있습니다. 이 액체는 달걀 흰자보다 조금 더 걸쭉한 유체로, 관절이 움직일 때 마찰을 줄이고 충격을 흡수합니다. 활액의 미끄러짐은 온도에 민감합니다. 온도가 낮아지면 점도가 올라가 잘 흐르지 않게 됩니다. 기름이 냉장고에서 굳는 것과 같은 방향의 변화입니다.<br>
+</p>
+<p>
+관절 깊숙한 곳의 온도는 피부만큼 크게 떨어지지 않습니다. 하지만 무릎 앞쪽처럼 피부와 뼈 사이가 얇은 부위는 찬 공기에 오래 노출되면 실제로 몇 도가 내려갑니다. 그 상태에서 첫 움직임을 만들면, 굳은 활액이 관절면 사이에서 충분히 퍼지지 못해 뻣뻣함과 시큰거림이 생깁니다.<br>
+</p>
+<h3>기압과 통증의 관계는 아직 논쟁 중입니다</h3>
+<p>
+"비 오기 전에 무릎이 쑤신다"는 말은 오래된 속설이 아닙니다. 실제로 기압이 낮아질 때 관절 통증이 심해졌다는 연구가 있습니다. 반대로 날씨 변화와 통증의 연관이 통계적으로 뚜렷하지 않다는 대규모 연구도 있습니다. 2015년 유럽 6개국 노인 810명을 1년 넘게 추적한 연구에서는 습도와 통증의 연관만 확인되고, 기압이나 기온 변화의 직접 효과는 확인되지 않았습니다.<br>
+</p>
+<p>
+정리하면 이렇습니다. 기압이 통증에 영향을 준다는 보고는 있지만 결론이 갈려 있고, 통증의 크기는 개인차가 큽니다. 그러니 기압을 탓하기보다, 겨울에 확실히 달라지는 것들에 손을 대는 편이 낫습니다. 그 확실한 것들은 아래 세 가지입니다.<br>
+</p>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>겨울에 달라지는 것</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>관절에 미치는 영향</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>대응</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>기온 하강</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>활액 점도 상승, 근육과 힘줄의 뻣뻣함 증가</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>온찜질 후 스트레칭</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>활동량 감소</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>대퇴사두근 약화, 관절을 지지하는 힘 감소</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>실내 근력 운동</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>미끄러운 노면</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>낙상과 골절, 넘어진 뒤 통증 악화</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>실내화, 보행 보조, 염화칼슘</td></tr></tbody></table>
+<h3>근육이 굳으면 관절이 더 아픕니다</h3>
+<p>
+무릎 통증의 상당 부분은 관절 연골만의 문제가 아닙니다. 허벅지 앞쪽의 대퇴사두근은 무릎으로 오는 충격을 흡수하는 쿠션 역할을 합니다. 겨울에 걷는 거리가 줄고 두꺼운 옷 때문에 움직임이 둔해지면 이 근육이 빠르게 약해집니다. 근육이 약해지면 관절이 받는 하중이 커지고, 하중이 커지면 통증이 늘고, 통증이 늘면 다시 덜 움직이게 되는 순환이 만들어집니다.<br>
+</p>
+<p>
+그래서 겨울 관절 관리의 핵심은 따뜻하게 하는 것과 움직이는 것을 한 세트로 묶는 데 있습니다. 따뜻하게만 하고 움직이지 않으면 굳은 채로 남고, 아프다고 움직이지 않으면 근육이 더 빠집니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>2. 무릎 관절염, 겨울에 특히 조심할 세 가지</h2>
+<h3>첫째, 아침 첫 계단</h3>
+<p>
+밤새 움직이지 않은 무릎은 가장 뻣뻣한 상태입니다. 이때 계단을 급하게 내려가면 관절면에 부담이 한꺼번에 걸립니다. 기상 직후 10분은 무릎을 펴고 굽히는 동작을 침대에서 몇 번 반복한 뒤 일어나십시오. 난간을 잡고 한 발씩 내려가는 습관 하나로 아침 통증이 달라집니다.<br>
+</p>
+<h3>둘째, 쪼그려 앉기와 양반다리</h3>
+<p>
+무릎을 완전히 굽히면 관절 뒤쪽과 슬개골 뒤쪽에 압력이 집중됩니다. 겨울철 김장, 바닥 생활, 좌식 식탁처럼 무릎을 오래 굽히는 자세는 시간을 줄이는 편이 좋습니다. 바닥에 앉을 때는 방석을 높이고, 일어설 때는 팔로 몸을 밀어 일어나십시오.<br>
+</p>
+<h3>셋째, 붓고 열이 나는 무릎</h3>
+<p>
+무릎이 붓고 만지면 따뜻하며 열이 나는 상태는 퇴행성 변화만으로 설명되지 않습니다. 급성 염증이거나 감염성 관절염일 수 있습니다. 감염성 관절염은 몇 시간에서 며칠 사이에 관절을 망가뜨릴 수 있는 응급 질환입니다. 이 상태에 온찜질을 하면 부종과 염증이 더 커집니다. 아래 3번에서 이 감별을 자세히 다룹니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>3. 온찜질과 냉찜질, 무엇이 맞나</h2>
+<h3>가르는 기준은 "붓고 뜨거운가"입니다</h3>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>상태</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>신호</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>맞는 처치</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>이유</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>만성 퇴행성 통증, 아침 강직</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>붓지 않고, 만져도 뜨겁지 않으며, 움직이면 조금 풀림</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>온찜질</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>혈류 증가, 근육 이완, 조직 신전성 향상</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>운동 직후, 급성 염증, 부종, 열감</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>붓고, 따뜻하고, 만지면 아프며, 열이 동반</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>냉찜질</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>혈관 수축, 부종과 통증 감소</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>급성 외상 직후</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>넘어지거나 부딪힌 직후</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>냉찜질</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>출혈과 부종 억제</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수술 후 또는 주사 후</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>시술 부위 부종</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>냉찜질</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>지시에 따름</td></tr></tbody></table>
+<p>
+한 문장으로 줄이면 이렇습니다. 뻣뻣하면 데우고, 부으면 식히십시오. 겨울철 무릎 관절염의 아침 강직은 대개 앞쪽에 해당하고, 무릎이 붓고 열이 나는 상태는 뒤쪽에 해당합니다.<br>
+</p>
+<h3>온찜질, 온도와 시간이 절반입니다</h3>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>항목</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>기준</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>이유</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>온도</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>피부에 닿는 온도 40~45도 이하</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>전기찜질기나 온수팩은 수건 두어 겹으로 감싸 피부에 직접 닿지 않게 합니다</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>시간</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>한 번에 15~20분, 하루 2~3회</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>길게 하는 것이 더 좋지 않습니다. 40도를 넘는 열에 오래 노출되면 피부가 붉어지고, 감각이 둔한 사람은 화상을 입고도 모릅니다</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>부위</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>무릎 앞과 뒤, 허벅지 아래쪽</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>근육이 함께 풀려 스트레칭이 수월해집니다</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>순서</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>온찜질 15분, 스트레칭 10분, 걷기 5분</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>열로 조직을 푼 직후에 움직여야 효과가 남습니다</td></tr></tbody></table>
+<h3>해서는 안 되는 경우</h3>
+<p>
+다음에 하나라도 해당하면 집에서 온찜질을 하지 마십시오.<br>
+</p>
+<li>무릎이 붓고 열이 나며 만지면 통증이 심한 경우</li>
+<li>당뇨병성 신경병증으로 발과 다리의 감각이 둔한 경우</li>
+<li>하지의 혈액 순환이 나쁘다는 진단을 받은 경우 (말초동맥질환)</li>
+<li>피부에 상처, 물집, 발진이 있는 경우</li>
+<li>원인을 모르는 다리 부종이나 통증이 갑자기 생긴 경우 (정맥혈전증 감별 필요)</li>
+<li>열이 나거나 몸살 기운이 있는 경우</li>
+<li>전신을 뜨거운 물에 오래 담그는 경우 (고령, 심장질환, 고혈압에서 혈압 변동 위험)</li>
+<p>
+당뇨가 있는 분은 특히 주의하십시오. 감각이 둔하면 뜨거운 것을 뜨거운 줄 모릅니다. 온도계로 물온도를 확인하는 습관이 안전합니다.<br>
+</p>
+<h3>근거는 어디까지인가</h3>
+<p>
+솔직하게 말하면 온찜질의 근거는 강하지 않습니다. 2003년 코크란 리뷰는 무릎 골관절염에서 열과 냉 치료를 다룬 연구 3편, 179명을 분석해 근거 수준이 낮다고 결론지었습니다. 얼음 마사지가 근력과 관절 운동 범위를 개선했다는 결과와, 냉찜질이 부종을 줄였다는 결과는 있었지만, 온찜질이 부종에 이점을 보이지 않았고 통증에 대한 확실한 근거도 부족했습니다. 미국 류마티스학회 2019년 지침도 온찜질과 냉찜질을 조건부 권고로 분류합니다. 운동, 체중 감량, 교육이 강한 권고인 것과는 등급이 다릅니다.<br>
+</p>
+<p>
+그래도 온찜질을 권하는 이유가 있습니다. 부작용이 적고, 비용이 거의 들지 않으며, 굳은 근육을 풀어 운동을 시작할 수 있게 만듭니다. 골관절염 치료에서 가장 강한 근거를 가진 것은 운동입니다. 온찜질은 그 운동을 하기 좋은 상태로 몸을 만들어 주는 역할이라고 이해하시면 정확합니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>4. 온찜질 뒤에 하는 무릎 스트레칭 여섯 가지</h2>
+<p>
+모두 누워서 또는 의자에 앉아서 할 수 있습니다. 통증이 10점 중 3점을 넘지 않는 범위에서 움직이고, 참을 수 있는 아픔과 참으면 안 되는 아픔을 구별하십시오. 날카롭게 찌르는 통증이나 관절이 잠기는 느낌이 오면 멈추십시오.<br>
+</p>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>순서</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>동작</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>방법</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>횟수</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>1</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>대퇴사두근 등척성 수축</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>다리를 펴고 허벅지에 힘을 주어 무릎 뒤를 바닥에 누름. 5초 유지</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>10회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>2</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>무릎 굽혔다 펴기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>누워서 발뒤꿈치를 엉덩이 쪽으로 천천히 당겼다 폄</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>15회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>3</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>슬개골 밀기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>다리를 편 채 무릎뼈를 위아래, 좌우로 살살 밀기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>각 방향 10회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>4</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>누워 다리 들기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>반대쪽 무릎을 세우고, 아픈 다리를 편 채 30도 들어 5초 유지</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>10회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>5</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>의자에서 무릎 펴기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>의자에 앉아 한쪽 다리를 천천히 들어 5초 유지</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>좌우 각 10회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>6</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>종아리 스트레칭</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>벽을 짚고 뒷다리를 곧게 뻗어 발뒤꿈치를 바닥에 붙임, 20초 유지</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>좌우 3회</td></tr></tbody></table>
+<p>
+이 여섯 동작에 10분이면 충분합니다. 중요한 것은 강도가 아니라 빈도입니다. 주말에 몰아서 하는 것보다 매일 아침저녁으로 나누어 하는 편이 근력 유지에 유리합니다.<br>
+</p>
+<p>
+일상에서 덧붙일 것도 있습니다. 의자에서 일어날 때 팔걸이를 쓰고, 오래 앉아 있지 말고 한 시간에 한 번은 일어나 몇 걸음 걷고, 가능하면 평지 걷기를 20~30분 유지하십시오. 수영이나 실내 자전거처럼 체중이 관절에 덜 실리는 운동도 좋은 선택입니다. 미국 류마티스학회는 유산소, 근력, 균형 운동과 태극권을 강한 권고로 분류합니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>5. 오십견: 밤에 아파서 잠을 못 자는 어깨</h2>
+<h3>어떤 병인가</h3>
+<p>
+오십견이라는 이름은 정식 진단명이 아닙니다. 의학 용어로는 유착성 관절낭염, 또는 동결견이라고 합니다. 어깨 관절을 감싼 관절낭이라는 주머니가 두꺼워지고 오그라들면서 관절이 굳는 병입니다. 염증과 섬유화가 함께 진행합니다.<br>
+</p>
+<p>
+전체 인구의 2~5퍼센트에서 생기고, 40~60대 여성에서 흔합니다. 당뇨병이 있는 사람은 위험이 약 5배 높고, 유착성 관절낭염 환자의 약 30퍼센트에서 당뇨가 확인됩니다. 갑상선 기능 저하증도 연관이 있습니다. 어깨를 오래 쓰지 못한 상태, 예를 들어 골절로 깁스를 했거나 수술을 한 뒤에도 잘 생깁니다.<br>
+</p>
+<h3>세 단계로 진행합니다</h3>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>단계</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>특징</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>기간</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>이 시기의 치료 초점</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>통증기 (유동기)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>밤에 더 아프고, 점점 굳어짐</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수주에서 수개월</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>통증 조절, 무리한 강제 운동 금지</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>경직기 (동결기)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>통증은 줄지만 운동 범위가 크게 제한</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수개월</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>조기 운동 범위 회복</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>회복기 (해동기)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>서서히 움직임이 돌아옴</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수개월에서 1년</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>근력과 기능 회복</td></tr></tbody></table>
+<p>
+한때 1~2년이면 저절로 다 낫는다고 알려졌습니다. 최근 연구는 이 설명을 수정합니다. 시간이 지나면서 좋아지는 것은 맞지만, 상당수는 완전히 회복되지 않고 일부 제한이 남습니다. 특히 당뇨가 있는 경우 더 오래가고 덜 회복됩니다. 그러니 참고 기다리기만 하기보다 단계에 맞는 치료를 병행하는 편이 낫습니다.<br>
+</p>
+<h3>병원에서 확인하는 것</h3>
+<p>
+진단은 대개 진찰로 이루어집니다. 능동 운동과 수동 운동이 모두 제한되는 것이 핵심입니다. 특히 팔을 몸 옆에 붙이고 바깥으로 돌리는 외회전이 가장 먼저, 가장 크게 제한됩니다. 반대쪽과 비교해 절반 이하로밖에 돌아가지 않으면 유착성 관절낭염을 강하게 의심합니다.<br>
+</p>
+<p>
+감별해야 할 질환이 있습니다. 회전근개 파열은 남이 들어 올릴 때는 올라가지만 스스로는 못 올리는 양상입니다. 석회성 건염은 갑자기 극심한 통증이 옵니다. 목 디스크에 의한 신경 압박, 류마티스 질환, 드물지만 감염이나 종양도 배제해야 합니다. 그래서 진찰과 함께 필요하면 초음파나 MRI, 단순 방사선 촬영을 시행합니다.<br>
+</p>
+<h3>치료는 단계에 맞춥니다</h3>
+<li>**통증기**: 통증 조절이 우선입니다. 소염진통제와 함께 관절강 내 스테로이드 주사가 통증과 기능을 단기간에 개선합니다. 근거가 비교적 탄탄한 치료입니다. 당뇨가 있으면 주사 후 혈당이 일시적으로 오를 수 있어 미리 상의해야 합니다.</li>
+<li>**경직기**: 관절 운동 범위를 되찾는 재활이 중심입니다. 물리치료와 가정 운동을 병행합니다. 반응이 더디면 수압팽창술이나 마취하 도수 정복술을 고려합니다.</li>
+<li>**회복기**: 근력 운동을 더합니다. 회전근개와 견갑골 주변 근육을 강화해 재발과 기능 저하를 막습니다.</li>
+<li>**오래 지속되는 경우**: 6개월 이상 치료에도 운동 범위가 심하게 제한되면 관절경적 관절낭 유리술을 고려합니다.</li>
+<p>
+---<br>
+</p>
+<h2>6. 오십견 스트레칭 다섯 가지</h2>
+<p>
+통증기에는 강제로 펴는 운동이 오히려 염증을 키웁니다. 이 시기의 목표는 굳은 각도를 늘리는 것이 아니라 굳는 속도를 늦추는 것입니다. 통증이 가라앉는 경직기부터 범위를 늘리는 운동을 본격적으로 합니다. 모든 동작은 온찜질 10~15분 뒤에 하십시오.<br>
+</p>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>순서</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>동작</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>방법</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>기준</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>1</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>진자 운동</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>상체를 숙이고 아픈 팔을 늘어뜨린 뒤 작은 원을 그림</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>30초씩 양방향, 하루 3세트</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>2</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>벽 기어오르기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>벽을 마주 보고 손가락으로 벽을 짚어 조금씩 위로 이동</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>아픈 지점에서 1~2칸 더, 10회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>3</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수건 당기기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>등 뒤로 수건을 잡고 건강한 손으로 위쪽으로 당김</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>20초 유지, 5회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>4</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>문틀 스트레칭</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>문틀을 잡고 몸을 앞으로 기울여 가슴 앞을 늘림</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>20초 유지, 5회</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>5</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>등 뒤 손잡기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>등 뒤에서 양손을 맞잡거나 수건으로 연결</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>20초 유지, 5회</td></tr></tbody></table>
+<p>
+지킬 원칙은 세 가지입니다. 첫째, 통증 10점 중 3~4점을 넘기지 않습니다. 둘째, 반동을 쓰지 않고 20~30초 천천히 유지합니다. 셋째, 운동 후 2시간 안에 통증이 원래대로 돌아와야 합니다. 다음 날까지 아프면 강도가 과했습니다.<br>
+</p>
+<p>
+잠자는 자세도 치료의 일부입니다. 아픈 어깨를 아래로 깔고 자면 통증이 심해집니다. 반대쪽으로 눕고, 아픈 팔 아래에 베개를 받쳐 어깨가 앞으로 처지지 않게 하십시오. 잘 때 팔을 머리 위로 올리는 자세도 피합니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>7. 겨울철 관절 보온, 이렇게 하십시오</h2>
+<p>
+1. **무릎은 겉옷으로 덮습니다.** 두꺼운 바지 한 겹보다 바람을 막는 겉감이 효과적입니다. 실내에서도 얇은 무릎 담요를 쓰면 관절 온도 유지에 도움이 됩니다.<br>
+2. **실내 온도는 20도 안팎, 바닥은 더 차갑습니다.** 좌식 생활을 한다면 방석과 두꺼운 양말을 준비하십시오. 바닥 냉기는 무릎과 허리에 그대로 전달됩니다.<br>
+3. **아침에는 천천히 움직입니다.** 기상 직후 침대에서 무릎 굽혔다 펴기 10회, 어깨 돌리기 10회를 하고 일어나십시오.<br>
+4. **미끄러운 길에서는 보폭을 줄입니다.** 주머니에 손을 넣지 말고, 장갑을 끼고, 가능하면 난간이나 보행 보조기를 이용하십시오. 겨울 낙상은 대부분 계단과 주차장 경사로에서 생깁니다.<br>
+5. **운동은 실내에서 시간을 정해 합니다.** "오늘은 추우니까"가 반복되면 3주 만에 근력이 눈에 띄게 줄어듭니다.<br>
+6. **물을 마십니다.** 겨울에는 갈증을 덜 느껴 수분 섭취가 줄고, 이는 혈액 점도와 피로에 영향을 줍니다.<br>
+7. **통증 일기를 씁니다.** 아픈 시간, 붓는지, 어떤 동작에서 아픈지를 2주만 기록해도 진료에서 원인을 좁히는 데 큰 도움이 됩니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>8. 병원에 가야 하는 신호</h2>
+<p>
+다음 중 하나라도 있으면 집에서 버티지 마십시오.<br>
+</p>
+<li>무릎이 갑자기 붓고 뜨거우며 열이 난다 (감염성 관절염, 통풍 감별)</li>
+<li>무릎이 잠겨서 펴지지 않는다</li>
+<li>넘어진 뒤 체중을 실을 수 없다</li>
+<li>밤에 잠을 깰 정도의 통증이 2주 이상 지속된다</li>
+<li>어깨 통증과 함께 팔에 힘이 빠지거나 손가락이 저린다</li>
+<li>어깨를 다친 뒤 팔을 스스로 올리지 못한다</li>
+<li>원인 없이 체중이 줄거나 열이 동반된다</li>
+<p>
+감염성 관절염은 시간이 생명입니다. 무릎이 붓고 열이 나는데 온찜질로 버티는 일은 가장 위험한 선택입니다. 이 경우는 응급실에서 관절 천자와 검사가 필요합니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>9. 자주 받는 질문</h2>
+<h3>Q1. 온찜질과 냉찜질을 번갈아 해도 되나요</h3>
+<p>
+가능하지만 목적을 나누는 편이 낫습니다. 운동 전에는 온찜질로 근육을 풀고, 운동 후 붓기가 생기면 냉찜질로 가라앉히십시오. 같은 부위에 뜨겁고 차가운 것을 5분 간격으로 반복하면 피부에 부담이 됩니다.<br>
+</p>
+<h3>Q2. 전기장판이나 온수매트를 무릎에 대고 자도 되나요</h3>
+<p>
+권하지 않습니다. 잠든 사이 온도 조절이 안 되고, 접촉 부위가 눌려 열이 축적되면 저온 화상이 생깁니다. 감각이 둔한 당뇨 환자에게는 특히 위험합니다. 잠잘 때는 담요로 덮는 정도가 안전합니다.<br>
+</p>
+<h3>Q3. 파스나 찜질팩을 오래 붙여도 되나요</h3>
+<p>
+파스는 피부 자극이 생기면 즉시 떼십시오. 같은 부위에 24시간 이상 붙이는 것은 권하지 않습니다. 온수팩은 수건으로 감싸고 20분을 넘기지 마십시오.<br>
+</p>
+<h3>Q4. 오십견인데 운동을 강하게 하면 빨리 낫나요</h3>
+<p>
+아닙니다. 통증기에 무리하게 펴면 염증이 악화되고 더 굳습니다. 통증이 가라앉은 뒤 범위를 늘리는 것이 순서입니다. 억지로 벽을 짚고 매달리는 동작은 피하십시오.<br>
+</p>
+<h3>Q5. 무릎 관절염인데 계단을 피해야 하나요</h3>
+<p>
+완전히 피할 필요는 없습니다. 내려갈 때 부딪히는 힘이 올라갈 때보다 큽니다. 내려갈 때 난간을 잡고 천천히, 한 발씩 내려가는 방식으로 바꾸십시오. 통증이 심한 날에는 엘리베이터를 쓰는 것이 현명합니다.<br>
+</p>
+<h3>Q6. 겨울에 비타민 D를 챙겨야 하나요</h3>
+<p>
+겨울에는 햇빛 노출이 줄어 비타민 D가 부족해지기 쉽고, 이는 근력과 낙상 위험에 영향을 줍니다. 다만 용량은 개인 상태에 따라 다르므로 검사 후 상의하십시오. 임의로 고용량을 오래 먹는 것은 권하지 않습니다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>10. 겨울 관절을 지키는 하루 15분</h2>
+<p>
+아침에 일어나면 침대에서 무릎과 어깨를 몇 번 움직입니다. 온찜질 15분을 하는 동안 무릎에 수건을 덮고 앉아 있습니다. 그다음 위의 스트레칭을 10분 합니다. 저녁에는 걷기나 실내 자전거로 20분을 채웁니다. 이 루틴의 총 시간은 하루 40분을 넘지 않습니다.<br>
+</p>
+<p>
+겨울철 관절 통증은 대개 한 번의 사건으로 생기지 않습니다. 매일 아침의 뻣뻣함을 참고 지내다가, 어느 날 계단에서 넘어지면서 드러납니다. 온찜질은 따뜻함으로 끝나는 처치가 아니라 움직이기 위한 준비이고, 스트레칭은 통증을 없애는 기술이 아니라 굳는 속도를 늦추는 습관입니다. 붓고 뜨거운 관절에는 열을 대지 않는다는 원칙 하나만 기억하셔도 겨울을 훨씬 안전하게 보낼 수 있습니다.<br>
+</p>
+      </div>
+    </section>
+
+    <!-- 전문가용 임상 심층 칼럼 영역 -->
+    <section class="column clinical" id="col-clinical">
+      <div class="column-header clinical">
+        <h2 class="col-title clinical">🩺 전문가용 에디션 (Clinical In-Depth)</h2>
+        <span class="badge badge-clinical">Dr. K's Wiki · Tintinalli · 응급 프로토콜</span>
+      </div>
+      <div class="content-body">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 14px; border-radius: 8px; margin-bottom: 20px;">
+          <strong>🏛️ 연동 지식베이스</strong>: <code>kst104/wikiwi</code> (닥터 K 의학 위키, ACS & 대동맥 박리 프로토콜)<br>
+          <strong>📋 핵심 타깃</strong>: 의사, 응급실 의료진, 임상 연구자, 의학 전문 독자<br>
+          <strong>🔬 강조 포인트</strong>: SVR & 카테콜아민 분비 기전, DAPT 로딩, Nicardipine/Labetalol 감압 프로토콜
+        </div>
+        <h1>[Clinical Review] 겨울철 관절 증상의 병태생리와 물리적 인자 치료의 근거, 퇴행성 슬관절염과 유착성 관절낭염의 단계별 재활 전략</h1>
+<blockquote>**저자**: 응급의학과 전문의 김승태<br></blockquote>
+<blockquote>**발행처**: 닥터 K 임상 의학 리뷰 (Doctor K Clinical Review Series)<br></blockquote>
+<blockquote>**기획 분류**: 재활/운동 (겨울철 건강관리 14일 기획 11일 차)<br></blockquote>
+<blockquote>**참고 문헌**: Kolasinski SL, et al. 2019 ACR/AF Guideline for the Management of Osteoarthritis of the Hand, Hip, and Knee (Arthritis Rheumatol 2020;72:220-33); Bannuru RR, et al. OARSI Guidelines for the Non-surgical Management of Knee, Hip, and Polyarticular Osteoarthritis (Osteoarthritis Cartilage 2019;27:1578-89); Brosseau L, et al. Thermotherapy for Treatment of Osteoarthritis (Cochrane Database Syst Rev 2003;4:CD004522); Messier SP, et al. Effects of Intensive Diet and Exercise on Knee Joint Loads, Inflammation, and Clinical Outcomes (JAMA 2013;310:1263-73); Ramirez J. Adhesive Capsulitis: Diagnosis and Management (Am Fam Physician 2019;99:297-300); Millar NL, et al. Frozen Shoulder (Nat Rev Dis Primers 2022;8:59); Zreik NH, et al. Adhesive Capsulitis of the Shoulder and Diabetes: A Meta-analysis of Prevalence (Muscles Ligaments Tendons J 2016;6:26-31); Timmermans EJ, et al. The Influence of Weather Conditions on Joint Pain in Older People with Osteoarthritis (J Rheumatol 2015;42:1885-92); Vergés J, et al. Weather Conditions Can Influence Rheumatic Diseases (2005); Kim HA. Osteoarthritis: Insights From Recent Research (J Rheum Dis 2022;29:132-9).<br></blockquote>
+<blockquote>**국내 위키 반영**: `kst104/wikiwi` 의 `medical/emergency/knee-injuries.md`(Tintinalli 7판 Chapter 271)에서 관절 천자와 화농성 관절염 감별, 혈관절증 평가 원칙을 인용했고, `medical/emergency/shoulder-injuries.md`(Chapter 268)에서 견관절 고정 후 조기 관절운동이 유착성 관절낭염을 예방한다는 원칙을 근위 상완골 골절 처치 절과 연결했다.</blockquote>
+<p>
+---<br>
+</p>
+<h2>1. 개요 및 역학 (Introduction & Epidemiology)</h2>
+<p>
+겨울철 외래에서 반복되는 두 가지 호소가 있다. 하나는 아침에 무릎이 펴지지 않는다는 것이고, 다른 하나는 밤에 어깨가 아파 잠을 못 잔다는 것이다. 두 증상은 서로 다른 질환이지만, 재활의 구조는 같은 원칙 위에 놓인다. 통증과 염증을 조절하는 단계, 운동 범위를 회복하는 단계, 근력과 기능을 재구축하는 단계가 순차적으로 이어진다.<br>
+</p>
+<p>
+퇴행성 슬관절염의 규모는 작지 않다. 국민건강영양조사 2010~2013년 자료를 분석한 보고에 따르면 50세 이상 한국 성인의 방사선적 무릎 골관절염 유병률은 35.1퍼센트(남성 24.4퍼센트, 여성 44.3퍼센트)였고, 80세 이상 여성에서는 78.7퍼센트에 이르렀다. 증상과 방사선 소견을 함께 충족하는 증상적 골관절염은 그보다 낮지만, 50세 이상에서 14퍼센트 안팎으로 추정된다. 즉 겨울철 무릎 통증은 개인의 문제가 아니라 진료실에서 가장 흔한 축에 속한다.<br>
+</p>
+<p>
+유착성 관절낭염은 전체 인구의 2~5퍼센트에서 발생하며 40~60대 여성에 많다. 당뇨병과의 연관이 가장 일관되게 보고되는데, 메타분석에서 당뇨 환자는 대조군 대비 약 5배 높은 위험을 보였고, 유착성 관절낭염 환자의 약 30퍼센트에서 당뇨가 확인되었다. 갑상선 기능 저하증도 위험을 높인다는 관찰 연구가 있다. 견관절 수술, 외상, 장기 고정 역시 이차성 유발 요인으로 꼽힌다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>2. 겨울 환경이 관절 증상을 악화시키는 경로 (Pathophysiology of Seasonal Symptoms)</h2>
+<h3>2.1. 활액의 유변학적 특성과 온도</h3>
+<p>
+정상 활액은 히알루론산의 높은 분자량과 농도 덕분에 비뉴턴성 점탄성을 보인다. 저속 전단에서는 점성이 높아 충격을 흡수하고, 고속 전단에서는 점성이 낮아져 마찰을 줄인다. 히알루론산 용액은 고분자 용액이므로 온도가 낮아지면 점도가 상승한다. 체외 실험에서 활액의 점도는 온도에 의존하며, 병적 활액에서는 히알루론산의 농도와 분자량 저하로 이 점탄성이 소실된다.<br>
+</p>
+<p>
+관절강 내 온도는 심부 체온보다 낮고, 냉각 노출 시 완만하게 하강한다. 피부 온도처럼 극적으로 떨어지지는 않지만, 얇은 연부조직으로 덮인 슬관절 전방은 냉각의 영향을 상대적으로 크게 받는다. 결과적으로 겨울철 첫 움직임에서 점도가 높아진 활액이 관절면 사이에 충분히 분포되지 못하고, 이것이 아침 강직과 초기 운동 통증의 한 축으로 작용한다는 설명이 가능하다. 다만 이 기전은 생리학적 추론에 가깝고, 계절성 통증을 직접 정량한 임상 연구는 제한적이다.<br>
+</p>
+<h3>2.2. 기압과 기상 요인: 근거의 현재 위치</h3>
+<p>
+기상 요인과 관절 통증의 관계는 오래 논쟁이 되었다. 2005년 스페인의 전향적 이중맹검 연구는 골관절염 80명을 포함한 92명을 한 달간 추적해 기압 하강이 통증을 악화시킨다고 보고했다. 반면 2015년 유럽 6개국 골관절염 노인 810명을 대상으로 한 연구는 일평균 습도와 통증의 연관만 확인했고, 기압과 기온의 일별 변화는 유의한 연관을 보이지 않았다. 같은 연구는 기압 효과가 관절 삼출, 연골 결손, 연골하 낭종 같은 국소 상태에 따라 달라질 수 있다고 해석했다.<br>
+</p>
+<p>
+임상적으로 취할 태도는 분명하다. 기상 요인을 치료 표적으로 삼을 수는 없지만, 환자가 기상 변화에 증상이 민감하다고 호소할 때 이를 무시할 이유도 없다. 통증 일기를 통해 개인 수준의 패턴을 확인하고, 그와 무관하게 확실한 개선 요인인 근력, 체중, 활동량을 우선 관리하는 것이 합리적이다.<br>
+</p>
+<h3>2.3. 근육·건의 강성 증가와 활동량 감소</h3>
+<p>
+냉각은 근육과 건의 강성을 높이고 신전성을 낮춘다. 관절 주변 연부조직의 온도가 낮으면 같은 각도를 만드는 데 더 큰 힘이 필요하고, 고유수용감각의 정확도도 떨어진다. 여기에 겨울철 보행량 감소가 겹치면 대퇴사두근의 단면적과 최대 수의적 수축력이 빠르게 감소한다. 대퇴사두근 약화는 슬관절 충격 흡수 능력을 떨어뜨려 통증을 증가시키고, 통증은 다시 활동을 줄여 근감소를 가속한다. 겨울철 관절 관리가 보온과 운동을 한 묶음으로 다루어야 하는 이유가 여기에 있다.<br>
+</p>
+<h3>2.4. 낙상 위험의 계절성</h3>
+<p>
+겨울철에는 보행 노면의 마찰 계수가 낮아지고, 두꺼운 옷으로 보행 균형과 고유수용감각 피드백이 제한된다. 골관절염 환자는 이미 무릎 신전 근력과 균형 능력이 저하되어 있어 낙상 시 골절 위험이 높다. 재활 계획에 낙상 예방을 포함하는 것은 선택이 아니라 필수다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>3. 퇴행성 슬관절염의 임상 평가 (Clinical Assessment)</h2>
+<h3>3.1. 진단 기준</h3>
+<p>
+골관절염의 진단은 임상과 영상의 조합으로 이루어진다. 미국 류마티스학회의 임상 기준은 무릎 통증에 다음 여섯 항목 중 세 개 이상이 해당할 때 골관절염으로 분류한다.<br>
+</p>
+<p>
+1. 연령 50세 이상<br>
+2. 아침 강직이 30분 이내<br>
+3. 움직일 때 마찰음(crepitus)<br>
+4. 골 압통<br>
+5. 골성 비대<br>
+6. 만져서 느껴지는 열감이 없음<br>
+</p>
+<p>
+이 기준은 감별 진단을 위한 도구이지 치료 반응을 예측하는 도구가 아니다. 방사선 등급은 Kellgren-Lawrence 분류를 쓰며, 등급 2 이상을 방사선적 골관절염으로 정의한다. 방사선 등급과 통증의 강도는 비례하지 않는 경우가 많다.<br>
+</p>
+<h3>3.2. 급성 통증에서 반드시 배제할 것</h3>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>질환</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>감별 단서</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>확인 방법</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>화농성 관절염</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>급격한 종창, 열감, 전신 발열, 체중 부하 불가</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>관절 천자, 활액 세포수와 배양</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>결정 유발 관절염(통풍, 가성통풍)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수 시간 내 극심한 통증, 발적</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>활액 편광 현미경 검사</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>혈관절증</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>외상력, 빠른 종창</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>천자에서 혈성 활액, 지방혈성 여부 확인</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>반월연골 잠김</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>관절이 굽힌 채 펴지지 않음</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>진찰, 필요 시 MRI</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>골절</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>낙상력, 압통점 국한</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>방사선 촬영</td></tr></tbody></table>
+<p>
+관절 천자는 진단적 목적과 치료적 목적을 겸한다. 활액이 화농성으로 의심되면 배양 검사와 함께 즉시 항생제 치료를 시작해야 하며, 이 판단을 온찜질이나 진통제로 미루어서는 안 된다. `kst104/wikiwi` 의 슬관절 손상 항목도 긴장성 관절혈증에서 천자가 증상 완화와 감별에 모두 필요하다는 원칙을 정리하고 있다.<br>
+</p>
+<h3>3.3. 기능 평가</h3>
+<p>
+재활의 목표 설정에는 통증 강도보다 기능 지표가 유용하다. 보행 속도, 계단 오르내리기 시간, 의자에서 다섯 번 일어서는 시간, 그리고 WOMAC이나 KOOS 같은 표준 설문이 흔히 쓰인다. 초기 평가를 남겨 두면 4주 뒤 개선 여부를 환자와 함께 확인할 수 있다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>4. 물리적 인자 치료의 근거 (Thermotherapy: What the Evidence Supports)</h2>
+<h3>4.1. 생리학적 근거</h3>
+<p>
+온열은 국소 혈류를 증가시키고 조직 온도를 올려 콜라겐의 신전성을 높이며 통증 역치를 상승시킨다. 근육 방추와 골지건기관의 활성이 변하면서 근 긴장이 줄어드는 효과도 기대한다. 냉각은 혈관을 수축시켜 부종을 줄이고, 국소 신경 전도 속도를 낮추어 통증 전달을 감소시킨다. 두 처치는 같은 축의 반대 방향에 있으므로, 적용 전에 현재 상태가 염증 우세인지 강직 우세인지 판단해야 한다.<br>
+</p>
+<h3>4.2. 임상 근거의 수준</h3>
+<p>
+코크란 리뷰(2003)는 무릎 골관절염에서 온열과 냉각을 다룬 무작위 대조 연구 3편, 179명을 분석했다. 얼음 마사지는 대퇴사두근 근력(상대 차이 29퍼센트)과 관절 운동 범위에서 통계적으로 유의한 개선을 보였고, 냉찜질은 부종을 감소시켰다. 반면 온찜질은 부종에 이점이 없었고, 얼음팩은 통증에 유의한 차이를 만들지 못했다. 저자들은 연구 규모와 질이 낮아 확정적 결론을 내릴 수 없다고 명시했다.<br>
+</p>
+<p>
+미국 류마티스학회 2019 지침은 열과 냉을 조건부 권고로 분류한다. 같은 지침에서 운동, 체중 감량, 자기효능 프로그램, 태극권, 무릎 국소 비스테로이드 소염제, 관절강 내 스테로이드 주사는 강한 권고에 속한다. 유럽 골관절염학회 지침도 교육, 구조화된 운동, 체중 관리를 핵심 치료로 둔다. 즉 온찜질은 단독 치료가 아니라 운동을 가능하게 하는 보조 수단으로 위치시키는 것이 근거에 부합한다.<br>
+</p>
+<h3>4.3. 적용 프로토콜</h3>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>항목</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>온찜질</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>냉찜질</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>적응</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>만성 통증, 아침 강직, 운동 전 준비</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>급성 염증, 부종, 운동 후, 외상 직후</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>온도</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>40~45도(피부 접촉 기준), 수건 2~3겹</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>얼음주머니를 수건으로 감쌈</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>시간</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>15~20분, 하루 2~3회</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>15~20분, 필요 시 1~2시간 간격</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>금기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>급성 염증, 감각 저하, 말초혈관질환, 피부 병변, 원인 미상 부종</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>레이노 현상, 냉과민증, 순환 장애</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>주의</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>고령, 당뇨병성 신경병증에서 화상 위험</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>장시간 적용 시 냉손상</td></tr></tbody></table>
+<p>
+온열 적용 후 20~30분 이내에 신전 운동을 배치하면 조직 신전성이 높아진 상태를 활용할 수 있다. 이것이 "온찜질 다음 스트레칭"이라는 순서의 근거다.<br>
+</p>
+<h3>4.4. 근거가 더 강한 축: 운동과 체중</h3>
+<p>
+무릎 골관절염에서 가장 강한 근거를 가진 개입은 구조화된 운동이다. 유산소 운동, 근력 운동, 수중 운동, 신경근 운동이 모두 권고되며, 감독 하에 시행할 때 효과가 더 크다. 체중 감량은 무릎 하중을 직접 줄인다. 무작위 연구에서 체중의 10퍼센트 감량은 통증과 기능을 임상적으로 유의하게 개선했고, 감량과 운동을 병행했을 때 염증 지표와 기능이 더 좋아졌다. 겨울철 재활 상담에서 온찜질만 이야기하고 운동 처방을 빠뜨리는 것은 근거의 무게를 거꾸로 적용하는 셈이다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>5. 유착성 관절낭염 (Adhesive Capsulitis)</h2>
+<h3>5.1. 병태생리</h3>
+<p>
+유착성 관절낭염은 견관절 관절낭의 섬유화와 수축으로 능동 및 수동 운동 범위가 모두 제한되는 질환이다. 조직학적으로는 관절낭과 오구상완인대의 섬유아세포 증식, 콜라겐 침착, 신경 성장과 혈관 형성이 관찰된다. 염증성 사이토카인과 신경성 염증 매개체가 통증과 섬유화를 함께 유도하는 것으로 이해된다. 원발성(특발성)과 이차성(외상, 수술, 고정, 전신질환 연관)으로 나누며, 이차성 특히 당뇨 연관형은 치료 저항성이 크고 경과가 길다.<br>
+</p>
+<h3>5.2. 임상 단계</h3>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>단계</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>임상 양상</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>병리 소견</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>통증기(유동기, freezing)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>야간통, 점진적 강직, 통증이 주된 문제</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>활막 염증 우세</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>경직기(동결기, frozen)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>통증은 감소, 운동 범위 제한이 두드러짐</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>관절낭 섬유화 우세</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>회복기(해동기, thawing)</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>운동 범위의 점진적 회복</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>섬유화 재형성</td></tr></tbody></table>
+<p>
+단계는 선형으로 진행하지 않으며 기간의 개인차가 크다. 병기 분류는 치료 강도를 정하고 환자에게 경과를 설명하는 틀로 쓰는 것이 적절하고, 특정 치료의 반응을 예측하는 지표로 과신해서는 안 된다.<br>
+</p>
+<h3>5.3. 진단과 감별</h3>
+<p>
+진찰의 핵심은 수동 운동 범위의 전반적 제한, 그중에서도 외회전의 조기 제한이다. 능동과 수동 제한의 정도가 비슷한 것이 회전근개 파열과의 감별점이다. 회전근개 파열은 수동 거상은 가능하지만 능동 거상이 제한되는 양상을 보인다. 감별해야 할 질환은 다음과 같다.<br>
+</p>
+<li>회전근개 파열, 석회성 건염</li>
+<li>견관절 골관절염(방사선에서 관절 간격 소실과 골극)</li>
+<li>경추 신경근병증(방사통, 신경학적 결손)</li>
+<li>류마티스 관절염 등 염증성 관절염</li>
+<li>감염성 관절염, 종양(드물지만 발열, 체중 감소, 야간통이 있으면 배제)</li>
+<p>
+영상 검사는 진단을 확정하기 위한 것이 아니라 감별과 동반 병변 확인을 위해 시행한다. 단순 방사선은 관절 간격과 골성 병변을, 초음파는 회전근개와 활막을, MRI는 관절낭 비후와 골수 부종을 평가한다.<br>
+</p>
+<h3>5.4. 치료</h3>
+<p>
+1. **통증 조절.** 비스테로이드 소염제와 관절강 내 스테로이드 주사가 중심이다. 메타분석에서 관절강 내 스테로이드는 4~6주 시점의 통증을 위약 대비 유의하게 개선했고, 그 효과가 24~26주까지 유지되는 것으로 보고되었다. 용량과 주입 경로에 따라 결과가 달라질 수 있다는 보고가 있으며, 당뇨 환자에서는 주사 후 수일간 혈당 상승을 예상하고 안내해야 한다.<br>
+2. **물리치료와 가정 운동.** 통증기에는 강제 신전을 피하고 관절 보호와 통증 조절에 무게를 둔다. 경직기에는 관절 운동 범위 회복 운동을 구조화해 시행한다. 주사와 물리치료를 병행할 때 어느 하나만 시행할 때보다 개선이 크다는 보고가 있다.<br>
+3. **수압팽창술.** 관절낭 내에 생리식염수를 주입해 관절낭을 팽창시키는 방법으로, 운동 범위 개선에 도움이 된다는 연구가 있다. 초음파 유도로 정확도를 높이기도 한다.<br>
+4. **마취하 도수 정복.** 경직기에 효과적이라는 보고가 있으며, 골다공증이나 골절 위험이 있는 환자에서는 신중히 선택한다.<br>
+5. **수술적 치료.** 6개월 이상의 보존적 치료에도 운동 범위 제한이 심하면 관절경적 관절낭 유리술을 고려한다. 회복 속도가 빠르지만 침습적이라는 단점이 있다.<br>
+</p>
+<p>
+견관절 골절이나 수술 후 장기 고정이 예정된 환자에서는 조기 관절 운동이 유착성 관절낭염 예방의 핵심이다. `kst104/wikiwi` 의 어깨 및 상완 손상 항목도 근위 상완골의 비전위 골절에서 조기 운동이 유착성 관절낭염 예방에 중요하다는 원칙을 명시하고 있다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>6. 겨울철 재활 프로토콜 (Weekly Protocol)</h2>
+<table style='border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px;'><thead><tr><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>시기</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>슬관절</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>견관절</th><th style='border: 1px solid #cbd5e1; padding: 8px 10px; background: #eef2ff; font-weight: 700;'>공통</th></tr></thead><tbody><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>아침</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>침대에서 굽혔다 펴기 10회, 온찜질 15분, 스트레칭 6동작 10분</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>어깨 돌리기, 진자 운동 1분</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>실내 온도 확인, 미끄럼 방지</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>낮</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>평지 걷기 20~30분 또는 실내 자전거</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>문틀 스트레칭, 벽 기어오르기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>한 시간에 한 번 기립</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>저녁</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>대퇴사두근 등척성 수축 10회 2세트</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>수건 당기기, 등 뒤 손잡기</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>통증 일기 기록</td></tr><tr><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>주 2~3회</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>의자에서 무릎 펴기로 점진적 부하</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>가벼운 밴드로 회전근개 강화</td><td style='border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top;'>낙상 위험 점검</td></tr></tbody></table>
+<p>
+진행 원칙은 세 가지다. 통증이 운동 후 2시간 내 기준선으로 돌아와야 하고, 다음 날 아침 통증이 증가하면 전날 강도를 낮추며, 관절 운동 범위는 통증 3~4점 이내에서만 늘린다.<br>
+</p>
+<p>
+---<br>
+</p>
+<h2>7. 임상 요약 (Clinical Summary)</h2>
+<p>
+1. **겨울철 관절 통증의 확실한 표적은 온도와 활동량이다.** 기압과 통증의 관계는 연구마다 엇갈리므로 치료 표적으로 삼기 어렵고, 보온과 근력 유지가 실제 개선을 만든다.<br>
+2. **온찜질과 냉찜질은 상태로 갈린다.** 뻣뻣한 만성 통증에는 온열, 붓고 뜨거운 급성 염증에는 냉각을 적용한다. 열을 대면 안 되는 상황을 먼저 배제한다.<br>
+3. **온찜질의 근거는 보조 수준이다.** 코크란 리뷰와 주요 지침은 온열을 조건부 권고로 두고, 운동과 체중 관리를 강한 권고로 둔다. 온열은 운동을 위한 준비로 처방한다.<br>
+4. **무릎이 붓고 열이 나면 감염을 먼저 배제한다.** 관절 천자와 활액 검사 없이 온찜질이나 진통제로 경과를 보는 것은 위험하다.<br>
+5. **유착성 관절낭염은 단계에 맞춰 치료한다.** 통증기에는 주사와 통증 조절, 경직기에는 구조화된 운동 범위 회복, 회복기에는 근력 강화가 중심이다. 당뇨가 동반되면 경과가 길고 재발이 많다는 점을 초기에 설명한다.<br>
+</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function setView(mode) {
+      const p = document.getElementById('col-public');
+      const c = document.getElementById('col-clinical');
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(b => b.classList.remove('active', 'clinical-active'));
+
+      if (mode === 'both') {
+        p.style.display = 'block';
+        c.style.display = 'block';
+        btns[0].classList.add('active');
+      } else if (mode === 'public') {
+        p.style.display = 'block';
+        c.style.display = 'none';
+        btns[1].classList.add('active');
+      } else if (mode === 'clinical') {
+        p.style.display = 'none';
+        c.style.display = 'block';
+        btns[2].classList.add('clinical-active');
+      }
+    }
+  </script>
+</body>
+</html>
