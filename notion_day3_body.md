@@ -6,7 +6,7 @@
 
 ## 🩺 제1부. [전문가용] 고령자 동절기 대퇴골 근위부 골절의 생역학적 기전과 응급실 소생·수술 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 8th Ed (Ch269), AAOS/NICE 고관절 골절 가이드라인, ATLS 1차 조사 프로토콜<br />**분류**: Orthopedic Trauma / Geriatric Emergency / Resuscitation Protocols
+> **저자**: 겅태(의학과 경제학에 관심많은)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 8th Ed (Ch269), AAOS/NICE 고관절 골절 가이드라인, ATLS 1차 조사 프로토콜<br />**분류**: Orthopedic Trauma / Geriatric Emergency / Resuscitation Protocols
 
 ### 1. Clinical Abstract (임상 핵심 요약)
 - **역학적 치명도**: 65세 이상 대퇴골 근위부 골절 시 1년 내 사망률 20~30% 육박. 침상 부동(Immobility)에 의한 폐렴, 욕창, 폐색전증 등 연쇄 합병증이 주 사망 원인.

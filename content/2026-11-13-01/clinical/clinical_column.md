@@ -1,6 +1,6 @@
 # [Clinical Review] 급성 인플루엔자 감염증의 병태생리, 진단적 접근 및 항바이러스 요법의 최신 지견
 
-> **저자**: 응급의학과 전문의 김승태<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **발행처**: 닥터 K 임상 의학 리뷰 (Doctor K Clinical Review Series)<br>
 > **참고 문헌**: Tintinalli's Emergency Medicine (9th ed.) Ch.144, Ch.146; CDC Influenza Antiviral Guidelines; KCDA 인플루엔자 관리 지침 2026
 

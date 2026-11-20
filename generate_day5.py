@@ -168,7 +168,7 @@ print(f"✅ slop-rewrite 결과: 점수 {score} (0점 목표 달성!), 감지 �
 # 2. Clinical Expert Column (clinical/clinical_column.md)
 clinical_md = """# [Clinical Review] 저온 접촉 화상(Low-Temperature Contact Burn)의 병태생리와 응급의학과적 치료 전략
 
-> **저자**: 응급의학과 전문의 김승태<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **임상 분과**: Emergency Medicine, Burn Surgery, Critical Care<br>
 > **참고 가이드라인**: Tintinalli's Emergency Medicine: A Comprehensive Study Guide (9th ed., Chapter 216: Burns), American Burn Association (ABA) Burn Center Referral Criteria, Moritz & Henriques Thermal Energy-Time Threshold Criteria<br>
 > **작성일자**: 2026년 11월 12일<br>

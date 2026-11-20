@@ -1,6 +1,6 @@
 # [임상 심층 칼럼] 한랭 노출 및 아침 혈압 급상승(MBPS)의 혈류역학적 기전과 급성 심뇌혈관 응급 처치 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine (7th/8th Ed), AHA/ACC & ESC Guidelines, KSH 2026<br>
 > **대상 독자**: 의료진, 임상 연구자, 응급의료 종사자 및 고관여 심혈관 환자<br>
 > **분류**: Cardiovascular Emergencies / Clinical Review / Hemodynamics

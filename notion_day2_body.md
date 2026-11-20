@@ -6,7 +6,7 @@
 
 ## 🩺 제1부. [전문가용] 한랭 노출 시 당뇨 환자 인슐린 약동학과 당뇨발 응급 처치 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 8th Ed (Ch224), ADA Standards of Care 2026, IWGDF 가이드라인<br />**분류**: Endocrinology & Metabolic Emergencies / Pharmacokinetics / Wound Care
+> **저자**: 겅태(의학과 경제학에 관심많은)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 8th Ed (Ch224), ADA Standards of Care 2026, IWGDF 가이드라인<br />**분류**: Endocrinology & Metabolic Emergencies / Pharmacokinetics / Wound Care
 
 ### 1. Clinical Abstract (임상 핵심 요약)
 - **약동학 변동**: 외부 기온 5℃ 미만 노출 시 피하 모세혈관 수축으로 피하 혈류량(SBF) 최대 50% 급감. 피하 인슐린 최고 혈중농도 도달시간(Tmax) 30~60분 유의미 지연.

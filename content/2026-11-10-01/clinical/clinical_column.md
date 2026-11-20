@@ -1,6 +1,6 @@
 # [임상 심층 칼럼] 고령자 동절기 대퇴골 근위부 골절(Proximal Femur Fracture)의 생역학적 기전과 응급실 초기 소생·수술 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine (Ch. 269), ATLS 1차 조사 프로토콜, 대한골대사학회 및 대한정형외과학회 고관절 가이드라인<br>
 > **대상 독자**: 정형외과·응급의학과 의료진, 노인의학 전문의, 임상 간호사 및 중증 외상 진료팀<br>
 > **분류**: Orthopedic Trauma / Geriatric Emergency / Resuscitation Protocols

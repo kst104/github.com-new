@@ -6,7 +6,7 @@
 
 ## 🩺 제1부. [전문가용] 저온 접촉 화상(Low-Temperature Contact Burn)의 병태생리와 응급의학과적 치료 전략
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 9th Ed (Ch216: Burns), American Burn Association (ABA) Guidelines, Moritz & Henriques Threshold Criteria<br />**분류**: Emergency Medicine / Burn Surgery / Critical Care
+> **저자**: 겅태(의학과 경제학에 관심많은)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 9th Ed (Ch216: Burns), American Burn Association (ABA) Guidelines, Moritz & Henriques Threshold Criteria<br />**분류**: Emergency Medicine / Burn Surgery / Critical Care
 
 ### 1. Clinical Abstract (임상 핵심 요약)
 - **역학적 치명도**: 온열용품(전기장판, 온수매트, 핫팩) 관련 화상 환자의 80% 이상이 심재성 2도 내지 3도 화상으로 진단됨. 초기 통증 결여로 내원 지연 시 광범위 피하 괴사 초래.

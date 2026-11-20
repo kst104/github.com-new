@@ -6,7 +6,7 @@
 
 ## 🩺 제1부. [전문가용] 동절기 급성 관상동맥 증후군(ACS)의 병태생리와 응급실 조기 재관류 요법 및 항혈소판 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 8th Ed (Ch48 & Ch49), 2023 ESC Guidelines for ACS, ACC/AHA STEMI Guidelines<br />**분류**: Cardiovascular Emergency / Acute Coronary Syndrome / Interventional Cardiology
+> **저자**: 겅태(의학과 경제학에 관심많은)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine 8th Ed (Ch48 & Ch49), 2023 ESC Guidelines for ACS, ACC/AHA STEMI Guidelines<br />**분류**: Cardiovascular Emergency / Acute Coronary Syndrome / Interventional Cardiology
 
 ### 1. Clinical Abstract (임상 핵심 요약)
 - **역학적 치명도**: 동절기 외기 온도 급락 시 알파-아드레날린성 혈관 수축 및 혈소판 응집능 항진으로 ACS 발병률 20~30% 급증.

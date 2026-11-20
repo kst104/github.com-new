@@ -1,6 +1,6 @@
 # [Clinical Review] 한랭 건조 공기 유발 기관지수축의 병태생리와 천식·COPD의 겨울철 악화 예방, 마스크의 가온·가습 효과에 대한 근거 검토
 
-> **저자**: 응급의학과 전문의 김승태<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **발행처**: 닥터 K 임상 의학 리뷰 (Doctor K Clinical Review Series)<br>
 > **기획 분류**: 호흡기 (겨울철 건강관리 14일 기획 12일 차)<br>
 > **참고 문헌**: Global Initiative for Asthma. Global Strategy for Asthma Management and Prevention, 2024 update; Global Initiative for Chronic Obstructive Lung Disease. Global Strategy for Prevention, Diagnosis and Management of COPD, 2025 Report; Koskela HO. Cold air-provoked respiratory symptoms: the mechanisms and management. Int J Circumpolar Health 2007;66:91-100; Courtney JM, Bax A. Hydrating the respiratory tract: an alternative explanation why masks lower severity of COVID-19. Biophys J 2021;120:994-1000; Anderson SD, Kippelen P. Airway injury as a mechanism for exercise-induced bronchoconstriction in elite athletes. J Allergy Clin Immunol 2008;122:225-35; Parsons JP, et al. An Official ATS Clinical Practice Guideline: Exercise-induced bronchoconstriction. Am J Respir Crit Care Med 2013;187:1016-27; Anthonisen NR, et al. Antibiotic therapy in exacerbations of chronic obstructive pulmonary disease. Ann Intern Med 1987;106:196-204; 질병관리청 국민건강영양조사 호흡기질환 유병률 자료; World Health Organization. Chronic obstructive pulmonary disease fact sheet; 대한천식알레르기학회 한국 천식 진료지침; Tintinalli JE, et al. Emergency Medicine: A Comprehensive Study Guide, Acute Asthma 절.<br>

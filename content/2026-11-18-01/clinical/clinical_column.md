@@ -1,6 +1,6 @@
 # [Clinical Review] 겨울철 관절 증상의 병태생리와 물리적 인자 치료의 근거, 퇴행성 슬관절염과 유착성 관절낭염의 단계별 재활 전략
 
-> **저자**: 응급의학과 전문의 김승태<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **발행처**: 닥터 K 임상 의학 리뷰 (Doctor K Clinical Review Series)<br>
 > **기획 분류**: 재활/운동 (겨울철 건강관리 14일 기획 11일 차)<br>
 > **참고 문헌**: Kolasinski SL, et al. 2019 ACR/AF Guideline for the Management of Osteoarthritis of the Hand, Hip, and Knee (Arthritis Rheumatol 2020;72:220-33); Bannuru RR, et al. OARSI Guidelines for the Non-surgical Management of Knee, Hip, and Polyarticular Osteoarthritis (Osteoarthritis Cartilage 2019;27:1578-89); Brosseau L, et al. Thermotherapy for Treatment of Osteoarthritis (Cochrane Database Syst Rev 2003;4:CD004522); Messier SP, et al. Effects of Intensive Diet and Exercise on Knee Joint Loads, Inflammation, and Clinical Outcomes (JAMA 2013;310:1263-73); Ramirez J. Adhesive Capsulitis: Diagnosis and Management (Am Fam Physician 2019;99:297-300); Millar NL, et al. Frozen Shoulder (Nat Rev Dis Primers 2022;8:59); Zreik NH, et al. Adhesive Capsulitis of the Shoulder and Diabetes: A Meta-analysis of Prevalence (Muscles Ligaments Tendons J 2016;6:26-31); Timmermans EJ, et al. The Influence of Weather Conditions on Joint Pain in Older People with Osteoarthritis (J Rheumatol 2015;42:1885-92); Vergés J, et al. Weather Conditions Can Influence Rheumatic Diseases (2005); Kim HA. Osteoarthritis: Insights From Recent Research (J Rheum Dis 2022;29:132-9).<br>

@@ -199,7 +199,7 @@ caption_txt = """겨울철 당뇨 환자분들, 전기장판에 발 올리고 �
 # 4. Clinical Column (clinical_column.md)
 clinical_md = """# [임상 심층 칼럼] 한랭 노출 시 당뇨병 환자의 피하 인슐린 약동학적 변동과 당뇨발(Diabetic Foot) 급성 감염 및 저온 화상의 응급 처치 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine (8th Ed Ch.224 Diabetic Emergencies), ADA Standards of Care 2026, IWGDF (국제당뇨발학회 가이드라인)<br>
 > **대상 독자**: 내분비내과 및 응급의학과 의료진, 상처치료 전문의, 임상 간호사 및 고관여 당뇨 환자<br>
 > **분류**: Endocrinology & Metabolic Emergencies / Pharmacokinetics / Wound Care

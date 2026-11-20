@@ -189,7 +189,7 @@ ads_md = """# 📢 Day 4 다채널 마케팅 광고 소재 10종
 # 3. Clinical Expert In-Depth Column (clinical/clinical_column.md)
 clinical_md = """# [임상 심층 칼럼] 동절기 급성 관상동맥 증후군(Acute Coronary Syndrome)의 병태생리와 응급실 조기 재관류 요법(Primary PCI) 및 항혈소판 프로토콜
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br>
+> **저자**: 겅태(의학과 경제학에 관심많은)<br>
 > **문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine (Ch. 48: Chest Pain, Ch. 49: Acute Coronary Syndromes), 2023 ESC Guidelines for ACS, ACC/AHA STEMI Guidelines, 대한심장학회(KSC) 급성심근경색 진료지침<br>
 > **대상 독자**: 응급의학과·순환기내과 의료진, 심혈관 중재시술팀, 중증 외상 및 응급 간호팀<br>
 > **분류**: Cardiovascular Emergency / Acute Coronary Syndrome / Interventional Cardiology

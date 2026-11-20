@@ -6,7 +6,7 @@
 
 ## 🩺 제1부. [전문가용] 한랭 노출 및 아침 혈압 급상승(MBPS) 임상 심층 칼럼
 
-> **저자 / 임상 감수**: 응급의학과 전문의 김승태 (Dr. K's Emergency Medicine Hub)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine, AHA/ACC & ESC Guidelines<br />**분류**: Cardiovascular Emergencies / Clinical Review / Hemodynamics
+> **저자**: 겅태(의학과 경제학에 관심많은)<br />**문헌 참조**: Dr. K's Medical Wiki (`kst104/wikiwi`), Tintinalli's Emergency Medicine, AHA/ACC & ESC Guidelines<br />**분류**: Cardiovascular Emergencies / Clinical Review / Hemodynamics
 
 ### 1. Clinical Abstract (임상 핵심 요약)
 - **역학 통계**: 동절기 기온 하강 시 급성 심근경색(AMI) 및 뇌졸중 발병률 1.3~1.5배 증가. 발병의 70%가 오전 06시~09시 기상 직후 집중.
