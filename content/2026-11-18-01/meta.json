@@ -1,7 +1,7 @@
 {
   "id": "2026-11-18-01",
-  "published_url": "",
-  "title": "겨울철 무릎 관절염과 오십견: 온찜질 기준과 스트레칭, 초겨울 관절 보온 관리",
+  "published_url": "https://blog.naver.com/kst104/224484651561",
+  "title": "아침에 무릎이 안 펴져요, 겨울철 관절 통증에 온찜질부터 권하지 않는 이유",
   "keyword": "겨울철 무릎 관절염, 오십견 스트레칭, 관절 통증 온찜질",
   "channels": [
     "블로그",
@@ -10,13 +10,22 @@
     "파워링크",
     "쇼츠"
   ],
-  "status": "검토",
-  "category": "재활/운동",
+  "status": "발행완료",
+  "category": "의학·건강",
   "board_category": "의학/건강",
   "audience": "50~70대 무릎 관절염 환자와 가족, 어깨가 굳은 40~60대, 당뇨 동반 만성질환자",
   "engine": "Claude",
   "created": "2026-11-18T10:00:00+09:00",
   "updated": "2026-11-18T10:25:00+09:00",
   "notion_page_id": "41ccac32-3750-81b0-94d2-e0805b643976",
-  "instagram_ready": true
+  "instagram_ready": true,
+  "published_at": "2026-11-20T13:11:41+09:00",
+  "published_channel": "네이버 블로그 (kst104, 의학·건강, 전체공개)",
+  "affiliate": {
+    "product": "한스웰 한마음 황사 마스크 대형 성인용 KF94, 100개",
+    "price": 17800,
+    "short_url": "https://link.coupang.com/a/iO4riyxIZw",
+    "mobile_clickable": true,
+    "checked_at": "2026-11-20"
+  }
 }

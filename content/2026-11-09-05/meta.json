@@ -1,6 +1,6 @@
 {
   "id": "2026-11-09-05",
-  "published_url": "",
+  "published_url": "https://blog.naver.com/kst104/224484564679",
   "title": "겨울철 한파와 혈압 급상승 주의보: 아침 기상 시 뇌졸중·심근경색 예방법",
   "keyword": "겨울철 고혈압, 아침 혈압 급상승, 한파 심근경색",
   "channels": [
@@ -11,11 +11,20 @@
     "쇼츠"
   ],
   "status": "발행완료",
-  "category": "의학/건강",
+  "category": "의학·건강",
   "audience": "4050 직장인 및 고혈압 환자",
   "engine": "Claude",
   "created": "2026-11-09T16:35:00+09:00",
-  "updated": "2026-11-09T16:35:00+09:00",
+  "updated": "2026-11-20T12:00:00+09:00",
   "notion_page_id": "413cac32-3750-817c-b7f9-e02a5e034639",
-  "instagram_ready": true
+  "instagram_ready": true,
+  "published_at": "2026-11-20T11:57:00+09:00",
+  "published_channel": "네이버 블로그 (kst104, 의학·건강, 전체공개)",
+  "affiliate": {
+    "product": "한스웰 한마음 황사 마스크 대형 성인용 KF94, 100개",
+    "price": 17800,
+    "short_url": "https://link.coupang.com/a/iO4riyxIZw",
+    "mobile_clickable": true,
+    "checked_at": "2026-11-20"
+  }
 }

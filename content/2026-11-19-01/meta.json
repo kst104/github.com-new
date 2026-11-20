@@ -1,7 +1,7 @@
 {
   "id": "2026-11-19-01",
-  "published_url": "",
-  "title": "만성 호흡기 질환자의 찬 공기 기관지 수축 방어법: 방한 마스크·목도리의 가온 가습 원리와 겨울철 호흡기 관리",
+  "published_url": "https://blog.naver.com/kst104/224484657125",
+  "title": "숨을 들이쉴 때마다 조여요, 겨울 아침 마스크를 먼저 챙기라는 이유",
   "keyword": "찬 공기 천식 기침, 겨울철 호흡기 관리, 방한 마스크 효과",
   "channels": [
     "블로그",
@@ -10,13 +10,22 @@
     "파워링크",
     "쇼츠"
   ],
-  "status": "검토",
-  "category": "의학/호흡기",
+  "status": "발행완료",
+  "category": "의학·건강",
   "board_category": "의학/건강",
   "audience": "천식·COPD로 흡입기를 쓰는 40~80대와 가족, 겨울 아침 운동을 하는 50대 이상, 만성기침이 있는 흡연자",
   "engine": "Claude",
   "created": "2026-11-19T14:45:00+09:00",
   "updated": "2026-11-19T15:05:00+09:00",
   "notion_page_id": "41dcac32-3750-8155-8105-e84cdcb97ce6",
-  "instagram_ready": true
+  "instagram_ready": true,
+  "published_at": "2026-11-20T13:16:00+09:00",
+  "published_channel": "네이버 블로그 (kst104, 의학·건강, 전체공개)",
+  "affiliate": {
+    "product": "한스웰 한마음 황사 마스크 대형 성인용 KF94, 100개",
+    "price": 17800,
+    "short_url": "https://link.coupang.com/a/iO4riyxIZw",
+    "mobile_clickable": true,
+    "checked_at": "2026-11-20"
+  }
 }
