@@ -1,0 +1,27 @@
+{
+  "month": "2026-11",
+  "program_month": 1,
+  "naver_blog_views": 2830,
+  "naver_blog_visitors": 1240,
+  "youtube_shorts_views": 3150,
+  "coupang_clicks": 96,
+  "coupang_revenue": 8544,
+  "naver_connect_clicks": 12,
+  "naver_connect_revenue": 23256,
+  "other_revenue": 0,
+  "ad_spend": {
+    "search": 0,
+    "content": 0
+  },
+  "feedback_rate": 0.5,
+  "attribution": {
+    "search": 0.7,
+    "content": 0.3
+  },
+  "current_products": {
+    "coupang": "한스웰 황사 마스크 KF94 100매",
+    "naver": "들꽃잠 배 찜질팩"
+  },
+  "collection_status": "sample",
+  "note": "11월 초기 정산 샘플. 유입·클릭·수익은 구조 검증용 추정치이며, 실제 값은 11월 말 각 플랫폼 대시보드에서 확정합니다."
+}

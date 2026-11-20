@@ -141,6 +141,25 @@ gh auth setup-git
 
 ---
 
+## 6. 월간 수익 되먹임 · 계절성 상품 알고리즘
+
+매달 정산한 유입·수익·광고비로 다음 달 광고 예산을 뽑고(수익의 50%), 검색광고와 콘텐츠 부스팅에 ROAS 기준으로 나누며, 다음 달 계절 대표 상품 1+1을 고르는 엔진입니다.
+
+```bash
+python3 engine/revenue_feedback.py simulate --month 2026-11    # 내장 샘플로 시뮬레이션
+python3 engine/revenue_feedback.py settle --input engine/data/settlements/2026-12.json
+python3 engine/revenue_feedback.py score --month 2026-12       # 상품 순위만
+python3 -m unittest engine.test_revenue_feedback -v            # 계산 검증 27건
+```
+
+- 계산: `engine/revenue_feedback.py` (되먹임 예산·ROAS·채널 배분·계절성 상품 스코어링·JSON/Markdown 리포트)
+- 상품 카탈로그: `engine/data/seasonal_products.json` · 정산 입력 예시: `engine/data/settlements/2026-11_sample.json`
+- 리포트: `reports/revenue_feedback/`
+- 운영 가이드: [`docs/06_월간_수익_되먹임_알고리즘_가이드.md`](docs/06_월간_수익_되먹임_알고리즘_가이드.md)
+- 노션: 허브 아래 [📈 월간 수익·되먹임 정산 보드](https://app.notion.com/p/41ecac3237508181a5d1d79fdb84f66b)
+
+---
+
 ## 폴더 구조
 ```
 content/<YYYY-MM-DD-NN>/   콘텐츠 1건 (meta.json, post.md, ads.md, shorts.md, 미디어)

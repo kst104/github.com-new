@@ -1,0 +1,426 @@
+{
+  "month": "2026-11",
+  "next_month": "2026-12",
+  "collection_status": "sample",
+  "note": "11월 초기 정산 시뮬레이션. 유입·클릭·수익은 구조 검증용 샘플값이며, 실제 값은 11월 말 플랫폼 대시보드에서 확정합니다.",
+  "program_month": 1,
+  "inputs": {
+    "naver_blog_views": 2830,
+    "naver_blog_visitors": 1240,
+    "youtube_shorts_views": 3150,
+    "coupang_clicks": 96,
+    "coupang_revenue": 8544,
+    "naver_connect_clicks": 12,
+    "naver_connect_revenue": 23256,
+    "other_revenue": 0,
+    "ad_spend": {
+      "search": 0,
+      "content": 0
+    },
+    "total_reach": 4390,
+    "total_clicks": 108,
+    "feedback_rate": 0.5
+  },
+  "metrics": {
+    "gross_revenue": 31800,
+    "total_ad_spend": 0,
+    "net_before_reinvestment": 31800,
+    "roas": null,
+    "revenue_per_visitor": 7.24,
+    "cost_per_visitor": null,
+    "profit_per_visitor": 7.24,
+    "revenue_per_click": 294.44,
+    "cost_per_click": null,
+    "click_rate": 0.0246,
+    "ad_dependency": 0.0,
+    "revenue_per_view_blog": 8.22,
+    "revenue_per_view_shorts": 2.71
+  },
+  "attribution": {
+    "search": 0.7,
+    "content": 0.3
+  },
+  "revenue_by_channel": {
+    "search": 22260,
+    "content": 9540
+  },
+  "budget": {
+    "feedback_rate": 0.5,
+    "computed_budget": 16000,
+    "budget": 50000,
+    "flags": [
+      "수익의 50%(15,900원)가 최소 집행 단위(30,000원)에 못 미쳐 시드 예산 50,000원을 적용했습니다(프로그램 1개월 차, 최대 3개월)."
+    ],
+    "seed_applied": true,
+    "capped": false
+  },
+  "allocation": {
+    "total_budget": 50000,
+    "by_channel": {
+      "search": 30000,
+      "content": 20000
+    },
+    "share": {
+      "search": 0.6,
+      "content": 0.4
+    },
+    "channel_roas": {
+      "search": null,
+      "content": null
+    },
+    "basis": "광고 집행 이력이 없는 첫 달이라 콜드스타트 기본 배분(검색 60 : 부스팅 40)을 적용했습니다.",
+    "cold_start": true,
+    "penalized": []
+  },
+  "guardrails": {
+    "feedback_rate": 0.5,
+    "min_monthly_budget": 30000,
+    "seed_budget": 50000,
+    "seed_max_months": 3,
+    "max_monthly_budget": 300000,
+    "min_channel_share": 0.3,
+    "max_channel_share": 0.7,
+    "budget_unit": 1000,
+    "prior_spend": 50000,
+    "switch_margin": 0.08
+  },
+  "assumptions": {
+    "attribution": "검색 유입 글에서 결제가 일어나고 쇼츠는 발견·재방문에 기여한다는 전제로 검색 70 : 부스팅 30로 나눴습니다. 매달 실제 전환 데이터가 쌓이면 정산 JSON의 attribution으로 덮어쓰세요.",
+    "roas": "ROAS = 당월 수익 ÷ 당월 집행 광고비(전월에 산출한 예산이 당월에 집행된 금액)."
+  },
+  "products": {
+    "target_month": "2026-12",
+    "ranking": [
+      {
+        "name": "한스웰 황사 마스크 KF94 100매",
+        "platform": "coupang",
+        "price": 17800,
+        "commission_rate": 0.03,
+        "commission_per_sale": 534,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.966,
+        "economics_score": 0.793,
+        "data_confidence": 1.0,
+        "score": 0.9349,
+        "verified": true,
+        "source": "쿠팡파트너스 상품 검색 2026-11-20 · 평점 4.5 / 리뷰 81,001 · link.coupang.com/a/iO4riyxIZw",
+        "tags": [
+          "호흡기",
+          "한파",
+          "미세먼지",
+          "의약외품"
+        ]
+      },
+      {
+        "name": "들꽃잠 배 찜질팩",
+        "platform": "naver",
+        "price": 32300,
+        "commission_rate": 0.12,
+        "commission_per_sale": 3876,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.716,
+        "economics_score": 0.942,
+        "data_confidence": 1.0,
+        "score": 0.9076,
+        "verified": true,
+        "source": "네이버 쇼핑 커넥트 2026-11-20 · 수수료 12% · 예상 수익 3,876원",
+        "tags": [
+          "온찜질",
+          "한파",
+          "배",
+          "건강관리용품"
+        ]
+      },
+      {
+        "name": "한삼인 홍삼정 에브리타임 30포",
+        "platform": "coupang",
+        "price": 45900,
+        "commission_rate": 0.03,
+        "commission_per_sale": 1377,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.915,
+        "economics_score": 0.819,
+        "data_confidence": 0.0,
+        "score": 0.8281,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "면역",
+          "환절기",
+          "건강식품"
+        ]
+      },
+      {
+        "name": "브루노 초음파 가습기 4L",
+        "platform": "coupang",
+        "price": 39900,
+        "commission_rate": 0.03,
+        "commission_per_sale": 1197,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.884,
+        "economics_score": 0.839,
+        "data_confidence": 0.0,
+        "score": 0.8252,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "난방",
+          "보습",
+          "건조"
+        ]
+      },
+      {
+        "name": "코코메디 코세척기 세트",
+        "platform": "naver",
+        "price": 25900,
+        "commission_rate": 0.12,
+        "commission_per_sale": 3108,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.77,
+        "economics_score": 0.917,
+        "data_confidence": 0.0,
+        "score": 0.8154,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "호흡기",
+          "비염",
+          "건조"
+        ]
+      },
+      {
+        "name": "메디코어 손목 온열 마사지기",
+        "platform": "naver",
+        "price": 34900,
+        "commission_rate": 0.12,
+        "commission_per_sale": 4188,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.758,
+        "economics_score": 0.928,
+        "data_confidence": 0.0,
+        "score": 0.8151,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "관절",
+          "온찜질",
+          "손목"
+        ]
+      },
+      {
+        "name": "듀라온 온수 찜질기 (허리·배)",
+        "platform": "coupang",
+        "price": 32900,
+        "commission_rate": 0.03,
+        "commission_per_sale": 987,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.84,
+        "economics_score": 0.836,
+        "data_confidence": 0.0,
+        "score": 0.8124,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "관절",
+          "온찜질",
+          "한파"
+        ]
+      },
+      {
+        "name": "르메르 온수매트 더블",
+        "platform": "naver",
+        "price": 89000,
+        "commission_rate": 0.12,
+        "commission_per_sale": 10680,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.845,
+        "economics_score": 0.825,
+        "data_confidence": 0.0,
+        "score": 0.811,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "난방",
+          "수면",
+          "한파"
+        ]
+      },
+      {
+        "name": "닥터콜린 무릎 관절 보호대",
+        "platform": "coupang",
+        "price": 24900,
+        "commission_rate": 0.03,
+        "commission_per_sale": 747,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.81,
+        "economics_score": 0.806,
+        "data_confidence": 0.0,
+        "score": 0.7964,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "관절",
+          "무릎",
+          "환절기"
+        ]
+      },
+      {
+        "name": "닥터아람 유산균 프로바이오틱스",
+        "platform": "naver",
+        "price": 29900,
+        "commission_rate": 0.12,
+        "commission_per_sale": 3588,
+        "season_fit": 0.5,
+        "season_reason": "한파·난방·호흡기/보습 인접 시즌",
+        "demand_score": 0.837,
+        "economics_score": 0.937,
+        "data_confidence": 0.0,
+        "score": 0.6588,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "면역",
+          "환절기",
+          "건강식품"
+        ]
+      },
+      {
+        "name": "나잘후레쉬 비염 세정 스프레이",
+        "platform": "coupang",
+        "price": 18900,
+        "commission_rate": 0.03,
+        "commission_per_sale": 567,
+        "season_fit": 0.5,
+        "season_reason": "한파·난방·호흡기/보습 인접 시즌",
+        "demand_score": 0.811,
+        "economics_score": 0.787,
+        "data_confidence": 0.0,
+        "score": 0.6114,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "알레르기",
+          "비염",
+          "미세먼지"
+        ]
+      },
+      {
+        "name": "신일 리모컨 서큘레이터",
+        "platform": "coupang",
+        "price": 59900,
+        "commission_rate": 0.03,
+        "commission_per_sale": 1797,
+        "season_fit": 0.15,
+        "season_reason": "비시즌",
+        "demand_score": 0.849,
+        "economics_score": 0.818,
+        "data_confidence": 0.0,
+        "score": 0.5041,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "냉방",
+          "제습",
+          "여름"
+        ]
+      },
+      {
+        "name": "삐아 쿨링 패치 30매",
+        "platform": "naver",
+        "price": 12900,
+        "commission_rate": 0.12,
+        "commission_per_sale": 1548,
+        "season_fit": 0.15,
+        "season_reason": "비시즌",
+        "demand_score": 0.792,
+        "economics_score": 0.857,
+        "data_confidence": 0.0,
+        "score": 0.4993,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "냉방",
+          "수분",
+          "자외선"
+        ]
+      },
+      {
+        "name": "위닉스 제습기 16L",
+        "platform": "coupang",
+        "price": 289000,
+        "commission_rate": 0.03,
+        "commission_per_sale": 8670,
+        "season_fit": 0.15,
+        "season_reason": "비시즌",
+        "demand_score": 0.83,
+        "economics_score": 0.775,
+        "data_confidence": 0.0,
+        "score": 0.4873,
+        "verified": false,
+        "source": "추정치 · 정산 시 갱신",
+        "tags": [
+          "제습",
+          "장마",
+          "여름"
+        ]
+      }
+    ],
+    "selection": {
+      "coupang": {
+        "name": "한스웰 황사 마스크 KF94 100매",
+        "platform": "coupang",
+        "price": 17800,
+        "commission_rate": 0.03,
+        "commission_per_sale": 534,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.966,
+        "economics_score": 0.793,
+        "data_confidence": 1.0,
+        "score": 0.9349,
+        "verified": true,
+        "source": "쿠팡파트너스 상품 검색 2026-11-20 · 평점 4.5 / 리뷰 81,001 · link.coupang.com/a/iO4riyxIZw",
+        "tags": [
+          "호흡기",
+          "한파",
+          "미세먼지",
+          "의약외품"
+        ],
+        "action": "유지",
+        "reason": "현재 상품이 이번 달에도 1순위라 그대로 유지합니다."
+      },
+      "naver": {
+        "name": "들꽃잠 배 찜질팩",
+        "platform": "naver",
+        "price": 32300,
+        "commission_rate": 0.12,
+        "commission_per_sale": 3876,
+        "season_fit": 1.0,
+        "season_reason": "한파·난방·호흡기/보습 시즌 주력",
+        "demand_score": 0.716,
+        "economics_score": 0.942,
+        "data_confidence": 1.0,
+        "score": 0.9076,
+        "verified": true,
+        "source": "네이버 쇼핑 커넥트 2026-11-20 · 수수료 12% · 예상 수익 3,876원",
+        "tags": [
+          "온찜질",
+          "한파",
+          "배",
+          "건강관리용품"
+        ],
+        "action": "유지",
+        "reason": "현재 상품이 이번 달에도 1순위라 그대로 유지합니다."
+      }
+    }
+  }
+}
