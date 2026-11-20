@@ -5,6 +5,11 @@ Chalkboard / Blackboard Drawing Medical Shorts Engine
 - 다크 그린 칠판 텍스처, 우드 프레임, 분필 스케치 및 컬러 분필 하이라이트
 - Edge-TTS 한국어 음성 (ko-KR-InJoonNeural) 동기화 ("일일구" 정확 발음 적용)
 - 1080x1920 9:16 인스타그램 릴스 & 유튜브 쇼츠 표준 규격
+
+레이아웃 모드 (2026-11-20 승태 님 확정)
+- ``jaljab`` (기본값): 잘.의.정.바 3단 레이아웃 — 상단 흰색 헤더 / 중단 칠판 영상 / 하단 여백
+  (시안: downloads/Day13_잘의정바_1장시안_v2.png)
+- ``chalkboard``: 기존 전면 칠판 프레임(우드 프레임·배지·강의 노트 박스) — 과거 회차 재현용
 """
 
 import os
@@ -21,6 +26,29 @@ if not os.path.exists(FFMPEG_PATH):
 FONT_BOLD = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "fonts", "NanumGothic-Bold.ttf"))
 if not os.path.exists(FONT_BOLD):
     FONT_BOLD = "/workspace/fonts/NanumGothic-Bold.ttf"
+
+# ---------------------------------------------------------------------------
+# 잘.의.정.바 3단 레이아웃 규격 (1080x1920)
+# ---------------------------------------------------------------------------
+LAYOUT_JALJAB = "jaljab"          # 잘.의.정.바 3단 레이아웃 (신규 기본값)
+LAYOUT_CLASSIC = "chalkboard"     # 기존 전면 칠판 프레임
+DEFAULT_SHORTS_LAYOUT = LAYOUT_JALJAB
+
+JALJAB_TITLE = "잘못된 의료 정보 바로잡기"
+JALJAB_BRAND = "잘.의.정.바"
+JALJAB_FOOTER = "잘.의.정.바 · 자세한 칼럼은 프로필 링크"
+JALJAB_POINT = (238, 108, 22)     # #EE6C1E 주황 포인트
+JALJAB_TEXT = (20, 20, 20)
+JALJAB_FOOTER_GRAY = (105, 105, 105)
+
+# 3단 경계 (px, 상단 포함·하단 미포함)
+JALJAB_TOP_BAND = (0, 540)        # 상단 1/3 — 흰 배경 타이틀
+JALJAB_VIDEO_BAND = (540, 1400)   # 중단 — 칠판 영상 1080x860
+JALJAB_FOOTER_Y = 1422            # 하단 안내문 시작 y
+
+# 중단 영역 한 줄 자막 기본색/외곽선
+CAPTION_FILL = (255, 255, 255)
+CAPTION_OUTLINE = (10, 10, 10)
 
 async def generate_speech(text: str, output_mp3: str, voice: str = "ko-KR-InJoonNeural", rate: str = "+5%"):
     import edge_tts
@@ -45,6 +73,133 @@ def draw_text_with_outline(draw, pos, text, font, fill_color, outline_color, out
             if dx != 0 or dy != 0:
                 draw.text((x + dx, y + dy), text, font=font, fill=outline_color, anchor=anchor)
     draw.text((x, y), text, font=font, fill=fill_color, anchor=anchor)
+
+def _fit_font_width(text, max_w, start_size, min_size=24):
+    """텍스트가 max_w를 넘지 않는 가장 큰 폰트 크기를 찾는다."""
+    size = start_size
+    while size > min_size:
+        font = ImageFont.truetype(FONT_BOLD, size)
+        bbox = font.getbbox(text)
+        if bbox[2] - bbox[0] <= max_w:
+            return font, bbox
+        size -= 2
+    font = ImageFont.truetype(FONT_BOLD, size)
+    return font, font.getbbox(text)
+
+
+def _outlined_text(draw, center, text, font, fill=CAPTION_FILL, outline=CAPTION_OUTLINE, width=4):
+    x, y = center
+    for dx in range(-width, width + 1):
+        for dy in range(-width, width + 1):
+            if dx * dx + dy * dy <= width * width + 2 and (dx or dy):
+                draw.text((x + dx, y + dy), text, font=font, fill=outline, anchor="mm")
+    draw.text((x, y), text, font=font, fill=fill, anchor="mm")
+
+
+def _cover_crop(src: Image.Image, target_w: int, target_h: int, bias: float = 0.5) -> Image.Image:
+    """비율을 유지한 채 영역을 가득 채우고 남는 쪽을 잘라낸다(bias: 위쪽 0.0 ~ 아래쪽 1.0)."""
+    ratio = src.width / src.height
+    target = target_w / target_h
+    if ratio > target:
+        new_h = target_h
+        new_w = int(round(new_h * ratio))
+    else:
+        new_w = target_w
+        new_h = int(round(new_w / ratio))
+    resized = src.resize((new_w, new_h), Image.Resampling.LANCZOS)
+    extra_x, extra_y = new_w - target_w, new_h - target_h
+    cx = int(round(extra_x * 0.5))
+    cy = int(round(extra_y * bias))
+    return resized.crop((cx, cy, cx + target_w, cy + target_h))
+
+
+def create_jaljab_scene_frame(
+    *,
+    chalk_img_path: str,
+    out_img: str,
+    top_line: str = JALJAB_TITLE,
+    topic_keyword: str = "",
+    caption: str = "",
+    footer: str = JALJAB_FOOTER,
+    brand: str = JALJAB_BRAND,
+    width: int = 1080,
+    height: int = 1920,
+    crop_bias: float = 0.5,
+    scene_idx: int = 1,
+):
+    """잘.의.정.바 3단 레이아웃 한 씬 프레임.
+
+    상단(0~540 흰색): 1줄 굵은 검정 훅 + 2줄 주황 박스(흰 굵은 글씨)
+    중단(540~1400): 칠판 아트 1080x860 좌우 꽉 차게 + 하단 중앙 흰 자막(검정 외곽선)
+    하단(1400~1920 흰색): y1422 회색 안내문, 그 아래는 쇼츠 UI 여백으로 비움
+    실명은 넣지 않는다.
+    """
+    img = Image.new("RGB", (width, height), (255, 255, 255))
+    draw = ImageDraw.Draw(img)
+
+    # ---- 1. 상단 1/3: 흰 배경 + 굵은 검정 훅 + 주황 포인트 박스 ----
+    top_line = (top_line or JALJAB_TITLE).strip()
+    f_top, bb = _fit_font_width(top_line, width - 100, 62, 38)
+    top_h = bb[3] - bb[1]
+    line1_y = 244
+    line1_cy = line1_y + top_h // 2
+    draw.text((width // 2, line1_cy), top_line, font=f_top, fill=JALJAB_TEXT,
+              anchor="mm", stroke_width=2, stroke_fill=JALJAB_TEXT)
+
+    box_line = brand if not topic_keyword else f"{brand} · {topic_keyword}"
+    box_line = box_line.strip()
+    f_box, bb2 = _fit_font_width(box_line, width - 140, 64, 36)
+    tw2, th2 = bb2[2] - bb2[0], bb2[3] - bb2[1]
+    pad_x, pad_y = 32, 16
+    box_y1 = max(line1_cy + top_h // 2 + 24, 366)
+    box_y2 = box_y1 + th2 + pad_y * 2 + 12
+    box_x1 = (width - tw2) // 2 - pad_x
+    box_x2 = (width + tw2) // 2 + pad_x
+    draw.rectangle([box_x1, box_y1, box_x2, box_y2], fill=JALJAB_POINT)
+    draw.text((width // 2, (box_y1 + box_y2) // 2), box_line, font=f_box, fill=(255, 255, 255),
+              anchor="mm", stroke_width=2, stroke_fill=(255, 255, 255))
+
+    # ---- 2. 중단: 칠판 아트 1080x860 (좌우 꽉 차게, 비율 유지 크롭) ----
+    vid_y1, vid_y2 = JALJAB_VIDEO_BAND
+    vid_h = vid_y2 - vid_y1
+    if chalk_img_path and os.path.exists(chalk_img_path):
+        raw = Image.open(chalk_img_path).convert("RGB")
+        art = _cover_crop(raw, width, vid_h, bias=crop_bias)
+        img.paste(art, (0, vid_y1))
+    else:
+        draw.rectangle([0, vid_y1, width, vid_y2], fill=(22, 38, 30))
+
+    # 하단 중앙 한 줄 자막 (검정 외곽선 + 굵은 흰색)
+    cap = (caption or "").strip()
+    if cap:
+        f_cap, bb_cap = _fit_font_width(cap, width - 80, 52, 34)
+        cap_c = (bb_cap[2] - bb_cap[0], bb_cap[3] - bb_cap[1])
+        if cap_c[0] > width - 80 and " · " in cap:
+            # 너무 길면 '·' 기준 두 줄로 나눠 폰트를 지킨다
+            head, tail = cap.split(" · ", 1)
+            f_cap = ImageFont.truetype(FONT_BOLD, 44)
+            _outlined_text(draw, (width // 2, vid_y1 + vid_h - 128), head, f_cap, width=4)
+            _outlined_text(draw, (width // 2, vid_y1 + vid_h - 62), tail, f_cap, width=4)
+        else:
+            _outlined_text(draw, (width // 2, vid_y1 + vid_h - 96), cap, f_cap, width=4)
+
+    # ---- 3. 하단 여백: 회색 안내문만, 그 아래는 쇼츠 UI 여백 ----
+    if footer:
+        f_foot, bb_f = _fit_font_width(footer, width - 80, 28, 22)
+        draw.text(((width - (bb_f[2] - bb_f[0])) // 2, JALJAB_FOOTER_Y), footer, font=f_foot, fill=JALJAB_FOOTER_GRAY)
+
+    img.save(out_img, quality=95)
+    return out_img
+
+
+def scene_caption(scene: dict) -> str:
+    """씬 dict에서 한 줄 자막 문구를 만든다(caption 우선, 없으면 main_text 두 줄을 '·'로 연결)."""
+    cap = (scene.get("caption") or "").strip()
+    if cap:
+        return cap
+    lines = [l.strip() for l in (scene.get("main_text") or "").split("\n") if l.strip()]
+    return " · ".join(lines)
+
 
 def create_chalkboard_scene_frame(
     scene_idx: int,
@@ -197,11 +352,22 @@ def render_scene_video(img_path: str, audio_path: str, out_mp4: str, duration: f
     ]
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
-def render_chalkboard_shorts(scenes: list, output_mp4: str, temp_dir: str = "/tmp/chalk_shorts_build"):
+def render_chalkboard_shorts(
+    scenes: list,
+    output_mp4: str,
+    temp_dir: str = "/tmp/chalk_shorts_build",
+    layout: str = DEFAULT_SHORTS_LAYOUT,
+    top_line: str = JALJAB_TITLE,
+):
+    """칠판 드로잉 의학 쇼츠 렌더링.
+
+    layout="jaljab" (기본): 잘.의.정.바 3단 레이아웃
+    layout="chalkboard": 기존 전면 칠판 프레임
+    """
     os.makedirs(temp_dir, exist_ok=True)
     scene_videos = []
-    
-    print(f"\n[Chalkboard Video Engine] 칠판 분필 드로잉 스타일 쇼츠 렌더링 시작...")
+
+    print(f"\n[Chalkboard Video Engine] 칠판 분필 드로잉 스타일 쇼츠 렌더링 시작... (레이아웃: {layout})")
     
     for idx, sc in enumerate(scenes):
         scene_idx = idx + 1
@@ -212,15 +378,26 @@ def render_chalkboard_shorts(scenes: list, output_mp4: str, temp_dir: str = "/tm
         asyncio.run(generate_speech(sc["voice"], audio_file))
         duration = get_audio_duration(audio_file)
         
-        create_chalkboard_scene_frame(
-            scene_idx=scene_idx,
-            badge=sc.get("badge", ""),
-            chalk_keyword=sc.get("keyword", ""),
-            main_text=sc.get("main_text", ""),
-            sub_text=sc.get("sub_text", ""),
-            chalk_img_path=sc.get("chalk_img", ""),
-            out_img=img_file
-        )
+        if layout == LAYOUT_CLASSIC:
+            create_chalkboard_scene_frame(
+                scene_idx=scene_idx,
+                badge=sc.get("badge", ""),
+                chalk_keyword=sc.get("keyword", ""),
+                main_text=sc.get("main_text", ""),
+                sub_text=sc.get("sub_text", ""),
+                chalk_img_path=sc.get("chalk_img", ""),
+                out_img=img_file
+            )
+        else:
+            create_jaljab_scene_frame(
+                scene_idx=scene_idx,
+                chalk_img_path=sc.get("chalk_img", ""),
+                out_img=img_file,
+                top_line=sc.get("top_line") or top_line,
+                topic_keyword=sc.get("brand_keyword") or sc.get("keyword", ""),
+                caption=scene_caption(sc),
+                footer=sc.get("footer") or JALJAB_FOOTER,
+            )
         
         render_scene_video(img_file, audio_file, scene_mp4, duration)
         scene_videos.append(scene_mp4)
@@ -241,6 +418,29 @@ def render_chalkboard_shorts(scenes: list, output_mp4: str, temp_dir: str = "/tm
     ]
     subprocess.run(concat_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     print(f"\n✅ 칠판 드로잉 쇼츠 완성! -> {output_mp4}")
+
+def render_jaljab_previews(scenes: list, out_dir: str, prefix: str = "jaljab_scene", top_line: str = JALJAB_TITLE):
+    """음성 없이 잘.의.정.바 3단 레이아웃 씬 프레임 PNG만 뽑는다.
+
+    "1장 스크린샷" 요청이나 사전 시안 확인용. 렌더된 파일 경로 목록을 돌려준다.
+    """
+    os.makedirs(out_dir, exist_ok=True)
+    outs = []
+    for idx, sc in enumerate(scenes, 1):
+        out = os.path.join(out_dir, f"{prefix}_{idx}.png")
+        create_jaljab_scene_frame(
+            scene_idx=idx,
+            chalk_img_path=sc.get("chalk_img", ""),
+            out_img=out,
+            top_line=sc.get("top_line") or top_line,
+            topic_keyword=sc.get("brand_keyword") or sc.get("keyword", ""),
+            caption=scene_caption(sc),
+            footer=sc.get("footer") or JALJAB_FOOTER,
+        )
+        outs.append(out)
+        print(f"  - 프리뷰 {idx}/{len(scenes)}: {out}")
+    return outs
+
 
 def build_day4_chalkboard_shorts():
     scenes = [

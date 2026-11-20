@@ -14,7 +14,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(BASE_DIR))
 
-from engine.chalkboard_video_engine import render_chalkboard_shorts, FFMPEG_PATH
+from engine.chalkboard_video_engine import render_chalkboard_shorts, FFMPEG_PATH  # 기본 레이아웃: 잘.의.정.바 3단(jaljab)
 
 DAY_DIR = BASE_DIR / "content" / "2026-11-20-01"
 CHALK_DIR = DAY_DIR / "chalkboard"
@@ -31,7 +31,8 @@ GIF_OUT = DOWNLOADS / "Day13_겨울운동_미리보기.gif"
 SCENES = [
     {
         "badge": "겨울 아침 경고",
-        "keyword": "아침 혈압",
+        "keyword": "겨울 새벽 운동?!",
+        "caption": "새벽엔 혈압 최고 · 체온 최저!",
         "chalk_img": str(ART_DIR / "scene1_dawn_walk_chest.png"),
         "main_text": "새벽 운동은\n가장 힘든 시간입니다",
         "sub_text": "혈압은 가장 높고 체온은 가장 낮습니다",
@@ -40,6 +41,7 @@ SCENES = [
     {
         "badge": "심장이 받는 부담",
         "keyword": "혈관 수축",
+        "caption": "좁아진 혈관, 심장은 더 세게",
         "chalk_img": str(ART_DIR / "scene2_cold_heart_load.png"),
         "main_text": "혈관이 좁아지면\n심장은 더 세게 밉니다",
         "sub_text": "같은 속도에 산소는 더 많이 듭니다",
@@ -48,6 +50,7 @@ SCENES = [
     {
         "badge": "운동 적기",
         "keyword": "오후 두 시에서 네 시",
+        "caption": "해 지기 전, 오후 두 시에서 네 시",
         "chalk_img": str(ART_DIR / "scene3_afternoon_sun_walk.png"),
         "main_text": "체온이 오르는\n오후 두 시에서 네 시",
         "sub_text": "해가 지기 전에 끝내십시오",
@@ -56,6 +59,7 @@ SCENES = [
     {
         "badge": "실내 이십 분",
         "keyword": "의자 홈트",
+        "caption": "의자 하나로 이십 분이면 충분",
         "chalk_img": str(ART_DIR / "scene4_indoor_chair_workout.png"),
         "main_text": "의자 하나로\n이십 분이면 충분합니다",
         "sub_text": "준비 오 분, 본운동 십이 분, 정리 삼 분",
@@ -64,6 +68,7 @@ SCENES = [
     {
         "badge": "응급 호출 신호",
         "keyword": "일일구",
+        "caption": "가슴 통증 오 분이면 일일구",
         "chalk_img": str(ART_DIR / "scene5_chest_pain_call_119.png"),
         "main_text": "가슴 통증이 오 분\n지나면 일일구",
         "sub_text": "직접 운전하지 마시고 꼭 공유해 주세요",

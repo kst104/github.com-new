@@ -160,6 +160,24 @@ python3 -m unittest engine.test_revenue_feedback -v            # 계산 검증 2
 
 ---
 
+## 7. 의학 쇼츠 레이아웃 — `잘.의.정.바` 3단 (기본값)
+
+2026-11-20 승태 님 확정. 앞으로 만드는 의학 쇼츠는 **상단 1/3 흰색 헤더 + 중단 칠판 영상 + 하단 여백**의 3단 레이아웃으로 나갑니다.
+
+```python
+from engine.chalkboard_video_engine import render_chalkboard_shorts, render_jaljab_previews
+
+render_chalkboard_shorts(scenes, "out.mp4")                        # 기본 = 잘.의.정.바 3단(jaljab)
+render_chalkboard_shorts(scenes, "out.mp4", layout="chalkboard")   # 과거 전면 칠판 프레임 재현
+render_jaljab_previews(scenes, "content/<회처>/chalkboard/jaljab_preview")  # 음성 없이 컷 PNG만
+```
+
+- 씬 dict 필수 키: `chalk_img`, `keyword`(주제 키워드), `caption`(한 줄 자막), `voice`
+- 실명(`김승태`)은 넣지 않고 브랜드 `잘.의.정.바`만 노출합니다.
+- 전체 규격·검증 결과: [`docs/07_잘의정바_3단_레이아웃_규격.md`](docs/07_잘의정바_3단_레이아웃_규격.md) · 검증: `python3 engine/test_jaljab_layout.py`
+
+---
+
 ## 폴더 구조
 ```
 content/<YYYY-MM-DD-NN>/   콘텐츠 1건 (meta.json, post.md, ads.md, shorts.md, 미디어)
