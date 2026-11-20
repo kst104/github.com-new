@@ -173,6 +173,7 @@ render_jaljab_previews(scenes, "content/<회처>/chalkboard/jaljab_preview")  # 
 ```
 
 - 씬 dict 필수 키: `chalk_img`, `keyword`(주제 키워드), `caption`(한 줄 자막), `voice`
+- 첫 2초(`0.0s~2.0s`)에는 중단 영상 상단 중앙(`y≈565`)에 **`구독·알림·좋아요는 힘이 됩니다`** 알약 배지가 자동으로 뜨고 2초에 사라집니다(`subscribe_badge=True` 기본, 끄려면 `subscribe_badge=False`).
 - 실명(`김승태`)은 넣지 않고 브랜드 `잘.의.정.바`만 노출합니다.
 - 전체 규격·검증 결과: [`docs/07_잘의정바_3단_레이아웃_규격.md`](docs/07_잘의정바_3단_레이아웃_규격.md) · 검증: `python3 engine/test_jaljab_layout.py`
 

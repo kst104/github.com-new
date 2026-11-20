@@ -9,6 +9,7 @@ Chalkboard / Blackboard Drawing Medical Shorts Engine
 레이아웃 모드 (2026-11-20 승태 님 확정)
 - ``jaljab`` (기본값): 잘.의.정.바 3단 레이아웃 — 상단 흰색 헤더 / 중단 칠판 영상 / 하단 여백
   (시안: downloads/Day13_잘의정바_1장시안_v2.png)
+  + 영상 첫 2초(0.0~2.0s)에만 '구독·알림·좋아요는 힘이 됩니다' 배지 오버레이
 - ``chalkboard``: 기존 전면 칠판 프레임(우드 프레임·배지·강의 노트 박스) — 과거 회차 재현용
 """
 
@@ -49,6 +50,21 @@ JALJAB_FOOTER_Y = 1422            # 하단 안내문 시작 y
 # 중단 영역 한 줄 자막 기본색/외곽선
 CAPTION_FILL = (255, 255, 255)
 CAPTION_OUTLINE = (10, 10, 10)
+
+# ---------------------------------------------------------------------------
+# 초기 2초 '구독·알림·좋아요' 배지 (2026-11-20 승태 님 요청)
+# 영상 시작 0.0s ~ 2.0s 동안만 중단 영상 상단 중앙에 표시되고, 2.0s에 맞춰 사라진다.
+# ---------------------------------------------------------------------------
+SUBSCRIBE_BADGE_TEXT = "구독·알림·좋아요는 힘이 됩니다"
+SUBSCRIBE_BADGE_TOP = 565                  # 중단 경계(540) 바로 아래, 가로 중앙 정렬
+SUBSCRIBE_BADGE_FONT = 36
+SUBSCRIBE_BADGE_PAD_X = 34
+SUBSCRIBE_BADGE_PAD_Y = 15
+SUBSCRIBE_BADGE_FILL = (238, 108, 22, 235)   # #EE6C1E 반투명
+SUBSCRIBE_BADGE_EDGE = (255, 255, 255, 215)
+SUBSCRIBE_BADGE_WINDOW = (0.0, 2.0)          # 노출 구간(초)
+SUBSCRIBE_BADGE_FADE_IN = 0.0                # 첫 프레임(썸네일)부터 선명하게 — 페이드 인 없음
+SUBSCRIBE_BADGE_FADE_OUT = 0.45              # 2.0s 직전 페이드 아웃
 
 async def generate_speech(text: str, output_mp3: str, voice: str = "ko-KR-InJoonNeural", rate: str = "+5%"):
     import edge_tts
@@ -96,6 +112,39 @@ def _outlined_text(draw, center, text, font, fill=CAPTION_FILL, outline=CAPTION_
     draw.text((x, y), text, font=font, fill=fill, anchor="mm")
 
 
+def subscribe_badge_geometry(width: int = 1080):
+    """초기 2초 배지의 (폰트, 박스 좌표(x1,y1,x2,y2), 글자 높이). 박스는 가로 중앙·y=565 시작."""
+    font, bb = _fit_font_width(SUBSCRIBE_BADGE_TEXT, width - 120, SUBSCRIBE_BADGE_FONT, 26)
+    tw, th = bb[2] - bb[0], bb[3] - bb[1]
+    box_w = tw + SUBSCRIBE_BADGE_PAD_X * 2
+    box_h = th + SUBSCRIBE_BADGE_PAD_Y * 2
+    x1 = (width - box_w) // 2
+    y1 = SUBSCRIBE_BADGE_TOP
+    return font, (x1, y1, x1 + box_w, y1 + box_h), th
+
+
+def draw_subscribe_badge(layer: Image.Image, width: int = 1080):
+    """투명 RGBA 레이어에 '구독·알림·좋아요는 힘이 됩니다' 알약 배지를 그린다(박스 좌표 반환)."""
+    font, box, _ = subscribe_badge_geometry(width)
+    x1, y1, x2, y2 = box
+    d = ImageDraw.Draw(layer)
+    radius = (y2 - y1) // 2
+    d.rounded_rectangle([x1 + 3, y1 + 6, x2 + 3, y2 + 6], radius=radius, fill=(0, 0, 0, 95))
+    d.rounded_rectangle([x1, y1, x2, y2], radius=radius, fill=SUBSCRIBE_BADGE_FILL,
+                        outline=SUBSCRIBE_BADGE_EDGE, width=3)
+    d.text((width // 2, (y1 + y2) // 2 - 1), SUBSCRIBE_BADGE_TEXT, font=font,
+           fill=(255, 255, 255, 255), anchor="mm", stroke_width=2, stroke_fill=(255, 255, 255, 255))
+    return box
+
+
+def create_subscribe_badge_png(out_png: str, width: int = 1080, height: int = 1920) -> str:
+    """ffmpeg 오버레이용 투명 배지 PNG(1080x1920, 배지 이외는 완전 투명)를 만든다."""
+    layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    draw_subscribe_badge(layer, width)
+    layer.save(out_png)
+    return out_png
+
+
 def _cover_crop(src: Image.Image, target_w: int, target_h: int, bias: float = 0.5) -> Image.Image:
     """비율을 유지한 채 영역을 가득 채우고 남는 쪽을 잘라낸다(bias: 위쪽 0.0 ~ 아래쪽 1.0)."""
     ratio = src.width / src.height
@@ -126,6 +175,7 @@ def create_jaljab_scene_frame(
     height: int = 1920,
     crop_bias: float = 0.5,
     scene_idx: int = 1,
+    show_subscribe_badge: bool = False,
 ):
     """잘.의.정.바 3단 레이아웃 한 씬 프레임.
 
@@ -133,6 +183,8 @@ def create_jaljab_scene_frame(
     중단(540~1400): 칠판 아트 1080x860 좌우 꽉 차게 + 하단 중앙 흰 자막(검정 외곽선)
     하단(1400~1920 흰색): y1422 회색 안내문, 그 아래는 쇼츠 UI 여백으로 비움
     실명은 넣지 않는다.
+    show_subscribe_badge=True: 영상 첫 2초(t<2.0s)에 보이는 '구독·알림·좋아요는 힘이 됩니다'
+    배지를 정지 프레임·프리뷰에서 미리 확인하기 위한 옵션(실제 영상은 ffmpeg 오버레이로 2초만 노출).
     """
     img = Image.new("RGB", (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(img)
@@ -168,6 +220,12 @@ def create_jaljab_scene_frame(
         img.paste(art, (0, vid_y1))
     else:
         draw.rectangle([0, vid_y1, width, vid_y2], fill=(22, 38, 30))
+
+    # 초기 2초 배지 (정지 프레임·프리뷰 확인용 — 영상은 이 PNG를 0~2초만 오버레이)
+    if show_subscribe_badge:
+        layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+        draw_subscribe_badge(layer, width)
+        img.paste(layer, (0, 0), layer)
 
     # 하단 중앙 한 줄 자막 (검정 외곽선 + 굵은 흰색)
     cap = (caption or "").strip()
@@ -333,23 +391,72 @@ def create_chalkboard_scene_frame(
     img = img.convert("RGB")
     img.save(out_img, quality=95)
 
-def render_scene_video(img_path: str, audio_path: str, out_mp4: str, duration: float):
-    cmd = [
-        FFMPEG_PATH, "-y",
-        "-loop", "1",
-        "-i", img_path,
-        "-i", audio_path,
-        "-c:v", "libx264",
-        "-tune", "stillimage",
-        "-preset", "veryfast",
-        "-threads", "1",
-        "-c:a", "aac",
-        "-b:a", "192k",
-        "-pix_fmt", "yuv420p",
-        "-t", str(duration + 0.3),
-        "-shortest",
-        out_mp4
-    ]
+def render_scene_video(
+    img_path: str,
+    audio_path: str,
+    out_mp4: str,
+    duration: float,
+    overlay_png: str = None,
+    overlay_window: tuple = SUBSCRIBE_BADGE_WINDOW,
+    fade_in: float = SUBSCRIBE_BADGE_FADE_IN,
+    fade_out: float = SUBSCRIBE_BADGE_FADE_OUT,
+):
+    """한 씬 MP4를 만든다.
+
+    overlay_png를 주면 투명 배지 PNG를 영상 위에 얹고 ``overlay_window`` 구간(기본 0.0~2.0초)에만
+    보이게 한다 — 페이드 인으로 나타나 2초 직전에 페이드 아웃해 자막과 겹치지 않는다.
+    """
+    if overlay_png and os.path.exists(overlay_png):
+        start, end = overlay_window
+        end = min(end, max(duration, 0.1))           # 씬이 2초보다 짧으면 씬 끝까지만
+        fade_out_start = max(start, end - fade_out)
+        fade_out_len = max(end - fade_out_start, 0.05)
+        fade_chain = "[1:v]format=rgba"
+        if fade_in > 0:
+            fade_chain += f",fade=t=in:st={start:.2f}:d={fade_in:.2f}:alpha=1"
+        fade_chain += f",fade=t=out:st={fade_out_start:.2f}:d={fade_out_len:.2f}:alpha=1[badge];"
+        graph = (
+            fade_chain
+            + f"[0:v][badge]overlay=0:0:enable='between(t,{start:.2f},{end:.2f})',fps=25[v]"
+        )
+        cmd = [
+            FFMPEG_PATH, "-y",
+            "-loop", "1",
+            "-i", img_path,
+            "-loop", "1",
+            "-i", overlay_png,
+            "-i", audio_path,
+            "-filter_complex", graph,
+            "-map", "[v]",
+            "-map", "2:a",
+            "-c:v", "libx264",
+            "-tune", "stillimage",
+            "-preset", "veryfast",
+            "-threads", "1",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-pix_fmt", "yuv420p",
+            "-t", str(duration + 0.3),
+            "-shortest",
+            out_mp4
+        ]
+    else:
+        cmd = [
+            FFMPEG_PATH, "-y",
+            "-loop", "1",
+            "-i", img_path,
+            "-i", audio_path,
+            "-c:v", "libx264",
+            "-tune", "stillimage",
+            "-preset", "veryfast",
+            "-threads", "1",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-pix_fmt", "yuv420p",
+            "-t", str(duration + 0.3),
+            "-shortest",
+            out_mp4
+        ]
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
 def render_chalkboard_shorts(
@@ -358,11 +465,14 @@ def render_chalkboard_shorts(
     temp_dir: str = "/tmp/chalk_shorts_build",
     layout: str = DEFAULT_SHORTS_LAYOUT,
     top_line: str = JALJAB_TITLE,
+    subscribe_badge: bool = True,
 ):
     """칠판 드로잉 의학 쇼츠 렌더링.
 
     layout="jaljab" (기본): 잘.의.정.바 3단 레이아웃
     layout="chalkboard": 기존 전면 칠판 프레임
+    subscribe_badge=True (기본, jaljab 전용): 첫 씬 위에 '구독·알림·좋아요는 힘이 됩니다'
+    배지를 영상 시작 0.0s~2.0s에만 표시한다.
     """
     os.makedirs(temp_dir, exist_ok=True)
     scene_videos = []
@@ -398,8 +508,13 @@ def render_chalkboard_shorts(
                 caption=scene_caption(sc),
                 footer=sc.get("footer") or JALJAB_FOOTER,
             )
-        
-        render_scene_video(img_file, audio_file, scene_mp4, duration)
+
+        # 첫 씬에만 초기 2초 배지 오버레이(레이아웃이 jaljab일 때)
+        badge_png = None
+        if subscribe_badge and layout != LAYOUT_CLASSIC and scene_idx == 1:
+            badge_png = create_subscribe_badge_png(os.path.join(temp_dir, "subscribe_badge.png"))
+
+        render_scene_video(img_file, audio_file, scene_mp4, duration, overlay_png=badge_png)
         scene_videos.append(scene_mp4)
         print(f"  - 씬 {scene_idx}/{len(scenes)} 렌더 완료 ({duration:.1f}초): {sc.get('badge')}")
         
@@ -419,10 +534,18 @@ def render_chalkboard_shorts(
     subprocess.run(concat_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     print(f"\n✅ 칠판 드로잉 쇼츠 완성! -> {output_mp4}")
 
-def render_jaljab_previews(scenes: list, out_dir: str, prefix: str = "jaljab_scene", top_line: str = JALJAB_TITLE):
+def render_jaljab_previews(
+    scenes: list,
+    out_dir: str,
+    prefix: str = "jaljab_scene",
+    top_line: str = JALJAB_TITLE,
+    show_subscribe_badge: bool = True,
+):
     """음성 없이 잘.의.정.바 3단 레이아웃 씬 프레임 PNG만 뽑는다.
 
-    "1장 스크린샷" 요청이나 사전 시안 확인용. 렌더된 파일 경로 목록을 돌려준다.
+    "1장 스크린샷" 요청이나 사전 시안 확인용. 첫 씬에는 영상 0~2초에 실제로 보이는
+    '구독·알림·좋아요' 배지를 함께 넣어 확인할 수 있다(show_subscribe_badge).
+    렌더된 파일 경로 목록을 돌려준다.
     """
     os.makedirs(out_dir, exist_ok=True)
     outs = []
@@ -436,6 +559,7 @@ def render_jaljab_previews(scenes: list, out_dir: str, prefix: str = "jaljab_sce
             topic_keyword=sc.get("brand_keyword") or sc.get("keyword", ""),
             caption=scene_caption(sc),
             footer=sc.get("footer") or JALJAB_FOOTER,
+            show_subscribe_badge=bool(show_subscribe_badge and idx == 1),
         )
         outs.append(out)
         print(f"  - 프리뷰 {idx}/{len(scenes)}: {out}")
