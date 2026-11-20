@@ -186,6 +186,8 @@ def render_scene_video(img_path: str, audio_path: str, out_mp4: str, duration: f
         "-i", audio_path,
         "-c:v", "libx264",
         "-tune", "stillimage",
+        "-preset", "veryfast",
+        "-threads", "1",
         "-c:a", "aac",
         "-b:a", "192k",
         "-pix_fmt", "yuv420p",
