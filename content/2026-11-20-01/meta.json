@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-20-01",
+  "day": 13,
+  "title": "\"새벽에 나갔다가 가슴을 움켜쥐고\"... 응급실 의사가 겨울 운동 시간을 오후로 미루라는 이유",
+  "status": "발행완료",
+  "category": "의학·건강",
+  "author": "겅태(의학과 경제학에 관심많은)",
+  "published_url": "https://blog.naver.com/kst104/224485664928",
+  "published_at": "2026-11-21T08:56:00+09:00",
+  "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
+  "affiliate": {
+    "product": "한스웰 한마음 황사 마스크 대형 성인용 KF94, 1개입, 100개, 화이트",
+    "price": 17800,
+    "short_url": "https://link.coupang.com/a/iO4riyxIZw",
+    "disclosure": "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+    "mobile_clickable": true,
+    "checked_at": "2026-11-21"
+  },
+  "clinical_published": {
+    "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
+    "title": "한랭 환경 운동의 심혈관 부하와 운동 시간대의 생리학적 근거, 동적 준비운동 및 실내 저항운동·야외 보행의 위험 계층화",
+    "url": "https://blog.naver.com/kst104/224485691475",
+    "published_at": "2026-11-21T09:29:00+09:00",
+    "affiliate": {
+      "product": "들꽃잠 배 찜질팩 온열 팥 멀티형",
+      "price": 32300,
+      "link": "https://naver.me/Faeu91oI",
+      "mobile_clickable": true,
+      "checked_at": "2026-11-21"
+    },
+    "disclosure": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.",
+    "citations": "kst104/wikiwi (acs.md, trauma-adults.md, knee-injuries.md, shoulder-injuries.md), Tintinalli's Emergency Medicine 9th ed."
+  },
+  "mobile_check": {
+    "public": "m.blog.naver.com href=https://link.coupang.com/a/iO4riyxIZw 1건 확인",
+    "clinical": "m.blog.naver.com href=https://naver.me/Faeu91oI 1건 확인",
+    "checked_at": "2026-11-21T09:31:00+09:00"
+  }
+}
