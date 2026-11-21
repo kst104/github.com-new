@@ -7,8 +7,26 @@
   "category": "영양/식단",
   "blog_category": "의학·건강 (categoryNo=10)",
   "author": "겅태(의학과 경제학에 관심많은)",
-  "status": "제작완료",
-  "created_at": "2026-11-21T13:57:00+09:00",
+  "status": "발행완료",
+  "created_at": "2026-11-21T13:50:00+09:00",
+  "published_url": "https://blog.naver.com/kst104/224485952422",
+  "published_at": "2026-11-21T14:06:00+09:00",
+  "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
+  "published_tags": ["겨울철면역력음식", "온열식품식단", "생강차효능", "대추차효능", "비타민D", "겨울건강관리"],
+  "duplicate_handled": {
+    "logNo": 224485955824,
+    "reason": "네이버가 발행 직후 「페이지를 찾을 수 없습니다」 오류 화면을 띄워 재발행했으나 첫 발행이 실제로 완료되어 사본이 생성됨",
+    "action": "사본(태그 4개)은 비공개로 전환. 삭제는 승태 님 판단 대기",
+    "checked_at": "2026-11-21T14:12:00+09:00"
+  },
+  "clinical_published": {
+    "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
+    "title": "[임상 리뷰] 한랭 계절 영양 관리: 식사성 발열효과와 미량영양소 보충의 근거, 만성질환자 식이 조정",
+    "url": "https://blog.naver.com/kst104/224485962531",
+    "published_at": "2026-11-21T14:17:00+09:00",
+    "tags": ["임상리뷰", "비타민D", "단백질섭취", "겨울영양관리"],
+    "citations": "kst104/wikiwi (trauma-adults.md, sepsis.md, 발열.md, acs.md), Tintinalli's Emergency Medicine 9th ed."
+  },
   "affiliate": {
     "network": "네이버 쇼핑 커넥트 (브랜드 커넥트)",
     "product": "들꽃잠 배 찜질팩 온열 팥 멀티형 (허리·생리·어깨 겸용)",
@@ -17,7 +35,17 @@
     "short_url": "https://naver.me/Faeu91oI",
     "creator_shop": "https://cshop.naver.com/geongtae_shop",
     "disclosure": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.",
-    "mobile_clickable": null
+    "mobile_clickable": true,
+    "both_editions": true
+  },
+  "mobile_check": {
+    "public": "m.blog.naver.com/kst104/224485952422 에서 <a href=\"https://naver.me/Faeu91oI\" target=\"_blank\"> 1건, <a href=\"https://cshop.naver.com/geongtae_shop\"> 1건 확인. 표 5개 실제 표로 렌더, 태그 6개, 저자 겅태, 실명 0건",
+    "clinical": "m.blog.naver.com/kst104/224485962531 에서 동일 링크 2건 확인, 표 4개",
+    "checked_at": "2026-11-21T14:15:00+09:00",
+    "screenshots": [
+      "downloads/네이버블로그_day14_모바일_쇼핑커넥트링크.png",
+      "downloads/네이버블로그_day14_임상칼럼_모바일_쇼핑커넥트링크.png"
+    ]
   },
   "shorts": {
     "file": "downloads/Day14_겨울면역음식_온열식단_칠판드로잉_쇼츠.mp4",
@@ -26,7 +54,12 @@
     "layout": "jaljab",
     "subscribe_badge": true,
     "gif": "downloads/Day14_겨울면역음식_미리보기.gif",
-    "youtube_url": null
+    "youtube_url": "https://youtube.com/shorts/fALVVS7I9C8",
+    "youtube_title": "겨울철 면역력 음식, 근거 있는 건 딱 세 가지입니다",
+    "youtube_status": "공개",
+    "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
+    "uploaded_at": "2026-11-21T14:22:00+09:00"
   },
-  "note": "14:00 예정 루틴과 중복 제작을 막기 위해 13:57에 생성한 메타 파일"
+  "notion_page_id": "41fcac32-3750-81b4-983c-f6c9ba33ff1b",
+  "widget": "widgets/dual-content-viewer (Day 14 탭 추가, data[14])"
 }

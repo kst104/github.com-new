@@ -50,7 +50,18 @@
 - 배포본: `downloads/Day14_겨울면역음식_온열식단_칠판드로잉_쇼츠.mp4`, `downloads/Day14_겨울면역음식_미리보기.gif`, `downloads/Day14_scene_1.png`~`3.png`, `downloads/Day14_콘텐츠_이원화_듀얼뷰어.html`
 - 생성 스크립트: `generate_day14_shorts.py` (저장소 루트)
 
-## 5. 품질 검증
+## 5. 유튜브 업로드
+
+| 항목 | 값 |
+| :--- | :--- |
+| 채널 | 잘못된 의료 정보 바로잡기(잘.의.정.바) `UCHhMXW0nECx7N3wFo9TfJAg` |
+| URL | https://youtube.com/shorts/fALVVS7I9C8 |
+| 제목 | 겨울철 면역력 음식, 근거 있는 건 딱 세 가지입니다 |
+| 공개 상태 | 공개 (아동용 아님) |
+| 게시일 | 2026-11-21 |
+| 설명 | 네이버 블로그·크리에이터샵·쇼핑 커넥트 링크 + #Shorts 해시태그 포함, 실명·@ 멘션 없음 |
+
+## 6. 품질 검증
 
 - ffmpeg 실측: 1080x1920(SAR 1:1), 24.97fps(25 tbr), 50.68초, H.264 High + AAC LC 24kHz mono
 - 오디오 mean -20.6dB / max -3.4dB, 무음 구간 없음
