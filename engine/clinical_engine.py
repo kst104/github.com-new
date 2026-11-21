@@ -224,6 +224,7 @@ def markdown_to_clinical_html(md_text, title="한랭 노출 및 아침 혈압 �
     html_body = re.sub(r"^### (.+)$", r'<h3 class="journal-h3">\1</h3>', html_body, flags=re.MULTILINE)
     html_body = re.sub(r"\*\*(.+?)\*\*", r'<strong>\1</strong>', html_body)
     html_body = re.sub(r"\*(.+?)\*", r'<em>\1</em>', html_body)
+    html_body = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank" rel="noopener" style="color:#2563eb;text-decoration:underline;">\1</a>', html_body)
 
     full_html = f"""<!DOCTYPE html>
 <html lang="ko">
