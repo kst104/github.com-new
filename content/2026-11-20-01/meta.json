@@ -9,12 +9,22 @@
   "published_at": "2026-11-21T08:56:00+09:00",
   "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
   "affiliate": {
-    "product": "한스웰 한마음 황사 마스크 대형 성인용 KF94, 1개입, 100개, 화이트",
-    "price": 17800,
-    "short_url": "https://link.coupang.com/a/iO4riyxIZw",
-    "disclosure": "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
+    "network": "네이버 쇼핑 커넥트 (브랜드 커넥트)",
+    "product": "들꽃잠 배 찜질팩 온열 팥 멀티형 (허리·생리·어깨 겸용)",
+    "price": 32300,
+    "list_price": 45000,
+    "short_url": "https://naver.me/Faeu91oI",
+    "creator_shop": "https://cshop.naver.com/geongtae_shop",
+    "disclosure": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.",
     "mobile_clickable": true,
-    "checked_at": "2026-11-21"
+    "checked_at": "2026-11-21",
+    "replaced_previous": {
+      "network": "쿠팡파트너스",
+      "product": "한스웰 한마음 황사 마스크 대형 성인용 KF94, 1개입, 100개, 화이트",
+      "price": 17800,
+      "short_url": "https://link.coupang.com/a/iO4riyxIZw",
+      "replaced_at": "2026-11-21"
+    }
   },
   "clinical_published": {
     "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
@@ -32,8 +42,8 @@
     "citations": "kst104/wikiwi (acs.md, trauma-adults.md, knee-injuries.md, shoulder-injuries.md), Tintinalli's Emergency Medicine 9th ed."
   },
   "mobile_check": {
-    "public": "m.blog.naver.com href=https://link.coupang.com/a/iO4riyxIZw 1건 확인",
+    "public": "m.blog.naver.com/kst104/224485664928 href=https://naver.me/Faeu91oI 1건, link.coupang.com 0건, 쿠팡파트너스 문구 0건 확인",
     "clinical": "m.blog.naver.com href=https://naver.me/Faeu91oI 1건 확인",
-    "checked_at": "2026-11-21T09:31:00+09:00"
+    "checked_at": "2026-11-21T13:45:00+09:00"
   }
 }
