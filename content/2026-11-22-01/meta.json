@@ -7,8 +7,20 @@
   "category": "의학/건강",
   "blog_category": "의학·건강 (categoryNo=10)",
   "author": "겅태(의학과 경제학에 관심많은)",
-  "status": "제작완료",
+  "status": "발행완료",
   "created_at": "2026-11-22T12:40:00+09:00",
+  "published_url": "https://blog.naver.com/kst104/224486927034",
+  "published_at": "2026-11-22T12:47:00+09:00",
+  "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
+  "published_tags": ["겨울철피부건조", "보습제바르는법", "세라마이드크림", "3분법칙", "피부장벽", "겨울피부관리"],
+  "clinical_published": {
+    "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
+    "title": "[임상 리뷰] 한랭기 피부 장벽 손상과 보습 요법의 근거: 각질층 지질 조성, 3분 법칙의 근거 수준, 세라마이드 보충의 임상 적용",
+    "url": "https://blog.naver.com/kst104/224486929870",
+    "published_at": "2026-11-22T12:51:00+09:00",
+    "tags": ["임상리뷰", "피부장벽", "세라마이드", "보습요법"],
+    "citations": "kst104/wikiwi (sepsis.md, trauma-adults.md), Tintinalli 9판 (Disorders of the Skin, Wound Management, Bacterial Skin and Soft Tissue Infections, Environmental Injuries), Cochrane 2017, BEEP 2020, PreventADALL 2020, Chiang & Eichenfield 2009"
+  },
   "affiliate": {
     "network": "네이버 쇼핑 커넥트 (브랜드 커넥트)",
     "product": "들꽃잠 배 찜질팩 온열 팥 멀티형 (허리·생리·어깨 겸용)",
@@ -17,7 +29,17 @@
     "short_url": "https://naver.me/Faeu91oI",
     "creator_shop": "https://cshop.naver.com/geongtae_shop",
     "disclosure": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.",
+    "mobile_clickable": true,
     "both_editions": true
+  },
+  "mobile_check": {
+    "public": "m.blog.naver.com/kst104/224486927034 에서 <a href=\"https://naver.me/Faeu91oI\" target=\"_blank\">, <a href=\"https://cshop.naver.com/geongtae_shop\" target=\"_blank\"> 각 1건 확인. 파란 밑줄(rgb(96,140,186), underline) 렌더, 표 3개, 태그 6개",
+    "clinical": "m.blog.naver.com/kst104/224486929870 에서 동일 링크 2건 확인, 표 6개, 태그 4개",
+    "checked_at": "2026-11-22T12:52:00+09:00",
+    "screenshots": [
+      "downloads/네이버블로그_day15_모바일_쇼핑커넥트링크.png",
+      "downloads/네이버블로그_day15_임상칼럼_모바일_쇼핑커넥트링크.png"
+    ]
   },
   "shorts": {
     "file": "downloads/Day15_겨울피부건조_보습3분법칙_칠판드로잉_쇼츠.mp4",
@@ -25,6 +47,12 @@
     "resolution": "1080x1920",
     "layout": "jaljab",
     "subscribe_badge": true,
-    "gif": "downloads/Day15_겨울피부건조_미리보기.gif"
-  }
+    "gif": "downloads/Day15_겨울피부건조_미리보기.gif",
+    "youtube_url": "https://youtube.com/shorts/gI6g5CRjDwg",
+    "youtube_title": "크림을 발라도 당기는 이유, 겨울 피부에 빠진 건 물이 아닙니다",
+    "youtube_status": "공개",
+    "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
+    "uploaded_at": "2026-11-22T12:55:00+09:00"
+  },
+  "widget": "widgets/dual-content-viewer (Day 15 탭 추가, data[15], currentDay=15)"
 }
