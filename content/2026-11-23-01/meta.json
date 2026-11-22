@@ -3,7 +3,11 @@
   "day": 16,
   "title": "\"뜨거운 물로 씻을수록 다음 날 더 가려워요\"... 겨울 샤워가 피부를 망치는 세 가지",
   "topic": "겨울 샤워·세안 습관이 피부를 망친다, 뜨거운 물·비누·각질 제거의 함정",
-  "keywords": ["겨울철 샤워 습관", "뜨거운 물 피부 자극", "약산성 클렌저 고르는 법"],
+  "keywords": [
+    "겨울철 샤워 습관",
+    "뜨거운 물 피부 자극",
+    "약산성 클렌저 고르는 법"
+  ],
   "category": "의학/건강",
   "blog_category": "의학·건강 (categoryNo=10)",
   "author": "겅태(의학과 경제학에 관심많은)",
@@ -12,13 +16,24 @@
   "published_url": "https://blog.naver.com/kst104/224487897690",
   "published_at": "2026-11-23T08:30:00+09:00",
   "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
-  "published_tags": ["겨울철샤워습관", "뜨거운물피부자극", "약산성클렌저", "때밀이", "피부장벽", "손습진"],
+  "published_tags": [
+    "겨울철샤워습관",
+    "뜨거운물피부자극",
+    "약산성클렌저",
+    "때밀이",
+    "피부장벽",
+    "손습진"
+  ],
   "clinical_published": {
     "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
     "title": "한랭기 세정 습관과 표피 장벽: 계면활성제·표면산도·물리적 각질제거의 병태생리와 근거 기반 세정 처방",
     "url": "https://blog.naver.com/kst104/224487915036",
     "published_at": "2026-11-23T08:47:00+09:00",
-    "tags": ["임상리뷰", "피부장벽", "계면활성제"],
+    "tags": [
+      "임상리뷰",
+      "피부장벽",
+      "계면활성제"
+    ],
     "citations": "kst104/wikiwi (sepsis.md, trauma-adults.md), Tintinalli 9판 (Disorders of the Skin, Bacterial Skin and Soft Tissue Infections, Environmental Injuries, Wound Management), Ananthapadmanabhan 2004, Baranda 2002, Grubauer 1989, Rawlings & Matts 2005, Cork 2009, Danby 2011, Norman 2003, Chiang & Eichenfield 2009",
     "edition_note": "블로그 게시본은 8개 절·부록의 요약판(약 6,000자). 저장소 원고는 전체판(11,091자, 표 4개). 스마트에디터 호출당 1,450자 입력 제한과 문단 순서 문제 때문에 요약판으로 발행했다."
   },
@@ -38,7 +53,10 @@
     "public": "m.blog.naver.com/kst104/224487897690 에서 <a href=\"https://naver.me/Faeu91oI\" target=\"_blank\">, <a href=\"https://cshop.naver.com/geongtae_shop\" target=\"_blank\"> 각 1건 확인. 태그 6개, 본문 전체 렌더",
     "clinical": "m.blog.naver.com/kst104/224487915036 에서 동일 링크 2건이 <a target=\"_blank\">로 렌더됨을 DOM에서 확인, 태그 3개",
     "checked_at": "2026-11-23T08:48:00+09:00",
-    "screenshots": []
+    "screenshots": [
+      "downloads/네이버블로그_day16_모바일_쇼핑커넥트링크.png",
+      "downloads/네이버블로그_day16_임상칼럼_모바일.png"
+    ]
   },
   "shorts": {
     "file": "downloads/Day16_겨울샤워습관_피부장벽_칠판드로잉_쇼츠.mp4",
@@ -53,7 +71,11 @@
     "youtube_title": "뜨거운 물로 씻을수록 더 가려운 이유, 겨울 샤워의 함정",
     "youtube_status": "공개",
     "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
-    "uploaded_at": "2026-11-23T08:52:00+09:00"
+    "uploaded_at": "2026-11-23T08:52:00+09:00",
+    "youtube_verified": "https://youtube.com/shorts/HulnC4Skkro 로그인 없이 접근·재생 확인, 저작권 검사 \"발견된 문제 없음\""
   },
-  "widget": "widgets/dual-content-viewer (Day 16 탭 추가 예정)"
+  "widget": "widgets/dual-content-viewer (Day 16 탭 추가 예정)",
+  "notion_page": "https://www.notion.so/41ccac323750816f8649eb809436ea47 (상태 검토, 발행 URL·GitHub·수정일 기록)",
+  "github_commit": "e2c021e",
+  "slack_notice": "#pickle-geongtae (ts 1795391765.688389)"
 }
