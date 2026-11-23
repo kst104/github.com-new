@@ -1,0 +1,88 @@
+{
+  "id": "2026-11-24-01",
+  "day": 17,
+  "title": "\"밤만 되면 다리를 긁습니다\"... 겨울 가려움증, 건조성 피부염과 아토피는 다릅니다",
+  "topic": "밤마다 긁는 겨울 가려움증, 건조성 피부염 vs 아토피, 스테로이드 연고 오해",
+  "keywords": [
+    "겨울철 가려움증 원인",
+    "건조성 피부염 증상",
+    "아토피 연고 스테로이드"
+  ],
+  "category": "의학/건강",
+  "blog_category": "의학·건강 (categoryNo=10)",
+  "author": "겅태(의학과 경제학에 관심많은)",
+  "status": "발행완료",
+  "created_at": "2026-11-24T08:00:00+09:00",
+  "published_url": "https://blog.naver.com/kst104/224489435950",
+  "published_at": "2026-11-24T08:22:00+09:00",
+  "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
+  "published_tags": [
+    "겨울철가려움증",
+    "건조성피부염",
+    "아토피피부염",
+    "스테로이드연고",
+    "밤가려움",
+    "피부장벽"
+  ],
+  "clinical_published": {
+    "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
+    "title": "한랭기 소양과 만성 습진의 감별: 건조성 습진과 아토피 피부염의 병태생리, 국소 스테로이드 근거 기반 처방",
+    "url": "https://blog.naver.com/kst104/224489440383",
+    "published_at": "2026-11-24T08:30:00+09:00",
+    "tags": [
+      "임상리뷰",
+      "국소스테로이드",
+      "아토피피부염"
+    ],
+    "citations": "Tintinalli 9판 (Ch 248 Initial Evaluation and Management of Skin Disorders, Ch 249 Generalized Skin Disorders, Ch 250 Skin Disorders: Face and Scalp, Ch 251 Skin Disorders: Trunk, Ch 252 Skin Disorders: Groin and Skinfolds, Ch 253 Skin Disorders: Extremities, Ch 152 Soft Tissue Infections, Ch 142 Rashes in Infants and Children), Williams 1994, Hanifin & Rajka 1980, Cork 2009, Weidinger & Novak 2016, Langan 2020, Norman 2003, Patel & Yosipovitch 2007, Sonkoly 2006, Yosipovitch & Bernhard 2013, Weisshaar 2012, Charman 2000, Aubert-Wastiaux 2011, Long & Finlay 1991, Schmitt 2011, Matterne 2019, Eichenfield 2014",
+    "edition_note": "전체판 12,822자·표 2개가 그대로 게시됐다(Day 16의 요약판 제약 없음)."
+  },
+  "today_prompt": {
+    "public": "밤에 긁는 부위를 하나씩 적고, 그 부위에 맞는 보습제와 연고 사용 순서를 표로 만들어 줘.",
+    "clinical": "야간 소양 환자의 문진 항목을 표로 정리하고, 건조성 습진과 아토피 피부염을 구분하는 감별 체크리스트를 만들어 줘.",
+    "placement": "본문 끝난 직후, 제품 소개 바로 위 · 30px 굵은 제목 + 1x1 표 빨간 테두리 #ff0010"
+  },
+  "affiliate": {
+    "network": "네이버 쇼핑 커넥트 (브랜드 커넥트)",
+    "product": "이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 80ml",
+    "price": 24700,
+    "list_price": 38000,
+    "short_url": "https://naver.me/5nhmDgab",
+    "creator_shop": "https://cshop.naver.com/geongtae_shop",
+    "disclosure": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.",
+    "mobile_clickable": true,
+    "both_editions": true
+  },
+  "mobile_check": {
+    "public": "m.blog.naver.com/kst104/224489435950 에서 제휴·크리에이터샵 링크가 <a target=\"_blank\">로 렌더, 표 3개·태그 6개·프롬프트 박스 확인",
+    "clinical": "m.blog.naver.com/kst104/224489440383 에서 동일 링크 2건이 <a>로 렌더, 태그 3개 확인",
+    "checked_at": "2026-11-24T08:31:00+09:00",
+    "screenshots": [
+      "downloads/네이버블로그_day17_대중용_상단.png",
+      "downloads/네이버블로그_day17_대중용_말미_프롬프트_링크.png",
+      "downloads/네이버블로그_day17_임상칼럼_말미_프롬프트_링크.png"
+    ]
+  },
+  "shorts": {
+    "file": "downloads/Day17_겨울밤가려움_건조피부염아토피_칠판드로잉_쇼츠.mp4",
+    "duration_sec": 47.25,
+    "resolution": "1080x1920",
+    "layout": "jaljab",
+    "subscribe_badge": true,
+    "voice": "ko-KR-InJoonNeural +5%",
+    "gif": "downloads/Day17_겨울밤가려움_미리보기.gif",
+    "scene_times": [
+      {"start": "00:00", "chapter": "밤에 더 가려운 이유"},
+      {"start": "00:11", "chapter": "건조성 피부염 증상"},
+      {"start": "00:20", "chapter": "아토피 피부염 감별"},
+      {"start": "00:29", "chapter": "스테로이드 연고 사용법"},
+      {"start": "00:40", "chapter": "취침 전 보습과 환경"}
+    ],
+    "youtube_video_id": "leJ-s6vncAk",
+    "youtube_url": "https://youtube.com/shorts/leJ-s6vncAk",
+    "youtube_title": "밤마다 다리를 긁는 이유, 건조성 피부염과 아토피는 다릅니다",
+    "youtube_status": "공개",
+    "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
+    "hashtags": "#Shorts #밤가려움 #건조피부 #아토피 #보습제 #연고 #겨울건강 #가려움증 #피부장벽 #스테로이드연고 #피부관리 #잘의정바 #건강정보"
+  }
+}
