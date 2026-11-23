@@ -57,7 +57,7 @@ def build_public() -> str:
     md_body = "> **저자**: 겅태(의학과 경제학에 관심많은)\n\n---\n\n" + md[i:]
     # 프롬프트·제품 소개·태그는 HTML로 직접 붙인다
     j = md_body.index("## 💡 오늘의 프롬프트")
-    md_body = md_body[:j].rstrip()
+    md_body = re.sub(r"(\s*-{3,}\s*)+$", "", md_body[:j]).rstrip()
 
     inner = inner_html(md_body)
     parts = [inner, PROMPT_HTML.format(prompt=PROMPT_PUBLIC), PRODUCT_HTML,
@@ -76,7 +76,7 @@ def build_clinical() -> str:
     # 부록의 제품 안내는 본문에서 제거하고 HTML로 붙인다
     j = md_body.index("## 부록: 보습 처방과 제휴 안내")
     appendix = md_body[j:]
-    md_body = md_body[:j].rstrip()
+    md_body = re.sub(r"(\s*-{3,}\s*)+$", "", md_body[:j]).rstrip()
 
     inner = inner_html(md_body)
     appendix_md = appendix.replace("## 부록: 보습 처방과 제휴 안내",
