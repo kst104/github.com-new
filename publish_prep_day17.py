@@ -55,8 +55,8 @@ def build_public() -> str:
     md = SRC_PUBLIC.read_text(encoding="utf-8")
     i = md.index("## 💡 현장 리포트")
     md_body = "> **저자**: 겅태(의학과 경제학에 관심많은)\n\n---\n\n" + md[i:]
-    # 태그·면책 섹션 정리: 제품 소개 이후는 HTML로 직접 붙인다
-    j = md_body.index("## 🛍️ 함께 보면 좋은 제품")
+    # 프롬프트·제품 소개·태그는 HTML로 직접 붙인다
+    j = md_body.index("## 💡 오늘의 프롬프트")
     md_body = md_body[:j].rstrip()
 
     inner = inner_html(md_body)
