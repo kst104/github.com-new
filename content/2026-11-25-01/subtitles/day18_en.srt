@@ -1,53 +1,53 @@
 1
-00:00:00,211 --> 00:00:03,721
+00:00:00,000 --> 00:00:03,440
 My child has a fever and a cough.
 Should I give cold medicine first?
 
 2
-00:00:05,243 --> 00:00:08,059
+00:00:04,179 --> 00:00:06,825
 Before cold medicine,
 look at how your child is breathing.
 
 3
-00:00:09,890 --> 00:00:12,708
+00:00:07,630 --> 00:00:10,576
 If the skin under the ribs pulls in,
 that's an emergency sign.
 
 4
-00:00:14,572 --> 00:00:18,697
+00:00:11,393 --> 00:00:15,377
 A cold builds slowly. Flu brings high fever
 and body aches within hours.
 
 5
-00:00:20,564 --> 00:00:24,592
+00:00:16,181 --> 00:00:19,826
 Under age two, wheezing means RSV.
 Fast breathing is a sign too.
 
 6
-00:00:26,387 --> 00:00:29,508
+00:00:20,599 --> 00:00:23,987
 A dry cough lasting over two weeks
 may be mycoplasma.
 
 7
-00:00:31,358 --> 00:00:34,320
+00:00:24,836 --> 00:00:28,076
 For children under two, don't give
 combination cold medicine on your own.
 
 8
-00:00:36,185 --> 00:00:40,488
+00:00:28,861 --> 00:00:33,397
 In older adults, poor appetite and weakness
 without fever can be pneumonia.
 
 9
-00:00:42,170 --> 00:00:43,959
+00:00:34,103 --> 00:00:35,841
 So what should we check first today?
 
 10
-00:00:45,470 --> 00:00:48,622
+00:00:36,622 --> 00:00:39,443
 Breathing, urine output,
 and how much they eat.
 
 11
-00:00:50,403 --> 00:00:53,129
+00:00:40,253 --> 00:00:43,138
 Next episode: what causes a cough
 lasting over three weeks.

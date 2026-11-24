@@ -1,0 +1,96 @@
+{
+  "id": "2026-11-25-01",
+  "day": 18,
+  "title": "\"새벽에 열이 39도\"…감기인 줄 알았는데, 독감·RSV·마이코플라스마였습니다",
+  "topic": "겨울 고열·기침, 감기인가 독감인가. RSV·마이코플라스마까지 아이와 어르신 감별법",
+  "keywords": [
+    "RSV 증상 아이",
+    "마이코플라스마 폐렴 기침",
+    "독감 감기 차이"
+  ],
+  "category": "의학/건강",
+  "blog_category": "의학·건강 (categoryNo=10)",
+  "author": "겅태(의학과 경제학에 관심많은)",
+  "status": "발행완료",
+  "created_at": "2026-11-25T03:55:00+09:00",
+  "published_url": "https://blog.naver.com/kst104/224490820453",
+  "published_at": "2026-11-25T04:43:12+09:00",
+  "published_channel": "네이버 블로그 (kst104, 「의학·건강」 categoryNo=10, 전체공개)",
+  "published_tags": [
+    "독감감기차이",
+    "RSV증상",
+    "마이코플라스마폐렴",
+    "아이고열",
+    "소아호흡기",
+    "겨울건강"
+  ],
+  "clinical_published": {
+    "channel": "네이버 블로그 (kst104, 「임상·전문가 칼럼」 categoryNo=11, 전체공개)",
+    "title": "한랭기 소아·고령 호흡기 감염의 감별: 인플루엔자, RSV 세기관지염, 마이코플라스마 폐렴의 임상 평가와 치료 선택",
+    "url": "https://blog.naver.com/kst104/224490822107",
+    "published_at": "2026-11-25T04:47:00+09:00",
+    "tags": ["인플루엔자", "RSV세기관지염", "마이코플라스마폐렴"],
+    "citations": "Tintinalli 9판 Ch62·64·65·109·119·126·127·128·142, Ralston 2014 (AAP bronchiolitis), Bradley 2011 (PIDS/IDSA CAP), Metlay 2019 (ATS/IDSA), Uyeki 2019 (IDSA influenza), Hammitt 2022 (nirsevimab), IMPact-RSV 1998, Falsey 2005, Waites & Talkington 2004, 김환희 등 주간 건강과 질병 2026 (국내 마크로라이드 내성 81.4%·89.4%), 질병관리청 소아 마크로라이드 불응성 마이코플라스마 폐렴 치료지침 2024, WHO Pocket Book 2013",
+    "wiki_reflection": "kst104/wikiwi wiki/medical/emergency/sepsis.md — Sepsis-3·qSOFA·1시간 번들을 이차 세균성 폐렴 절에 연결"
+  },
+  "today_prompt": {
+    "public": "아이 기침과 열을 진료받을 때, 언제부터 어떻게 시작했는지와 숨쉬는 모습을 어떻게 정리해 가면 좋을까요?",
+    "clinical": "인플루엔자·RSV·마이코플라스마 폐렴을 나이와 시작 양상으로 구분하는 감별 체크리스트를 표로 만들어 줘.",
+    "placement": "본문 끝난 직후, 제품 소개 바로 위 · 30px 굵은 제목 + 1x1 표 빨간 테두리 #ff0010"
+  },
+  "affiliate": {
+    "network": "네이버 쇼핑 커넥트 (브랜드 커넥트)",
+    "product": "이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 80ml",
+    "price": 24700,
+    "list_price": 38000,
+    "short_url": "https://naver.me/5nhmDgab",
+    "creator_shop": "https://cshop.naver.com/geongtae_shop",
+    "disclosure": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.",
+    "mobile_clickable": true,
+    "both_editions": true
+  },
+  "images": {
+    "dir": "content/2026-11-25-01/images_v2",
+    "files": ["day18_v2_scene1_숨쉬는모습.png", "day18_v2_scene2_네가지감별.png", "day18_v2_scene3_어르신.png"],
+    "placement": "대중용 2장(1장·4장 앞), 임상 1장(5장 앞)"
+  },
+  "shorts": {
+    "file": "downloads/Day18_겨울고열기침_감기독감RSV마이코플라스마_쇼츠.mp4",
+    "duration_sec": 43.7,
+    "resolution": "1080x1920",
+    "fps": 24,
+    "layout": "paperdoll_header_1of5",
+    "voice_engine": "typecast ssfm-v31 (닥터 온 상현 / 가온 다은)",
+    "lip_sync": "RMS 기반 입 여닫힘, 주변 피부색 덮개로 이중 입 제거",
+    "motion": "상하 2.4px·주기 3.8초 호흡 모션",
+    "gif": "downloads/Day18_겨울고열기침_미리보기.gif",
+    "scene_times": "content/2026-11-25-01/video/scene_times.json",
+    "youtube_video_id": "YbKEchQ4OuI",
+    "youtube_url": "https://youtube.com/shorts/YbKEchQ4OuI",
+    "youtube_title": "아이 기침에 열까지, 감기인가 독감인가. RSV와 마이코플라스마는 다릅니다",
+    "youtube_status": "공개",
+    "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
+    "video_language": "한국어",
+    "hashtags": "#Shorts #RSV #독감 #고열 #기침 #아이 #마이코플라스마 #세기관지염 #감기 #호흡기 #겨울건강 #응급실 #잘의정바",
+    "subtitles": {
+      "ko": {"file": "subtitles/day18_ko.srt", "cues": 11, "status": "게시됨 (수동)"},
+      "en": {"file": "subtitles/day18_en.srt", "cues": 11, "status": "게시됨", "title": "Fever and Cough in Kids: Cold, Flu, RSV, or Mycoplasma?"},
+      "ja": {"file": "subtitles/day18_ja.srt", "cues": 11, "status": "게시됨", "title": "子どもの熱と咳、風邪かインフルエンザか — RSVとマイコプラズマの違い"}
+    },
+    "previous_video": {"id": "MDadN3989Y0", "status": "비공개", "reason": "Typecast 음성 최종본으로 교체"},
+    "screenshots": [
+      "browser/2026-11-25-잘의정바-day18-typecast-다국어자막-완료-2026-11-25-050333.png",
+      "browser/2026-11-25-잘의정바-day18-typecast-공개확인-2026-11-25-050406.png"
+    ]
+  },
+  "slop": "4종 모두 slop_score 0",
+  "revision": {
+    "date": "2026-11-25",
+    "source": "승태 님 구두 지시 3건",
+    "items": [
+      "쇼츠 연출 확정: 환자 질문 → 닥터 온 클로즈업 설명 → 2~3인 엔딩 대화 → Day 19 예고",
+      "몸통 움직임 완화(경망스러운 흔들림 제거) + 입만 움직이는 립싱크",
+      "Typecast ssfm-v31 7캐릭터 음성으로 최종본 제작, edge-tts 1판 비공개"
+    ]
+  }
+}

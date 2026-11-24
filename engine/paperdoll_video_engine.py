@@ -116,8 +116,39 @@ def rounded_panel(size, radius, fill, outline=None, width=0):
     return panel
 
 
+TYPECAST_ENV = BASE / ".env.typecast"
+TYPECAST_URL = "https://api.typecast.ai/v1/text-to-speech"
+
+
 def load_voice_config() -> dict:
     return json.loads(VOICES_JSON.read_text(encoding="utf-8"))["characters"]
+
+
+def typecast_key() -> str:
+    for line in TYPECAST_ENV.read_text(encoding="utf-8").splitlines():
+        if line.strip().startswith("TYPECAST_API_KEY"):
+            return line.split("=", 1)[1].strip().strip('"').strip("'")
+    raise SystemExit("TYPECAST_API_KEY를 찾지 못했습니다")
+
+
+def typecast_tts(text: str, out_path: Path, cfg: dict):
+    import urllib.request
+    body = {
+        "voice_id": cfg["voice_id"],
+        "text": text,
+        "model": cfg.get("model", "ssfm-v31"),
+        "language": "kor",
+        "emotion_preset": cfg.get("emotion_preset", "normal"),
+        "emotion_intensity": cfg.get("emotion_intensity", 1.0),
+        "audio_tempo": cfg.get("audio_tempo", 1.0),
+        "audio_pitch": cfg.get("audio_pitch", 0),
+        "audio_format": "mp3",
+    }
+    req = urllib.request.Request(TYPECAST_URL, data=json.dumps(body).encode("utf-8"),
+                                 headers={"X-API-KEY": typecast_key(),
+                                          "Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(req, timeout=120) as r:
+        out_path.write_bytes(r.read())
 
 
 # --------------------------------------------------------------------------- 음성
@@ -158,16 +189,23 @@ def audio_envelope(mp3: str, fps: int = FPS) -> list[float]:
     return out
 
 
-def synthesize(beats: list[dict], temp_dir: Path, voices: dict) -> list[dict]:
+def synthesize(beats: list[dict], temp_dir: Path, voices: dict, engine: str = "typecast") -> list[dict]:
     temp_dir.mkdir(parents=True, exist_ok=True)
-    async def run():
+    if engine == "typecast":
         for i, b in enumerate(beats, 1):
-            cfg = voices[b["speaker"]]
-            await _tts(b["text"], temp_dir / f"beat_{i:02d}.mp3", cfg["voice"], cfg["rate"],
-                       cfg.get("pitch", "+0Hz"))
-    asyncio.run(run())
+            cfg = voices[b["speaker"]]["typecast"]
+            typecast_tts(b["text"], temp_dir / f"beat_{i:02d}.wav", cfg)
+            print(f"  typecast {i:02d} {b['speaker']} ok")
+    else:
+        async def run():
+            for i, b in enumerate(beats, 1):
+                cfg = voices[b["speaker"]]
+                await _tts(b["text"], temp_dir / f"beat_{i:02d}.mp3", cfg["voice"], cfg["rate"],
+                           cfg.get("pitch", "+0Hz"))
+        asyncio.run(run())
+    ext = "wav" if engine == "typecast" else "mp3"
     for i, b in enumerate(beats, 1):
-        b["audio"] = str(temp_dir / f"beat_{i:02d}.mp3")
+        b["audio"] = str(temp_dir / f"beat_{i:02d}.{ext}")
         b["dur"] = probe_duration(Path(b["audio"]))
         b["env"] = audio_envelope(b["audio"])
     return beats
