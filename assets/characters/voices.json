@@ -1,0 +1,70 @@
+{
+  "version": "1.1",
+  "engine": "edge-tts",
+  "description": "잘.의.정.바 7인 고정 캐릭터별 한국어 TTS 음성 프로필",
+  "characters": {
+    "doctor": {
+      "name": "닥터 온",
+      "role": "의사",
+      "image": "work/content-automation-engine/assets/characters/doctor_transparent.png",
+      "voice": "ko-KR-InJoonNeural",
+      "rate": "+6%",
+      "pitch": "+0Hz",
+      "tone": "차분하고 신뢰감 있는 설명 톤"
+    },
+    "boy": {
+      "name": "몽이",
+      "role": "남자 어린이",
+      "image": "work/content-automation-engine/assets/characters/boy_transparent.png",
+      "voice": "ko-KR-SunHiNeural",
+      "rate": "+12%",
+      "pitch": "+24Hz",
+      "tone": "호기심 많고 씩씩한 남자아이 톤"
+    },
+    "girl": {
+      "name": "콩이",
+      "role": "여자 어린이",
+      "image": "work/content-automation-engine/assets/characters/girl_transparent.png",
+      "voice": "ko-KR-SunHiNeural",
+      "rate": "+14%",
+      "pitch": "+34Hz",
+      "tone": "발랄하고 밝은 여자아이 톤"
+    },
+    "adult_man": {
+      "name": "보람",
+      "role": "성인 남성",
+      "image": "work/content-automation-engine/assets/characters/adult_man_transparent.png",
+      "voice": "ko-KR-InJoonNeural",
+      "rate": "+8%",
+      "pitch": "-8Hz",
+      "tone": "친근한 30~40대 남성 질문 톤"
+    },
+    "adult_woman": {
+      "name": "가온",
+      "role": "성인 여성",
+      "image": "work/content-automation-engine/assets/characters/adult_woman_transparent.png",
+      "voice": "ko-KR-SunHiNeural",
+      "rate": "+6%",
+      "pitch": "+2Hz",
+      "tone": "생활감 있는 30~40대 여성 질문 톤"
+    },
+    "grandpa": {
+      "name": "느티",
+      "role": "할아버지",
+      "image": "work/content-automation-engine/assets/characters/grandpa_transparent.png",
+      "voice": "ko-KR-InJoonNeural",
+      "rate": "-8%",
+      "pitch": "-22Hz",
+      "tone": "묵직하고 느긋한 어르신 톤"
+    },
+    "grandma": {
+      "name": "포근",
+      "role": "할머니",
+      "image": "work/content-automation-engine/assets/characters/grandma_transparent.png",
+      "voice": "ko-KR-SunHiNeural",
+      "rate": "-6%",
+      "pitch": "-16Hz",
+      "tone": "다정하고 온화한 어르신 톤"
+    }
+  }
+}

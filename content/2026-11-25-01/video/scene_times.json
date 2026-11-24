@@ -1,0 +1,104 @@
+{
+  "beats": [
+    {
+      "beat": 1,
+      "start": "00:00",
+      "start_sec": 0.0,
+      "duration": 4.88,
+      "chapter": "오늘의 질문",
+      "caption": "아이 기침에 열까지, 감기약 먼저?",
+      "speaker": "가온"
+    },
+    {
+      "beat": 2,
+      "start": "00:05",
+      "start_sec": 4.88,
+      "duration": 4.64,
+      "chapter": "먼저 볼 것",
+      "caption": "감기약보다 숨쉬는 모습 먼저",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 3,
+      "start": "00:10",
+      "start_sec": 9.52,
+      "duration": 4.67,
+      "chapter": "응급실 신호",
+      "caption": "갈비뼈 밑이 들어가면 응급실",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 4,
+      "start": "00:14",
+      "start_sec": 14.19,
+      "duration": 5.99,
+      "chapter": "감기와 독감",
+      "caption": "감기는 서서히, 독감은 갑자기",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 5,
+      "start": "00:20",
+      "start_sec": 20.18,
+      "duration": 5.84,
+      "chapter": "RSV",
+      "caption": "두 살 미만 쌕쌕거림은 RSV",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 6,
+      "start": "00:26",
+      "start_sec": 26.02,
+      "duration": 4.96,
+      "chapter": "마이코플라스마",
+      "caption": "보름째 마른기침은 다릅니다",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 7,
+      "start": "00:31",
+      "start_sec": 30.98,
+      "duration": 4.84,
+      "chapter": "감기약 주의",
+      "caption": "두 살 미만은 감기약 임의 복용 금지",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 8,
+      "start": "00:36",
+      "start_sec": 35.82,
+      "duration": 6.16,
+      "chapter": "어르신",
+      "caption": "열이 없어도 폐렴일 수 있습니다",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 9,
+      "start": "00:42",
+      "start_sec": 41.98,
+      "duration": 3.13,
+      "chapter": "오늘 확인할 것",
+      "caption": "그럼 오늘은 뭘 먼저 볼까요?",
+      "speaker": "가온"
+    },
+    {
+      "beat": 10,
+      "start": "00:45",
+      "start_sec": 45.11,
+      "duration": 4.96,
+      "chapter": "오늘 확인할 것",
+      "caption": "숨쉬는 모습, 소변, 밥 먹는 양",
+      "speaker": "닥터 온"
+    },
+    {
+      "beat": 11,
+      "start": "00:50",
+      "start_sec": 50.07,
+      "duration": 4.52,
+      "chapter": "다음 편 예고",
+      "caption": "다음 편: 3주 넘는 기침의 원인",
+      "speaker": "닥터 온"
+    }
+  ],
+  "total_sec": 54.59
+}

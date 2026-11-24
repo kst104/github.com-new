@@ -1,0 +1,26 @@
+{
+  "post.md": {
+    "slop_score": 0,
+    "clean": true,
+    "finding_count": 0,
+    "findings": []
+  },
+  "clinical/clinical_column.md": {
+    "slop_score": 0,
+    "clean": true,
+    "finding_count": 0,
+    "findings": []
+  },
+  "ads.md": {
+    "slop_score": 0,
+    "clean": true,
+    "finding_count": 0,
+    "findings": []
+  },
+  "instagram/card_news_caption.md": {
+    "slop_score": 0,
+    "clean": true,
+    "finding_count": 0,
+    "findings": []
+  }
+}
