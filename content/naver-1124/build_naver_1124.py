@@ -19,14 +19,10 @@ INTRO = ("지금 투자는 AI와의 전쟁입니다. AI를 이해하는 능력�
 NOTICE = ("📢 [안내] '올.주.선.이'는 유튜브 구독자 또는 블로그 이웃 1,000명까지는 평생 무료로 서비스를 이어가며, "
           "그 이상 신규 가입자부터는 유료 전환을 검토하고 있습니다.")
 PRODUCT_LINES = [
-    ("h", "▍함께 보면 좋은 제품"),
-    ("p", "매일 시장 기록을 올리는 채널입니다. 함께 소개하는 제품의 판매 수수료는 기록을 이어가는 데 보탬이 됩니다."),
-    ("p", "• 상품명: 이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 80ml"),
-    ("p", "• 가격: 24,700원 (정가 38,000원)"),
-    ("p", "• 특징: 그린티 씨드 오일과 히알루론산을 담은 보습 크림입니다. 세안이나 목욕 뒤 피부가 촉촉할 때 얼굴과 목에 얇게 펴 바릅니다. 새 제품은 팔 안쪽에 먼저 발라 보고 자극이 없을 때 사용하십시오."),
-    ("a", ("네이버에서 이니스프리 그린티 씨드 히알루론산 수분크림 보기", "https://naver.me/5nhmDgab")),
+    ("h", "▍겅태의 크리에이터샵"),
+    ("p", "매일 시장 기록을 올리는 채널입니다. 시장·건강 관련 추천 제품은 아래 크리에이터샵에 모아 두었습니다."),
     ("a", ("크리에이터샵: 겅태 크리에이터샵", "https://cshop.naver.com/geongtae_shop")),
-    ("p", "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다."),
+    ("p", "이 포스팅은 네이버 크리에이터샵 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다."),
     ("p", "본 글은 투자 권유가 아닌 개인적인 시장 기록 및 정보 정리 목적입니다."),
 ]
 
@@ -38,7 +34,7 @@ DIRECTION_HTML = """<h2 style="font-size:20px;font-weight:bold;">오늘의 방�
 <tr><th style="border:1px solid #ddd;background:#f5f5f5;padding:10px;">구분</th><th style="border:1px solid #ddd;background:#f5f5f5;padding:10px;">판단</th></tr>
 <tr><td style="border:1px solid #ddd;padding:10px;">오늘의 방향</td><td style="border:1px solid #ddd;padding:10px;">▲ 강위, 강한 상방</td></tr>
 <tr><td style="border:1px solid #ddd;padding:10px;">내일의 예상</td><td style="border:1px solid #ddd;padding:10px;">▲ 강위, 강한 상방</td></tr>
-<tr><td style="border:1px solid #ddd;padding:10px;">방향성 적중률</td><td style="border:1px solid #ddd;padding:10px;">11/23~ 100.0% (1/1)</td></tr>
+<tr><td style="border:1px solid #ddd;padding:10px;">방향성 적중률</td><td style="border:1px solid #ddd;padding:10px;">11/23~ 집계 대상 없음</td></tr>
 </table>"""
 
 
