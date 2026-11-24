@@ -100,6 +100,29 @@
     "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
     "hashtags": "#Shorts #밤가려움 #건조피부 #아토피 #보습제 #연고 #겨울건강 #가려움증 #피부장벽 #스테로이드연고 #피부관리 #잘의정바 #건강정보",
     "video_language": "한국어",
+    "original_subtitles": {
+      "ko": {
+        "file": "work/day17_ko.srt",
+        "copy": "subtitles/day17_ko.srt",
+        "cues": 12,
+        "chars": 284,
+        "source": "수동 업로드(타이밍 포함) · 스튜디오 언어 → 동영상 언어: 한국어 → 수동 업로드",
+        "timing_basis": "기존 영어·일본어 자막과 동일 타임코드(렌더 오디오 silencedetect 실측), 대본 generate_day17_shorts.py voice 필드와 1:1",
+        "asr_errors_fixed": [
+          "코르티 소리 → 코르티솔이",
+          "아토피염 → 아토피 피부염",
+          "잠대기 전강이와 → 잠들기 전 정강이와"
+        ],
+        "status": "게시됨",
+        "published_at": "2026-11-24T19:12:00+09:00"
+      }
+    },
+    "original_subtitle_screenshots": [
+      "downloads/2026-11-24-잘의정바-day17-한국어자막-완료.png",
+      "downloads/2026-11-24-잘의정바-day17-한국어자막-편집기12큐.png",
+      "downloads/2026-11-24-잘의정바-day17-한국어자막-재생확인.png",
+      "downloads/2026-11-24-잘의정바-day17-한국어자막-트랙목록.png"
+    ],
     "translations": {
       "en": {
         "title": "Why You Scratch Your Legs Every Night: Dry-Skin Eczema vs. Atopic Dermatitis",
