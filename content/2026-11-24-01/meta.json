@@ -98,7 +98,25 @@
     "youtube_title": "밤마다 다리를 긁는 이유, 건조성 피부염과 아토피는 다릅니다",
     "youtube_status": "공개",
     "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
-    "hashtags": "#Shorts #밤가려움 #건조피부 #아토피 #보습제 #연고 #겨울건강 #가려움증 #피부장벽 #스테로이드연고 #피부관리 #잘의정바 #건강정보"
+    "hashtags": "#Shorts #밤가려움 #건조피부 #아토피 #보습제 #연고 #겨울건강 #가려움증 #피부장벽 #스테로이드연고 #피부관리 #잘의정바 #건강정보",
+    "video_language": "한국어",
+    "translations": {
+      "en": {
+        "title": "Why You Scratch Your Legs Every Night: Dry-Skin Eczema vs. Atopic Dermatitis",
+        "subtitles": "subtitles/day17_en.srt",
+        "subtitle_cues": 12,
+        "status": "게시됨",
+        "published_at": "2026-11-24T18:50:00+09:00"
+      },
+      "ja": {
+        "title": "毎晩脚をかく理由 — 乾燥性皮膚炎とアトピー性皮膚炎は違います",
+        "subtitles": "subtitles/day17_ja.srt",
+        "subtitle_cues": 12,
+        "status": "게시됨",
+        "published_at": "2026-11-24T18:52:00+09:00"
+      }
+    },
+    "translation_verified_screenshot": "downloads/2026-11-24-잘의정바-day17-다국어자막-완료.png"
   },
   "revision": {
     "date": "2026-11-24",
