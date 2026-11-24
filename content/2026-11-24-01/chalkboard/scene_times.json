@@ -4,42 +4,42 @@
       "scene": 1,
       "start": "00:00",
       "start_sec": 0.0,
-      "duration": 10.51,
+      "duration": 12.19,
       "chapter": "밤에 더 가려운 이유",
-      "caption": "밤에는 가려움이 더 심해집니다"
+      "caption": "밤에는 가려움이 더 심해질 수 있습니다"
     },
     {
       "scene": 2,
-      "start": "00:11",
-      "start_sec": 10.51,
-      "duration": 9.43,
+      "start": "00:12",
+      "start_sec": 12.19,
+      "duration": 10.8,
       "chapter": "건조성 피부염 증상",
-      "caption": "정강이가 하얗게 갈라지면 건조성 피부염"
+      "caption": "정강이가 하얗게 갈라지면 건조성 피부염을 의심합니다"
     },
     {
       "scene": 3,
-      "start": "00:20",
-      "start_sec": 19.94,
-      "duration": 9.02,
+      "start": "00:23",
+      "start_sec": 22.99,
+      "duration": 10.82,
       "chapter": "아토피 피부염 감별",
-      "caption": "팔꿈치와 무릎 안쪽이 반복되면 아토피"
+      "caption": "팔꿈치와 무릎 안쪽이 반복되면 아토피를 의심합니다"
     },
     {
       "scene": 4,
-      "start": "00:29",
-      "start_sec": 28.96,
-      "duration": 10.87,
+      "start": "00:34",
+      "start_sec": 33.81,
+      "duration": 10.56,
       "chapter": "스테로이드 연고 사용법",
-      "caption": "얼굴은 약한 등급, 몸통은 중간 등급"
+      "caption": "처방받은 연고는 안내받은 부위에, 안내받은 양과 기간대로"
     },
     {
       "scene": 5,
-      "start": "00:40",
-      "start_sec": 39.83,
-      "duration": 7.37,
+      "start": "00:44",
+      "start_sec": 44.37,
+      "duration": 6.31,
       "chapter": "취침 전 보습과 환경",
-      "caption": "잠들기 전 보습제를 한 번 더 바릅니다"
+      "caption": "잠들기 전 건조한 부위를 보습하고, 땀이 날 정도로 덥게 덮지 않기"
     }
   ],
-  "total_sec": 47.2
+  "total_sec": 50.68
 }
