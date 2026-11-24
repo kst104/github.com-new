@@ -17,7 +17,7 @@ DAY = Path("/workspace/work/content-automation-engine/content/2026-11-24-01")
 SRC_PUBLIC = DAY / "post.md"
 SRC_CLINICAL = DAY / "clinical" / "clinical_column.md"
 
-PROMPT_PUBLIC = "밤에 긁는 부위를 하나씩 적고, 그 부위에 맞는 보습제와 연고 사용 순서를 표로 만들어 줘."
+PROMPT_PUBLIC = "진료 때 가려운 부위와 사용 중인 연고에 대해 무엇을 물어보면 좋을까요?"
 PROMPT_CLINICAL = "야간 소양 환자의 문진 항목을 표로 정리하고, 건조성 습진과 아토피 피부염을 구분하는 감별 체크리스트를 만들어 줘."
 
 PROMPT_HTML = (
