@@ -49,6 +49,25 @@ TITLE = "잘못된 의료 정보 바로잡기"
 FOOTER = "잘.의.정.바 · 자세한 칼럼은 프로필 링크"
 SUBSCRIBE_TEXT = "구독·알림·좋아요는 힘이 됩니다"
 
+# 캐릭터별 입 좌표(원본 투명 PNG 픽셀 기준): (x, y, 입 너비, 입 높이)
+MOUTH_ANCHORS = {
+    # (중심 x, 중심 y, 원래 입 전체를 덮는 폭, 높이)
+    "doctor": (351, 554, 100, 70),
+    "adult_woman": (281, 413, 88, 54),
+    "boy": (387, 578, 98, 78),
+    "girl": (339, 505, 90, 62),
+    "grandpa": (300, 470, 76, 26),
+    "grandma": (302, 470, 78, 28),
+    "adult_man": (345, 558, 84, 52),
+}
+MOUTH_INK = (150, 62, 56)
+MOUTH_TONGUE = (219, 116, 106)
+LIP_LINE = (108, 58, 50)
+MOUTH_SKIN = {"doctor": (253, 224, 197), "adult_woman": (253, 219, 193), "boy": (253, 224, 198),
+              "girl": (253, 220, 196), "grandpa": (250, 208, 172), "grandma": (250, 210, 176),
+              "adult_man": (253, 221, 194)}
+_LEVELS = (0.0, 0.15, 0.3, 0.45, 0.6, 0.78, 1.0)
+
 
 # --------------------------------------------------------------------------- 유틸
 def font(size: int) -> ImageFont.FreeTypeFont:
@@ -108,6 +127,37 @@ async def _tts(text: str, out_mp3: Path, voice: str, rate: str, pitch: str):
     await comm.save(str(out_mp3))
 
 
+def audio_envelope(mp3: str, fps: int = FPS) -> list[float]:
+    """mp3를 16kHz 모노로 풀어 1/fps 초 창의 RMS를 0~1 입 벌림 값으로 만든다."""
+    import array
+    import wave
+    wav = str(Path(mp3).with_suffix(".env.wav"))
+    subprocess.run([FFMPEG_PATH, "-y", "-i", mp3, "-ac", "1", "-ar", "16000", wav],
+                   check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    with wave.open(wav, "rb") as wf:
+        sr = wf.getframerate()
+        raw = wf.readframes(wf.getnframes())
+    data = array.array("h")
+    data.frombytes(raw)
+    win = max(1, sr // fps)
+    rms = []
+    for i in range(0, len(data) - win + 1, win):
+        chunk = data[i:i + win]
+        rms.append(math.sqrt(sum(v * v for v in chunk) / len(chunk)) / 32768.0)
+    if not rms:
+        return [0.0]
+    loud = sorted(r for r in rms if r > 0.004)
+    ref = loud[int(len(loud) * 0.9)] if loud else 0.05
+    env = [min(1.0, (r / max(ref, 1e-4)) ** 0.8) for r in rms]
+    # 짧은 끊김 메우기 + 부드럽게
+    out = []
+    for i, v in enumerate(env):
+        prev = out[-1] if out else 0.0
+        v = max(v, prev * 0.55) if v < prev else v
+        out.append(v)
+    return out
+
+
 def synthesize(beats: list[dict], temp_dir: Path, voices: dict) -> list[dict]:
     temp_dir.mkdir(parents=True, exist_ok=True)
     async def run():
@@ -119,6 +169,7 @@ def synthesize(beats: list[dict], temp_dir: Path, voices: dict) -> list[dict]:
     for i, b in enumerate(beats, 1):
         b["audio"] = str(temp_dir / f"beat_{i:02d}.mp3")
         b["dur"] = probe_duration(Path(b["audio"]))
+        b["env"] = audio_envelope(b["audio"])
     return beats
 
 
@@ -331,6 +382,97 @@ def build_base(beat: dict, keyword: str, topic_keyword: str) -> Image.Image:
     return base
 
 
+def _skin_at(src: Image.Image, x: float, y: float, r: int = 7):
+    x, y = int(x), int(y)
+    box = src.crop((max(0, x - r), max(0, y - r), min(src.width, x + r), min(src.height, y + r)))
+    px = [p for p in box.getdata() if p[3] > 200]
+    if not px:
+        return (253, 222, 196)
+    px.sort(key=lambda p: p[0] + p[1] + p[2])
+    return px[len(px) // 2][:3]
+
+
+def face_color(name: str):
+    """입 둘레 고리에서 붉은 기가 강한 화장·턱선을 뺀 피부색 중앙값(캐릭터당 1회 계산)."""
+    key = ("facecolor", name)
+    if key in _BG_CACHE:
+        return _BG_CACHE[key]
+    import numpy as np
+    cx, cy, cw, ch = MOUTH_ANCHORS[name]
+    arr = np.array(Image.open(CHARS / f"{name}_transparent.png").convert("RGB")).astype(int)
+    H, W = arr.shape[:2]
+    ys, xs = np.mgrid[0:H, 0:W]
+    e = ((xs - cx) / (cw * 0.5)) ** 2 + ((ys - cy) / (ch * 0.5)) ** 2
+    ring = (e >= 1.15 ** 2) & (e <= 1.9 ** 2)
+    px = arr[ring]
+    R, G, B = px[:, 0], px[:, 1], px[:, 2]
+    keep = (R > 230) & (G > 180) & (B > 160) & ((R - G) < 45)
+    col = tuple(int(v) for v in np.median(px[keep], axis=0)) if keep.any() else (253, 222, 196)
+    _BG_CACHE[key] = col
+    return col
+
+
+def mouth_sprite(name: str, level: float) -> Image.Image:
+    """원래 입 전체를 같은 피부색으로 덮고, 그 중심에 카툰 입을 그린 조각."""
+    level = min(_LEVELS, key=lambda v: abs(v - level))
+    key = ("mouth", name, level)
+    if key in _BG_CACHE:
+        return _BG_CACHE[key]
+    cx, cy, cw, ch = MOUTH_ANCHORS[name]
+    skin = face_color(name)
+    cw2, ch2 = int(cw * 1.06), int(ch * 1.18)          # 원래 입 윗니까지 확실히 덮는다
+    cy2 = cy - int(ch * 0.06)
+    pad = int(min(cw2, ch2) * 0.28)
+    w, h = cw2 + pad * 2, ch2 + pad * 2
+    im = Image.new("RGBA", (w, h), skin + (0,))
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([pad, pad, pad + cw2 - 1, pad + ch2 - 1],
+                                           radius=int(ch2 * 0.40), fill=255)
+    mask = mask.filter(ImageFilter.GaussianBlur(max(4, int(pad * 0.55))))
+    im.putalpha(mask)
+    mouth_center = (w / 2, h / 2 + (cy - cy2) * 0)
+    d = ImageDraw.Draw(im)
+    mw, mh = cw * 0.78, ch * 0.70
+    cxm = w / 2
+    cym = h / 2 + (cy - cy2) * 0
+    lip = max(2, int(mh * 0.11))
+    if level <= 0.16:
+        # 다문 입: 살짝 올라간 미소 선 하나만 남긴다
+        d.line([(cxm - mw * 0.40, cym + mh * 0.04), (cxm - mw * 0.12, cym + mh * 0.14),
+                (cxm + mw * 0.16, cym + mh * 0.14), (cxm + mw * 0.40, cym + mh * 0.02)],
+               fill=LIP_LINE, width=lip, joint="curve")
+    else:
+        ow, oh = mw * (0.62 + 0.28 * level), mh * level
+        box = [cxm - ow / 2, cym - oh * 0.45, cxm + ow / 2, cym + oh * 0.55]
+        d.ellipse(box, fill=MOUTH_INK, outline=LIP_LINE, width=lip)
+        if level >= 0.55:
+            d.ellipse([box[0] + ow * 0.16, box[1] + oh * 0.05,
+                       box[2] - ow * 0.16, box[1] + oh * 0.30], fill=(250, 246, 240))
+        if level >= 0.4:
+            d.ellipse([box[0] + ow * 0.22, box[3] - oh * 0.40,
+                       box[2] - ow * 0.22, box[3] - oh * 0.05], fill=MOUTH_TONGUE)
+    _BG_CACHE[key] = im
+    return im
+
+
+def draw_mouth(frame: Image.Image, name: str, height: int, crop: float | None, sprite_left: int,
+               sprite_top: int, openness: float):
+    """말하는 캐릭터의 입만 여닫는다(원본 좌표를 렌더 배율로 환산)."""
+    if name not in MOUTH_ANCHORS:
+        return
+    mx, my, mw, mh = MOUTH_ANCHORS[name]
+    key_h = ("srch", name)
+    if key_h not in _BG_CACHE:
+        _BG_CACHE[key_h] = Image.open(CHARS / f"{name}_transparent.png").height
+    used_h = _BG_CACHE[key_h] * (crop if crop else 1.0)
+    scale = height / used_h
+    m = mouth_sprite(name, openness)
+    tw, th = max(1, int(m.width * scale)), max(1, int(m.height * scale))
+    m = m.resize((tw, th), Image.LANCZOS)
+    frame.alpha_composite(m, (int(sprite_left + mx * scale - tw / 2),
+                              int(sprite_top + my * scale - th / 2)))
+
+
 def render_frames(beats: list[dict], timeline: list[dict], out_raw, keyword_by_beat: list[str],
                   topic_keyword: str):
     base_cache = [build_base(b, keyword_by_beat[i], topic_keyword) for i, b in enumerate(beats)]
@@ -351,22 +493,24 @@ def render_frames(beats: list[dict], timeline: list[dict], out_raw, keyword_by_b
         for slot in beat["cast"]:
             name, height, cx = slot["name"], slot["height"], slot["cx"]
             speaking = name == beat["speaker"]
-            if speaking:
-                bob = 12 * math.sin(2 * math.pi * 2.1 * local)
-                sway = 3 * math.sin(2 * math.pi * 1.05 * local)
-            else:
-                bob = 5 * math.sin(2 * math.pi * 1.1 * local + cx)
-                sway = 2 * math.sin(2 * math.pi * 0.6 * local + cx)
-                if beat.get("nod"):
-                    bob += 9 * abs(math.sin(2 * math.pi * 2.4 * local))
-            drop = max(0.0, 40 * (1 - local / 0.35)) if local < 0.35 else 0.0
+            # 아주 느리고 부드러운 호흡 모션만 남긴다(상하 2~3px, 주기 3~4초, 회전 없음)
+            phase = 0.0 if speaking else (cx % 360) / 57.3
+            bob = 2.4 * math.sin(2 * math.pi * local / 3.8 + phase)
+            sway = 0.7 * math.sin(2 * math.pi * local / 4.6 + phase)
+            if beat.get("nod"):
+                bob += 1.6 * max(0.0, math.sin(2 * math.pi * local / 2.2))
             sprite = char_sprite(name, height, slot.get("crop"))
             x = int(cx - sprite.width / 2 + sway)
-            y = int(CHAR_BASELINE - sprite.height + bob - drop)
+            y = int(CHAR_BASELINE - sprite.height + bob)
             if not slot.get("crop"):
                 sh = shadow_sprite(int(sprite.width * 0.72))
                 frame.alpha_composite(sh, (int(cx - sh.width / 2), CHAR_BASELINE - 16))
             frame.alpha_composite(sprite, (x, y))
+            if speaking and local < beat.get("dur", 0):
+                fi = int(round(local * FPS))
+                env = beat.get("env") or []
+                openness = env[fi] if 0 <= fi < len(env) else 0.0
+                draw_mouth(frame, name, height, slot.get("crop"), x, y, openness)
 
         if keyword_by_beat[idx] and not beat.get("memo") and not beat.get("closeup"):
             chip = memo_chip(keyword_by_beat[idx])

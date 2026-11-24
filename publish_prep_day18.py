@@ -39,6 +39,26 @@ PRODUCT_HTML = """<h2 style='font-size:20px;font-weight:bold;margin-top:34px;'>�
 """
 
 
+RAW = "https://raw.githubusercontent.com/kst104/github.com-new/main/content/2026-11-25-01/images_v2/"
+
+
+import html as _html
+
+
+def fig(name: str, alt: str) -> str:
+    return ("<p style='text-align:center;margin:22px 0;'><img src='" + RAW + name +
+            "' alt='" + _html.escape(alt) + "' style='width:100%;max-width:760px;height:auto;' /></p>\n")
+
+
+def insert_before_heading(html: str, heading: str, block: str) -> str:
+    marker = ">" + heading + "</h2>"
+    i = html.find(marker)
+    if i < 0:
+        raise SystemExit(f"제목을 찾지 못했습니다: {heading}")
+    start = html.rfind("<h2", 0, i)
+    return html[:start] + block + html[start:]
+
+
 def inner_html(md: str) -> str:
     return markdown_to_naver_html(md).strip()
 
@@ -58,6 +78,12 @@ def build_public() -> str:
     md_body = re.sub(r"(\s*-{3,}\s*)+$", "", md_body[:j]).rstrip()
 
     inner = inner_html(md_body)
+    inner = insert_before_heading(inner, "1. 감기와 독감은 시작이 다릅니다",
+                                  fig("day18_v2_scene1_숨쉬는모습.png", "숨쉴 때 갈비뼈 아래가 들어가면 응급실 신호"))
+    inner = insert_before_heading(inner, "4. 어르신은 열이 없어도 위중할 수 있습니다",
+                                  fig("day18_v2_scene2_네가지감별.png", "감기·독감·RSV·마이코플라스마는 시작이 다릅니다"))
+    inner = insert_before_heading(inner, "5. 네 가지를 한 표로 비교하면",
+                                  fig("day18_v2_scene3_어르신.png", "열이 없어도 밥을 못 먹고 기운이 없으면 폐렴을 의심"))
     parts = [inner, PROMPT_HTML.format(prompt=PROMPT_PUBLIC), PRODUCT_HTML,
              "<p style='font-size:15px; line-height:1.8; color:#555;'>*이 글은 의학적 정보 제공을 목적으로 하며, 개인의 진단과 치료를 대신하지 않습니다. 숨이 차거나 물을 못 마시는 경우, 3개월 미만 아이가 열이 나는 경우에는 지체 없이 의료기관을 방문하십시오.*</p>"]
     return wrap("\n".join(parts))
@@ -74,6 +100,8 @@ def build_clinical() -> str:
     md_body = re.sub(r"(\s*-{3,}\s*)+$", "", md_body[:j]).rstrip()
 
     inner = inner_html(md_body)
+    inner = insert_before_heading(inner, "5. 마이코플라스마 폐렴",
+                                  fig("day18_v2_scene2_네가지감별.png", "감기·독감·RSV·마이코플라스마 감별"))
     appendix_md = appendix.replace("## 부록: 보습 처방과 제휴 안내", "## 부록: 보습 처방")
     cut = appendix_md.index("- 제휴 상품:")
     appendix_md = appendix_md[:cut].rstrip()
