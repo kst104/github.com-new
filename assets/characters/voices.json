@@ -10,7 +10,17 @@
       "voice": "ko-KR-InJoonNeural",
       "rate": "+6%",
       "pitch": "+0Hz",
-      "tone": "차분하고 신뢰감 있는 설명 톤"
+      "tone": "차분하고 신뢰감 있는 설명 톤",
+      "typecast": {
+        "voice_id": "tc_69fc0cff784968297fb45daa",
+        "voice_name": "Sanghyun (상현)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 1.05,
+        "audio_pitch": 0,
+        "description": "중년 남성 대화형 · 차분하고 신뢰감 있는 의사 톤"
+      }
     },
     "boy": {
       "name": "몽이",
@@ -19,7 +29,17 @@
       "voice": "ko-KR-SunHiNeural",
       "rate": "+12%",
       "pitch": "+24Hz",
-      "tone": "호기심 많고 씩씩한 남자아이 톤"
+      "tone": "호기심 많고 씩씩한 남자아이 톤",
+      "typecast": {
+        "voice_id": "tc_69c1f8e4f8842d80fbe7fa4f",
+        "voice_name": "Woony (우니)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 1.0,
+        "audio_pitch": 0,
+        "description": "남자 어린이 숏폼·대화형 · 또랑또랑하고 자연스러운 아이 톤"
+      }
     },
     "girl": {
       "name": "콩이",
@@ -28,7 +48,17 @@
       "voice": "ko-KR-SunHiNeural",
       "rate": "+14%",
       "pitch": "+34Hz",
-      "tone": "발랄하고 밝은 여자아이 톤"
+      "tone": "발랄하고 밝은 여자아이 톤",
+      "typecast": {
+        "voice_id": "tc_6699eb5749dfac016c29445c",
+        "voice_name": "Sua (수아)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 1.0,
+        "audio_pitch": 0,
+        "description": "여자 어린이 대화형 · 밝고 자연스러운 여자아이 톤"
+      }
     },
     "adult_man": {
       "name": "보람",
@@ -37,7 +67,17 @@
       "voice": "ko-KR-InJoonNeural",
       "rate": "+8%",
       "pitch": "-8Hz",
-      "tone": "친근한 30~40대 남성 질문 톤"
+      "tone": "친근한 30~40대 남성 질문 톤",
+      "typecast": {
+        "voice_id": "tc_6a3350f8e5a50a4abe948fa8",
+        "voice_name": "Doyoon (도윤)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 1.05,
+        "audio_pitch": 0,
+        "description": "성인 남성 대화·숏폼형 · 담백하고 자연스러운 2030 남성 톤 (올주선이 겸용)"
+      }
     },
     "adult_woman": {
       "name": "가온",
@@ -46,7 +86,17 @@
       "voice": "ko-KR-SunHiNeural",
       "rate": "+6%",
       "pitch": "+2Hz",
-      "tone": "생활감 있는 30~40대 여성 질문 톤"
+      "tone": "생활감 있는 30~40대 여성 질문 톤",
+      "typecast": {
+        "voice_id": "tc_692799c46508f6b9468c54c7",
+        "voice_name": "Daeun (다은)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 1.05,
+        "audio_pitch": 0,
+        "description": "성인 여성 대화·숏폼형 · 친근하고 자연스러운 2030 여성 톤 (올주선이 겸용)"
+      }
     },
     "grandpa": {
       "name": "느티",
@@ -55,7 +105,17 @@
       "voice": "ko-KR-InJoonNeural",
       "rate": "-8%",
       "pitch": "-22Hz",
-      "tone": "묵직하고 느긋한 어르신 톤"
+      "tone": "묵직하고 느긋한 어르신 톤",
+      "typecast": {
+        "voice_id": "tc_675a73eb789ff3ea6cc80235",
+        "voice_name": "Kwonil (권일)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 0.98,
+        "audio_pitch": 0,
+        "description": "할아버지 스토리텔링·대화형 · 구수하고 인자한 어르신 남성 톤"
+      }
     },
     "grandma": {
       "name": "포근",
@@ -64,7 +124,25 @@
       "voice": "ko-KR-SunHiNeural",
       "rate": "-6%",
       "pitch": "-16Hz",
-      "tone": "다정하고 온화한 어르신 톤"
+      "tone": "다정하고 온화한 어르신 톤",
+      "typecast": {
+        "voice_id": "tc_60ad0841061ee28740ec2e1c",
+        "voice_name": "Sooni (순이)",
+        "model": "ssfm-v31",
+        "emotion_preset": "normal",
+        "emotion_intensity": 1.0,
+        "audio_tempo": 0.98,
+        "audio_pitch": 0,
+        "description": "할머니 대화·라디오형 · 따뜻하고 정겨운 어르신 여성 톤"
+      }
     }
+  },
+  "primary_engine": "typecast",
+  "typecast_api": {
+    "endpoint": "https://api.typecast.ai/v1/text-to-speech",
+    "env_file": "work/content-automation-engine/.env.typecast",
+    "plan": "Lite ($15/mo, 200,000 credits/mo, commercial use allowed)",
+    "language": "kor",
+    "default_model": "ssfm-v31"
   }
 }
