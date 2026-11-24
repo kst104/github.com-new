@@ -35,7 +35,14 @@
       "아토피피부염"
     ],
     "citations": "Tintinalli 9판 (Ch 248 Initial Evaluation and Management of Skin Disorders, Ch 249 Generalized Skin Disorders, Ch 250 Skin Disorders: Face and Scalp, Ch 251 Skin Disorders: Trunk, Ch 252 Skin Disorders: Groin and Skinfolds, Ch 253 Skin Disorders: Extremities, Ch 152 Soft Tissue Infections, Ch 142 Rashes in Infants and Children), Williams 1994, Hanifin & Rajka 1980, Cork 2009, Weidinger & Novak 2016, Langan 2020, Norman 2003, Patel & Yosipovitch 2007, Sonkoly 2006, Yosipovitch & Bernhard 2013, Weisshaar 2012, Charman 2000, Aubert-Wastiaux 2011, Long & Finlay 1991, Schmitt 2011, Matterne 2019, Eichenfield 2014",
-    "edition_note": "전체판 12,822자·표 2개가 그대로 게시됐다(Day 16의 요약판 제약 없음)."
+    "edition_note": "전체판 12,822자·표 2개가 그대로 게시됐다(Day 16의 요약판 제약 없음).",
+    "table_fix_v2": {
+      "date": "2026-11-24",
+      "table": "2군(강함) 모메타손 푸로에이트 0.1% 연고 / 3~5군(중간) 모메타손 0.1% 크림·트리암시놀론 0.1%·하이드로코르티손 부티레이트 / 6군(약함) 데소나이드 0.05% / 7군(매우 약함) 하이드로코르티손 1%",
+      "method": "네이버 스마트에디터에서 셀 단위 수정 + 마지막 행 추가(7군) + 7.1 산문 교체 후 수정 발행",
+      "public_check": "m.blog.naver.com/kst104/224489440383 전체공개·RSS 1건",
+      "screenshot": "downloads/네이버블로그_day17_임상칼럼_표정정_공개화면_2026-11-24.png"
+    }
   },
   "today_prompt": {
     "public": "진료 때 가려운 부위와 사용 중인 연고에 대해 무엇을 물어보면 좋을까요?",
@@ -65,7 +72,7 @@
   },
   "shorts": {
     "file": "downloads/Day17_겨울밤가려움_건조피부염아토피_칠판드로잉_쇼츠.mp4",
-    "duration_sec": 47.25,
+    "duration_sec": 50.73,
     "resolution": "1080x1920",
     "layout": "jaljab",
     "subscribe_badge": true,
@@ -74,27 +81,32 @@
     "scene_times": [
       {
         "start": "00:00",
-        "chapter": "밤에 더 가려운 이유"
+        "chapter": "밤에 더 가려운 이유",
+        "caption": "밤에는 가려움이 더 심해질 수 있습니다"
       },
       {
-        "start": "00:11",
-        "chapter": "건조성 피부염 증상"
+        "start": "00:12",
+        "chapter": "건조성 피부염 증상",
+        "caption": "정강이가 하얗게 갈라지면 건조성 피부염을 의심합니다"
       },
       {
-        "start": "00:20",
-        "chapter": "아토피 피부염 감별"
+        "start": "00:23",
+        "chapter": "아토피 피부염 감별",
+        "caption": "팔꿈치와 무릎 안쪽이 반복되면 아토피를 의심합니다"
       },
       {
-        "start": "00:29",
-        "chapter": "스테로이드 연고 사용법"
+        "start": "00:34",
+        "chapter": "스테로이드 연고 사용법",
+        "caption": "처방받은 연고는 안내받은 부위에, 안내받은 양과 기간대로"
       },
       {
-        "start": "00:40",
-        "chapter": "취침 전 보습과 환경"
+        "start": "00:44",
+        "chapter": "취침 전 보습과 환경",
+        "caption": "잠들기 전 건조한 부위를 보습하고, 땀이 날 정도로 덥게 덮지 않기"
       }
     ],
-    "youtube_video_id": "leJ-s6vncAk",
-    "youtube_url": "https://youtube.com/shorts/leJ-s6vncAk",
+    "youtube_video_id": "ngxTiODdr2g",
+    "youtube_url": "https://youtube.com/shorts/ngxTiODdr2g",
     "youtube_title": "밤마다 다리를 긁는 이유, 건조성 피부염과 아토피는 다릅니다",
     "youtube_status": "공개",
     "youtube_channel": "잘못된 의료 정보 바로잡기(잘.의.정.바) UCHhMXW0nECx7N3wFo9TfJAg",
@@ -104,17 +116,11 @@
       "ko": {
         "file": "work/day17_ko.srt",
         "copy": "subtitles/day17_ko.srt",
-        "cues": 12,
-        "chars": 284,
-        "source": "수동 업로드(타이밍 포함) · 스튜디오 언어 → 동영상 언어: 한국어 → 수동 업로드",
-        "timing_basis": "기존 영어·일본어 자막과 동일 타임코드(렌더 오디오 silencedetect 실측), 대본 generate_day17_shorts.py voice 필드와 1:1",
-        "asr_errors_fixed": [
-          "코르티 소리 → 코르티솔이",
-          "아토피염 → 아토피 피부염",
-          "잠대기 전강이와 → 잠들기 전 정강이와"
-        ],
+        "cues": 15,
         "status": "게시됨",
-        "published_at": "2026-11-24T19:12:00+09:00"
+        "timing_basis": "2판 렌더 오디오 silencedetect(-32dB, d=0.15) 실측",
+        "published_at": "2026-11-24T22:18:00+09:00",
+        "note": "업로드 직후 임시본으로 남아 취소로 되돌아간 것을 발견해 재게시·업데이트로 확정"
       }
     },
     "original_subtitle_screenshots": [
@@ -127,19 +133,51 @@
       "en": {
         "title": "Why You Scratch Your Legs Every Night: Dry-Skin Eczema vs. Atopic Dermatitis",
         "subtitles": "subtitles/day17_en.srt",
-        "subtitle_cues": 12,
+        "subtitle_cues": 15,
         "status": "게시됨",
-        "published_at": "2026-11-24T18:50:00+09:00"
+        "description_verified": "youtube.com/watch?v=ngxTiODdr2g (Accept-Language: en-US) 공개 응답에 영어 제목·설명·타임스탬프 노출 확인"
       },
       "ja": {
         "title": "毎晩脚をかく理由 — 乾燥性皮膚炎とアトピー性皮膚炎は違います",
         "subtitles": "subtitles/day17_ja.srt",
-        "subtitle_cues": 12,
+        "subtitle_cues": 15,
         "status": "게시됨",
-        "published_at": "2026-11-24T18:52:00+09:00"
+        "description_verified": "youtube.com/watch?v=ngxTiODdr2g (Accept-Language: ja-JP) 공개 응답에 일본어 제목·설명·타임스탬프 노출 확인"
       }
     },
-    "translation_verified_screenshot": "downloads/2026-11-24-잘의정바-day17-다국어자막-완료.png"
+    "translation_verified_screenshot": "downloads/2026-11-24-잘의정바-day17-다국어자막-완료.png",
+    "video_version": "2판(2026-11-24 21:5x 재렌더)",
+    "youtube_description": {
+      "summary": "밤 가려움의 요인, 건조성 피부염·아토피 감별, 처방 연고 사용 원칙",
+      "chapters": [
+        "00:00 밤에 더 가려운 이유",
+        "00:12 건조성 피부염 증상",
+        "00:23 아토피 피부염 감별",
+        "00:34 스테로이드 연고 사용법",
+        "00:44 취침 전 보습과 환경"
+      ],
+      "hashtags_count": 13,
+      "hashtags": "#Shorts #밤가려움 #건조피부 #아토피 #보습제 #연고 #겨울건강 #가려움증 #피부장벽 #스테로이드연고 #피부관리 #잘의정바 #건강정보"
+    },
+    "previous_video": {
+      "id": "leJ-s6vncAk",
+      "url": "https://youtube.com/shorts/leJ-s6vncAk",
+      "status": "비공개",
+      "changed_at": "2026-11-24T22:1x",
+      "reason": "2판 공개 후 중복·오류 노출 방지"
+    },
+    "public_track_list": [
+      "영어",
+      "일본어",
+      "한국어",
+      "한국어 (자동 생성됨)"
+    ],
+    "screenshots_v2": [
+      "downloads/2026-11-24-잘의정바-day17-2판-공개확인.png",
+      "downloads/2026-11-24-잘의정바-day17-2판-다국어자막-완료.png",
+      "downloads/2026-11-24-잘의정바-day17-2판-한국어수동자막-게시됨.png",
+      "downloads/2026-11-24-잘의정바-day17-2판-자막트랙목록.png"
+    ]
   },
   "revision": {
     "date": "2026-11-24",
@@ -156,5 +194,20 @@
       "야간 소양의 코르티솔·피부 온도 설명을 단정적 기전이 아니라 ‘가능한 요인’으로 완화, 환경 조절 가능성도 ‘상당 부분/영향을 줄 수 있다’로 조정"
     ],
     "widget": "update_widget_json.py --day 17 --label 피부염 로 widgets/dual-content-viewer 갱신"
+  },
+  "revision_v2": {
+    "date": "2026-11-24",
+    "source": "[겅태 검수] 2026-11-24 메일(21:05, 지피티 겅태) ① Day 17 쇼츠·임상 칼럼 정정안 승인분",
+    "clinical": [
+      "데소나이드를 '강함(2~3군)'에서 제거, '데소나이드 0.05%'를 6군(약함) 행에만 1회 표기",
+      "모메타손 푸로에이트 0.1%를 2군 연고 / 3~4군 크림으로 분리(표는 3~5군 중간 행에 크림 표기, 산문에 '연고가 2군, 크림이 3~4군' 명시)",
+      "7.1 산문 중간 등급 예시를 '트리암시놀론 0.1%, 하이드로코르티손 부티레이트'로 수정"
+    ],
+    "shorts": [
+      "0:37~0:43 화면·대사 '얼굴은 약한 등급, 몸통은 중간' → '처방받은 연고는 안내받은 부위에, 안내받은 양과 기간대로'",
+      "0:44~ 땀 안내를 '땀이 날 정도로 덥게 덮지 않기'(미국피부과학회 과열·땀 안내 기준)로 수정",
+      "앞부분 진단·원인 단정 완화(의심 표현, '요인으로 꼽힙니다')",
+      "한·영·일 자막 15큐를 2판 오디오 실측값으로 재생성, 2판 공개 업로드 후 1판 비공개"
+    ]
   }
 }
