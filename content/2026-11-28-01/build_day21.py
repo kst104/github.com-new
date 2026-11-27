@@ -30,6 +30,13 @@ def inline(txt: str) -> str:
 def convert(md: str) -> str:
     lines = md.split("\n")
     out: list[str] = []
+    gap = "<p style='line-height: 1.8; margin: 0;'>&nbsp;</p>"
+
+    def push(block: str, space: bool = True) -> None:
+        out.append(block)
+        if space:
+            out.append(gap)
+
     i = 0
     while i < len(lines):
         ln = lines[i].rstrip()
@@ -40,21 +47,21 @@ def convert(md: str) -> str:
             i += 1
             continue
         if ln.startswith("## "):
-            out.append(f"<h2 style='{H2_STYLE}'>{inline(ln[3:].strip())}</h2>")
+            push(f"<h2 style='{H2_STYLE}'>{inline(ln[3:].strip())}</h2>")
             i += 1
             continue
         if ln.startswith("### "):
-            out.append(f"<h3 style='{H3_STYLE}'>{inline(ln[4:].strip())}</h3>")
+            push(f"<h3 style='{H3_STYLE}'>{inline(ln[4:].strip())}</h3>")
             i += 1
             continue
         m = re.match(r"\[\[IMG:(.+?)\|(.+?)\]\]", ln.strip())
         if m:
             name, cap = m.group(1), m.group(2)
-            out.append(
+            push(
                 "<p style='text-align:center; margin:22px 0 6px 0;'>"
                 f"<img src='{RAW}{name}' alt='{cap}' style='width:100%; max-width:760px; border-radius:8px;' /></p>"
             )
-            out.append(f"<p style='text-align:center; font-size:13px; color:#64748b; margin:0 0 18px 0;'>{cap}</p>")
+            push(f"<p style='text-align:center; font-size:13px; color:#64748b; margin:0 0 18px 0;'>{cap}</p>")
             i += 1
             continue
         if ln.startswith("|"):
@@ -62,14 +69,14 @@ def convert(md: str) -> str:
             while i < len(lines) and lines[i].strip().startswith("|"):
                 rows.append([c.strip() for c in lines[i].strip().strip("|").split("|")])
                 i += 1
-            body = rows[1:] if len(rows) > 1 and set(rows[1][0]) <= set("-: ") else rows
+            body = rows[2:] if len(rows) > 1 and set(rows[1][0]) <= set("-: ") else rows[1:]
             head = rows[0]
             html = ["<table style='border-collapse: collapse; width: 100%; margin: 16px 0 20px 0;'>"]
             html.append("<tr>" + "".join(f"<th style='{TH_STYLE}'>{inline(c)}</th>" for c in head) + "</tr>")
             for r in body:
                 html.append("<tr>" + "".join(f"<td style='{TD_STYLE}'>{inline(c)}</td>" for c in r) + "</tr>")
             html.append("</table>")
-            out.append("".join(html))
+            push("".join(html))
             continue
         if ln.startswith("- "):
             items = []
@@ -79,7 +86,7 @@ def convert(md: str) -> str:
             html = ["<ul style='margin: 8px 0 16px 0; padding-left: 22px;'>"]
             html += [f"<li style='margin-bottom: 8px; font-size: 16px; color: #374151;'>{inline(t)}</li>" for t in items]
             html.append("</ul>")
-            out.append("".join(html))
+            push("".join(html))
             continue
         if re.match(r"^\d+\. ", ln):
             items = []
@@ -89,9 +96,9 @@ def convert(md: str) -> str:
             html = ["<ul style='margin: 8px 0 16px 0; padding-left: 22px;'>"]
             html += [f"<li style='margin-bottom: 8px; font-size: 16px; color: #374151;'>{inline(t)}</li>" for t in items]
             html.append("</ul>")
-            out.append("".join(html))
+            push("".join(html))
             continue
-        out.append(f"<p style='{P_STYLE}'>{inline(ln.strip())}</p>")
+        push(f"<p style='{P_STYLE}'>{inline(ln.strip())}</p>")
         i += 1
     return "\n".join(out)
 
@@ -138,6 +145,12 @@ def main() -> None:
 
     pub_md = (DAY / "post.md").read_text(encoding="utf-8")
     clin_md = (DAY / "clinical" / "clinical_column.md").read_text(encoding="utf-8")
+    keep = []
+    for ln in pub_md.split("\n"):
+        if ln.startswith("저자:"):
+            continue
+        keep.append(ln)
+    pub_md = "\n".join(keep)
     keep = []
     for ln in clin_md.split("\n"):
         if ln.startswith(("저자:", "발행처:", "기획 분류:")):

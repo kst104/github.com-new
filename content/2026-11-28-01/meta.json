@@ -1,0 +1,57 @@
+{
+  "day": "Day 21",
+  "date": "2026-11-28",
+  "theme": "겨울 자외선·입술 각질·동창과 손습진",
+  "category": ["의학·건강", "임상·전문가 칼럼"],
+  "author": "겅태(의학과 경제학에 관심많은)",
+  "posts": {
+    "public": {
+      "title": "겨울 자외선은 약하다는 착각, 기미와 손등 트임은 이렇게 시작됩니다",
+      "logNo": "224495505071",
+      "url": "https://blog.naver.com/kst104/224495505071",
+      "mobile": "https://m.blog.naver.com/kst104/224495505071",
+      "category": "의학·건강",
+      "tags": ["겨울자외선", "자외선차단제", "입술각질", "동창", "손습진"],
+      "images": 3,
+      "published_at": "2026-11-28T08:15:40+09:00"
+    },
+    "clinical": {
+      "title": "한랭기 광노출과 말초 피부 손상: 자외선 방어, 구순 건조, 동창과 손습진의 감별",
+      "logNo": "224495509763",
+      "url": "https://blog.naver.com/kst104/224495509763",
+      "mobile": "https://m.blog.naver.com/kst104/224495509763",
+      "category": "임상·전문가 칼럼",
+      "tags": ["겨울자외선", "동창", "손습진", "구순염", "한랭손상"],
+      "images": 2,
+      "published_at": "2026-11-28T08:22:14+09:00"
+    }
+  },
+  "affiliate": {
+    "product": "이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 80ml",
+    "price": "24,700원 (정가 38,000원)",
+    "link": "https://naver.me/5nhmDgab",
+    "creator_shop": "https://cshop.naver.com/geongtae_shop",
+    "disclosure": "네이버 쇼핑 커넥트 수수료 고지 포함"
+  },
+  "sources": [
+    "Tintinalli's Emergency Medicine 9e, Ch.208 Cold Injuries / Ch.209 Hypothermia",
+    "kst104/wikiwi wiki/medical/emergency/cold-skin-injury.md (신규)",
+    "AAD dry chapped lips",
+    "DermNet Chilblains",
+    "Mayo Clinic Chilblains",
+    "Cleveland Clinic Chilblains",
+    "NHS Contact dermatitis / Hand eczema (OUH)",
+    "질병관리청 국가건강정보포털 일광화상",
+    "기상청 생활기상지수 자외선지수",
+    "식품의약품안전처 자외선차단제 안내(2026.6.5)",
+    "EPA UV Index Descriptions",
+    "Cancer Council NSW Sun protection at the snow",
+    "대한화장품협회 자외선차단제 상식"
+  ],
+  "verification": {
+    "screenshots": "work/naver-1128/screenshots/",
+    "rss": "신규 2건만 확인(중복 없음), 카테고리 의학·건강/임상·전문가 칼럼",
+    "public_visibility": "두 편 모두 전체공개"
+  },
+  "stock_track": "올.주.선.이 11/28(토) 휴장 — 11/27(금) 시황·수급 2편(224494731152, 224494742777) 기발행 완료로 신규 없음"
+}
